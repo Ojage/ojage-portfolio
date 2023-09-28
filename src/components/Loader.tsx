@@ -1,7 +1,7 @@
 // Loader.tsx
 import React from "react";
-import { Box, Image, Spinner } from "@chakra-ui/react";
-import O from "../assets/images/732.png";
+import { Box, Image } from "@chakra-ui/react";
+import O from "../assets/images/732.svg";
 
 const Loader = () => {
   return (

@@ -2,8 +2,8 @@ a {
     color: inherit;
     background-image: linear-gradient(
       to right,
-      #da3a2f,
-      #da3a2f 50%,
+      #280704,
+      #190503 50%,
       #000 50%
     );
     background-size: 200% 100%;
@@ -18,7 +18,7 @@ a {
   
   a:before {
     content: '';
-    background: #da3a2f;
+    background: #190503;
     display: block;
     position: absolute;
     bottom: -3px;

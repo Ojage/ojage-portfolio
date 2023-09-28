@@ -1,9 +1,17 @@
 // Home.tsx
-import { Link } from "react-router-dom";
-import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
+// import { Link } from "react-router-dom";
+import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { projects } from "../../utils.ts/data";
+import { useState } from "react";
 
 const Home = () => {
+  const [projectListHovered, setProjectListHovered] = useState(false);
+  const [hoveredProject, setHoveredProject] = useState(null);
+
+  const handleProjectHover = (projectId: any) => {
+    setHoveredProject(projectId);
+  };
+
   return (
     <Flex
       textTransform="uppercase"
@@ -25,16 +33,38 @@ const Home = () => {
         transform="translate(-100%, -50%)"
         zIndex="1"
       >
-        <Stack spacing="1rem" color="grey">
-          <Text textDecor="none" as={Link}>
-            01
-          </Text>
-          <Text textDecor="none" as={Link}>
-            02
-          </Text>
-          <Text textDecor="none" as={Link}>
-            03
-          </Text>
+        <Stack
+          onMouseEnter={() => setProjectListHovered(!projectListHovered)}
+          display={projectListHovered ? "none" : "flex"}
+          gap="-1rem"
+          color="grey"
+        >
+          {projects.map(({ id }) => {
+            return <Text textDecor="none">0{id}</Text>;
+          })}
+        </Stack>
+        <Stack
+          onMouseLeave={() => setProjectListHovered(!projectListHovered)}
+          display={projectListHovered ? "flex" : "none"}
+          spacing=".1rem"
+          color="grey"
+        >
+          {projects.map(({ id, title }) => {
+            return (
+              <Text
+                key={id}
+                _hover={{ color: "black", cursor: "pointer" }}
+                textAlign="right"
+                fontSize="12px"
+                textTransform="uppercase"
+                textDecor="none"
+                onMouseEnter={() => handleProjectHover(id)}
+                onMouseLeave={() => handleProjectHover(null)}
+              >
+                {title}
+              </Text>
+            );
+          })}
         </Stack>
       </Flex>
       <Flex
@@ -52,14 +82,17 @@ const Home = () => {
         zIndex="2"
       >
         <Box w="fit-content" ml="-3.5rem">
-          <Image
-            mt="2.2rem"
-            boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
-            borderRadius="50%"
-            h="126px"
-            w="130px"
-            src={projects[0].img.RhibmsLogo}
-          />
+          {hoveredProject && (
+            <Image
+              className="animate__animated animate__fadeInLeft"
+              mt="2.2rem"
+              objectFit="cover"
+              boxShadow="rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+              h="126px"
+              w="130px"
+              src={projects[hoveredProject - 1].img}
+            />
+          )}
         </Box>
       </Flex>
     </Flex>
