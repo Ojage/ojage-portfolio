@@ -1,40 +1,49 @@
-import React from "react";
-import { Engine, Scene } from "react-babylonjs";
-import { Vector3, Color3 } from "@babylonjs/core";
-import Box from "./components/Box";
-import CallToActionWithVideo from "./components/CTA";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Loader from "./components/Loader";
+import Home from "./components/sections/Home";
+import About from "./components/sections/About";
+import Projects from "./components/sections/Projects";
+import Contact from "./components/sections/Contact";
+import "animate.css";
+import Nav from "./components/Navbar";
 
-const App: React.FC = () => (
-  <Engine
-    antialias={true}
-    adaptToDeviceRatio={true}
-    canvasId="sample-canvas"
-  >
-    <Scene>
-      <arcRotateCamera
-        name="camera1"
-        alpha={Math.PI / 3}
-        beta={Math.PI / 4.5}
-        radius={9.0}
-        target={Vector3.Zero()}
-        minZ={0.001}
-        position={Vector3.Zero()}
-      />
+const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
 
-      <hemisphericLight
-        name="light1"
-        intensity={0.8}
-        direction={Vector3.Up()}
-      />
+  useEffect(() => {
+    // Simulate data loading
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Adjust the duration as needed
+  }, []);
 
-      <Box
-        name="simple-box"
-        position={new Vector3(0, 0, 0)}
-        color={Color3.FromHexString('#AAF4F9')}
-      />
-    </Scene>
-    <CallToActionWithVideo />
-  </Engine>
-);
+  return (
+    <>
+      <Router>
+        <Routes>
+          {isLoading ? (
+            // Display the Loader while loading
+            <Route path="/" element={<Loader />} />
+          ) : (
+            // Render your components once loading is complete
+            <>
+              <Route path="/" element={(<><Nav /><Home /></>)} />
+              <Route path="/about" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/contact" element={<Contact />} />
+            </>
+          )}
+        </Routes>
+      </Router>
+    </>
+  );
+};
 
 export default App;
