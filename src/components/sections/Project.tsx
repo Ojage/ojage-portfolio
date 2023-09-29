@@ -1,8 +1,9 @@
 // Projects.tsx
-import { useParams, Link } from "react-router-dom";
-import { Box, Heading, Text, Image } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import { Box, Heading, Text, Image, Flex } from "@chakra-ui/react";
 import { projects } from "../../utils.ts/data";
 import "./project.css";
+import Marquee from "../Marquee";
 
 const Project = () => {
   const { id } = useParams();
@@ -12,7 +13,9 @@ const Project = () => {
   return (
     <Box textAlign="center" textTransform="uppercase">
       <Box
-        background="#7af1a7"
+        background={!project?.back ? `#410FF8` : `inherit`}
+        backgroundImage={!project?.back ? `inherit` : project.back}
+        backgroundSize="cover"
         h="100vh"
         w="100vw"
         pos="absolute"
@@ -23,7 +26,7 @@ const Project = () => {
       />
       <Box
         background="gainsboro"
-        opacity=".1"
+        opacity=".07"
         h="100vh"
         w="50vw"
         pos="absolute"
@@ -44,7 +47,7 @@ const Project = () => {
       >
         0{id}.
       </Heading>
-      <Heading fontSize="100px">{project?.title}</Heading>
+      <Heading color="white" fontSize="100px">{project?.title}</Heading>
       <Box h="160px">
         <Image
           h="100%"
@@ -89,7 +92,7 @@ const Project = () => {
             {project?.brief}
           </Text>
           <ul>
-            {project?.scopeOfWork.map((scope) => (
+            {project?.scopeOfWork.map((scope: string) => (
               <Text
                 as="li"
                 textTransform="capitalize"
@@ -100,6 +103,43 @@ const Project = () => {
               </Text>
             ))}
           </ul>
+        </Box>
+      </Box>
+      {project && <Marquee img={project.img} />}
+      <Box as={Flex} m="0 auto" alignItems="center">
+        <Box
+          // transform="translate(-100%, 0)"
+          marginLeft="50%"
+          transform="translate(-100%, -20%)"
+          width="50%"
+          h="70vh"
+          maxWidth="450px"
+        >
+          <Image
+            display="block"
+            objectFit="cover"
+            width="100%"
+            h="100%"
+            src={project?.relatedImgs[0]}
+            alt="idea-image"
+          />
+        </Box>
+        <Box w="50%" transform="translateX(-35%) translateZ(-300px) scale(1.3)">
+          <Box textAlign="left">
+            <Heading as="h3">Idea</Heading>
+            <Box as="ul" pl="0">
+              {project?.scopeOfWork.map((scope) => (
+                <Text
+                  as="li"
+                  textTransform="capitalize"
+                  fontFamily="'Neutra Text Light', sans-serif"
+                  id={scope}
+                >
+                  {scope}
+                </Text>
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>

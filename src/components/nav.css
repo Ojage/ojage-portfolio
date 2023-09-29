@@ -59,3 +59,10 @@ a {
     height: 3px;
     transition: all 0.3s ease-in-out;
   }
+
+  .logo {
+    height: 30pc;
+    background-color: red;
+  -webkit-mask: url("../assets/images/732.svg") no-repeat center;
+  mask: url("../assets/images/732.svg") no-repeat center;
+  }

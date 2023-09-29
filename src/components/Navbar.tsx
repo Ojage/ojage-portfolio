@@ -71,7 +71,7 @@ const Nav = () => {
             justifyContent="space-between"
           >
             <Box as={Link} className="logoA" to="/" h="54px" onClick={() => setIsHome(true)}>
-              <Image h="100%" src={O} alt="Logo" />
+              <Image color="red" h="100%" src={O} alt="Logo" />
             </Box>
             <Box pr=".7rem" display={isHome ? "block": "none"}>
               <Text
