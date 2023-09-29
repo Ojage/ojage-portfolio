@@ -3,10 +3,15 @@
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { projects } from "../../utils.ts/data";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [projectListHovered, setProjectListHovered] = useState(false);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const navigate = useNavigate();
+  const handleProjectClick = (projectId: any) => {
+    navigate(`/project/${projectId}`);
+  };
 
   const handleProjectHover = (projectId: any) => {
     setHoveredProject(projectId);
@@ -34,6 +39,7 @@ const Home = () => {
         zIndex="1"
       >
         <Stack
+          className="animate__animated animate__bounceIn"
           onMouseEnter={() => setProjectListHovered(!projectListHovered)}
           display={projectListHovered ? "none" : "flex"}
           gap="-1rem"
@@ -46,6 +52,7 @@ const Home = () => {
         <Stack
           onMouseLeave={() => setProjectListHovered(!projectListHovered)}
           display={projectListHovered ? "flex" : "none"}
+          className="animate__animated animate__jello"
           spacing=".1rem"
           color="grey"
         >
@@ -59,6 +66,7 @@ const Home = () => {
                 textTransform="uppercase"
                 textDecor="none"
                 onMouseEnter={() => handleProjectHover(id)}
+                onClick={() => handleProjectClick(id)}
                 onMouseLeave={() => handleProjectHover(null)}
               >
                 {title}

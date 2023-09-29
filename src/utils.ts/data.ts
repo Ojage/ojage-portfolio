@@ -7,21 +7,48 @@ export const projects = [
       id: 1,
       title: "rhibms",
       description: "The RHIBMS website",
-      img: RhibmsLogo
+      img: RhibmsLogo,
+      brief: "RHIBMS is a reputable institution specializing in training skilled personnel in various healthcare disciplines, including nursing and laboratory studies. and others.",
+      scopeOfWork: [
+        "Developing a visual concept that aligns with RHIBMS's values and mission.",
+        "Designing a user-friendly website layout with intuitive navigation.",
+        "Creating responsive design elements for optimal viewing on various devices.",
+        "Providing sample content to showcase the structure and purpose of the website.",
+        "Suggesting features and functionalities for future development.",
+        "Ensuring that the design is adaptable for future updates and expansion."
+      ],
       // Other project details
     },
     {
       id: 2,
       title: "mologo",
       description: "Image Compression site",
-      img: Mologo
+      img: Mologo,
+      brief: "RHIBMS is a reputable institution specializing in training skilled personnel in various healthcare disciplines, including nursing and laboratory studies. and others.",
+      scopeOfWork: [
+        "Developing a visual concept that aligns with RHIBMS's values and mission.",
+        "Designing a user-friendly website layout with intuitive navigation.",
+        "Creating responsive design elements for optimal viewing on various devices.",
+        "Providing sample content to showcase the structure and purpose of the website.",
+        "Suggesting features and functionalities for future development.",
+        "Ensuring that the design is adaptable for future updates and expansion."
+      ],
       // Other project details
     },
     {
       id: 3,
       title: "Apply Tekstedia",
       description: "Apply for jobs online",
-      img: TtdiaLogo
+      img: TtdiaLogo,
+      brief: "RHIBMS is a reputable institution specializing in training skilled personnel in various healthcare disciplines, including nursing and laboratory studies. and others.",
+      scopeOfWork: [
+        "Developing a visual concept that aligns with RHIBMS's values and mission.",
+        "Designing a user-friendly website layout with intuitive navigation.",
+        "Creating responsive design elements for optimal viewing on various devices.",
+        "Providing sample content to showcase the structure and purpose of the website.",
+        "Suggesting features and functionalities for future development.",
+        "Ensuring that the design is adaptable for future updates and expansion."
+      ],
       // Other project details
     },
     // More project objects

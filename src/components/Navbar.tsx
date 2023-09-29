@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineInstagram, AiOutlineDribbble, AiOutlineWhatsApp } from "react-icons/ai";
+import {
+  AiOutlineInstagram,
+  AiOutlineDribbble,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
 import { LiaBehanceSquare } from "react-icons/lia";
 import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import {
@@ -14,8 +18,6 @@ import {
 
 import O from "../assets/images/732.svg";
 import "./nav.css";
-
-
 
 // const NavLink = (props: Props) => {
 //   const { children } = props;
@@ -44,7 +46,13 @@ import "./nav.css";
 // }
 const Nav = () => {
   const [getInTouch, ssetGetInTouch] = useState(false);
-  
+  const [isHome, setIsHome] = useState(true);
+  const pathname = window.location.pathname;
+  useEffect(() => {
+    if (pathname.length > 1) {
+      setIsHome(false);
+    }
+  }, [pathname]);
   return (
     <Box
       fontSize="11px"
@@ -56,16 +64,16 @@ const Nav = () => {
         <Text as={Link} to="/about">
           About
         </Text>
-        <Box pos="fixed" left="45%" top="4%">
+        <Box pos="fixed" left="45%" top={isHome ? "4%" : "0"}>
           <Stack
             fontSize="12px"
             alignItems="center"
             justifyContent="space-between"
           >
-            <Box as={Link} to="/" h="54px">
+            <Box as={Link} className="logoA" to="/" h="54px" onClick={() => setIsHome(true)}>
               <Image h="100%" src={O} alt="Logo" />
             </Box>
-            <Box pr=".7rem">
+            <Box pr=".7rem" display={isHome ? "block": "none"}>
               <Text
                 fontFamily="'Neutra Text Light', sans-serif"
                 transform="rotate(270deg)"
@@ -89,24 +97,47 @@ const Nav = () => {
             onMouseLeave={() => ssetGetInTouch(!getInTouch)}
           >
             <Flex gap="1rem">
-              <a href="https://www.instagram.com/o_s_a_l_a/" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.instagram.com/o_s_a_l_a/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <AiOutlineInstagram size="15px" />
-
               </a>
-              <a href="https://dribbble.com/KSalathiel/" target="_blank" rel="noreferrer">
-              <AiOutlineDribbble size="15px" />
+              <a
+                href="https://dribbble.com/KSalathiel/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <AiOutlineDribbble size="15px" />
               </a>
-              <a href="https://behance.net/ojagesalathiel/" target="_blank" rel="noreferrer">
-              <LiaBehanceSquare size="15px" />
+              <a
+                href="https://behance.net/ojagesalathiel/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <LiaBehanceSquare size="15px" />
               </a>
-              <a href="https://facebook.com/Salathiel.Ayuk/" target="_blank" rel="noreferrer">
-              <BiLogoFacebook size="15px" />
+              <a
+                href="https://facebook.com/Salathiel.Ayuk/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <BiLogoFacebook size="15px" />
               </a>
-              <a href="https://linkedin.com/in/ojage-sala/" target="_blank" rel="noreferrer">
-              <BiLogoLinkedin size="15px" />
+              <a
+                href="https://linkedin.com/in/ojage-sala/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <BiLogoLinkedin size="15px" />
               </a>
-              <a href="https://wa.me/681402886" target="_blank" rel="noreferrer">
-              <AiOutlineWhatsApp size="15px" />
+              <a
+                href="https://wa.me/681402886"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <AiOutlineWhatsApp size="15px" />
               </a>
             </Flex>
             <a href="mailto:salathiel.ojage@gmail.com">

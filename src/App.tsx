@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import Loader from "./components/Loader";
 import Home from "./components/sections/Home";
 import About from "./components/sections/About";
-import Projects from "./components/sections/Projects";
+import Project from "./components/sections/Project";
 import Contact from "./components/sections/Contact";
 import "animate.css";
 import Nav from "./components/Navbar";
@@ -34,7 +34,7 @@ const App: React.FC = () => {
             <>
               <Route path="/" element={(<><Nav /><Home /></>)} />
               <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
+              <Route path="/project/:id" element={<><Nav /><Project /></>} />
               <Route path="/contact" element={<Contact />} />
             </>
           )}

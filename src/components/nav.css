@@ -35,3 +35,27 @@ a {
   a:hover::before {
     width:100%;
   }
+
+  .logoA {
+    text-decoration: none;
+    background-image: none;
+    background-size: 1;
+    background-position: initial;
+    display: inline-block;
+    padding: 5px 0;
+    position: initial;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  .logoA:before {
+    content: '';
+    background: none;
+    display: none;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+  }
