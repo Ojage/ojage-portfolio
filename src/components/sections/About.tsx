@@ -2,7 +2,6 @@ import { Box, Heading, Text, VStack, Divider, useColorModeValue } from "@chakra-
 import Nav from "../Navbar";
 
 const About = () => {
-  const bgColor = useColorModeValue("gainsboro", "#2c2c2c");
   const textColor = useColorModeValue("#4a3c31", "#f4e9d8");
   const accentColor = useColorModeValue("#e07a5f", "#ffb84d"); // A muted vintage orange for accents
 
