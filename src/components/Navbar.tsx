@@ -140,8 +140,8 @@ const Nav = () => {
                 <AiOutlineWhatsApp size="15px" />
               </a>
             </Flex>
-            <a href="mailto:salathiel.ojage@gmail.com">
-              salathiel.ojage@gmail.com
+            <a href="mailto:salathie@ojage.com">
+              salathiel@ojage.com
             </a>
           </Flex>
           <Text
