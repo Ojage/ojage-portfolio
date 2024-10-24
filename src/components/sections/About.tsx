@@ -1,77 +1,120 @@
-import { Box, Heading, Text, VStack, Divider, useColorModeValue } from "@chakra-ui/react";
+import { Box, Heading, Text, Stack, Grid, Flex, Divider, HStack, Badge } from "@chakra-ui/react";
+import { FaEnvelope, FaPhone, FaLinkedin } from "react-icons/fa";
 import Nav from "../Navbar";
 
 const About = () => {
-  const textColor = useColorModeValue("#4a3c31", "#f4e9d8");
-  const accentColor = useColorModeValue("#e07a5f", "#ffb84d"); // A muted vintage orange for accents
-
   return (
-    <Box  color={textColor} minHeight="100vh" py={16} px={8}>
+    <Box>
       <Nav />
-      <VStack mt="4rem" spacing={12} align="center" maxWidth="800px" mx="auto">
-
-        {/* Intro Section */}
-        <Box textAlign="center">
-          <Heading
-            as="h1"
-            size="2xl"
-            mb={6}
-            fontFamily="'Neutra Text Alt', sans-serif"
-            fontWeight="400"
-            color={accentColor}
-          >
-            Hello, I'm Ojage Salathiel Ayuk
+      <Box mt="3rem" bg="gray.50" py={10} px={{ base: 4, md: 16 }} color="gray.800" fontFamily="'Neutra Text Light',
+    sans-serif">
+        {/* Header Section */}
+        <Box bg="white" p={6} boxShadow="md" borderRadius="md" mb={8} border="1px solid #e1e4e8">
+          <Heading as="h1" fontSize="2xl" color="blue.600" mb={2}>
+            Salathiel Ojage
           </Heading>
-          <Text fontSize="lg" lineHeight="1.8" fontFamily="'Neutra Text Alt', sans-serif">
-            I'm a Full Stack Web Developer and UI Designer passionate about creating clean, functional,
-            and aesthetically pleasing web experiences. With a deep love for coding and design, I focus
-            on delivering high-quality, intuitive, and user-friendly solutions.
-          </Text>
+          <Text fontSize="lg" color="gray.600" mb={2}>React Full Stack Developer</Text>
+          <Flex gap={6}>
+            <Flex align="center">
+              <FaEnvelope size={18} />
+              <Text ml={2}>salathiel@ojage.com</Text>
+            </Flex>
+            <Flex align="center">
+              <FaPhone size={18} />
+              <Text ml={2}>+237 681 402 886</Text>
+            </Flex>
+            <Flex align="center">
+              <FaLinkedin size={18} />
+              <Text ml={2}>linkedin.com/in/ojage-ayuk</Text>
+            </Flex>
+          </Flex>
         </Box>
 
-        <Divider borderColor={accentColor} />
+        {/* Main Content in Grid Panels */}
+        <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={8}>
+          {/* Left Column (Summary and Contact Info) */}
+          <Box bg="white" p={6} boxShadow="md" borderRadius="md" border="1px solid #e1e4e8">
+            <Heading as="h2" fontSize="lg" mb={4} color="blue.600">Summary</Heading>
+            <Text>
+              A skilled and motivated Full Stack Developer with experience in React, React Native, TypeScript, and MongoDB.
+              Committed to delivering high-quality results and working collaboratively in a friendly and dynamic environment.
+            </Text>
+          </Box>
 
-        {/* Skills Section */}
-        <Box textAlign="center">
-          <Heading
-            as="h2"
-            size="xl"
-            mb={4}
-            fontFamily="'Neutra Text Alt', sans-serif"
-            color={accentColor}
-          >
-            Skills & Expertise
-          </Heading>
-          <Text fontSize="lg" fontFamily="'Neutra Text Alt', sans-serif">
-            <strong>Languages:</strong> JavaScript, TypeScript, HTML, CSS <br />
-            <strong>Frameworks:</strong> React, NestJS, Node.js, Express <br />
-            <strong>Tools & Libraries:</strong> MongoDB, Chakra UI, Git, Webpack <br />
-            <strong>Design:</strong> Figma, UI/UX Design
-          </Text>
-        </Box>
+          {/* Right Column (Experience, Education, Skills) */}
+          <Stack spacing={6}>
+            {/* Experience Section */}
+            <Box bg="white" p={6} boxShadow="md" borderRadius="md" border="1px solid #e1e4e8">
+              <Heading as="h2" fontSize="lg" mb={4} color="blue.600">Experience</Heading>
+              <Stack spacing={4}>
+                <Box>
+                  <Heading as="h3" fontSize="md" mb={2}>Full Stack Developer & Trainer - Liah Technologies (2022 - Present)</Heading>
+                  <Text>
+                    Developed browser-based applications using React and TypeScript, increasing user engagement by 20%.
+                    Optimized REST API calls to improve page speed by 15%.
+                  </Text>
+                </Box>
+                <Box>
+                  <Heading as="h3" fontSize="md" mb={2}>Junior Cloud Solutions Architect - Remote Cloud Solutions Provider (2023)</Heading>
+                  <Text>
+                    Provisioned AWS resources and developed backend automation using Python and YAML, reducing system downtime by 40%.
+                  </Text>
+                </Box>
+                <Box>
+                  <Heading as="h3" fontSize="md" mb={2}>Junior React Front End Developer - Mungwin Ltd (2021 - 2022)</Heading>
+                  <Text>
+                    Developed web applications using React, increasing user engagement by 20%, and implemented responsive designs,
+                    leading to a 15% increase in mobile traffic.
+                  </Text>
+                </Box>
+              </Stack>
+            </Box>
 
-        <Divider borderColor={accentColor} />
+            {/* Education Section */}
+            <Box bg="white" p={6} boxShadow="md" borderRadius="md" border="1px solid #e1e4e8">
+              <Heading as="h2" fontSize="lg" mb={4} color="blue.600">Education</Heading>
+              <Text fontSize="md" fontWeight="bold">Higher National Diploma in Software Engineering - Higher Institute of Management Science (2023 - 2024)</Text>
+              <Text>Buea, Cameroon</Text>
+            </Box>
 
-        {/* Experience Section */}
-        <Box textAlign="center">
-          <Heading
-            as="h2"
-            size="xl"
-            mb={4}
-            fontFamily="'Neutra Text Alt', sans-serif"
-            color={accentColor}
-          >
-            Experience
-          </Heading>
-          <Text fontSize="lg" fontFamily="'Neutra Text Alt', sans-serif">
-            With over 5 years of experience in the web development industry, I've worked on a diverse range of projects, from
-            small startups to large enterprises. My work includes building responsive web applications, developing interactive
-            UI components, and ensuring performance optimization.
-          </Text>
-        </Box>
+            {/* Skills Section */}
+            <Box bg="white" p={6} boxShadow="md" borderRadius="md" border="1px solid #e1e4e8">
+              <Heading as="h2" fontSize="lg" mb={4} color="blue.600">Skills</Heading>
+              <HStack>
+                <Badge>
+                  <Text fontWeight="bold">React</Text>
+                </Badge>
+                <Box>
+                  <Text fontWeight="bold">TypeScript</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">MongoDB</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">REST API</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">Python</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">AWS</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">NestJS</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold">NPM</Text>
+                </Box>
+              </HStack>
+            </Box>
+          </Stack>
+        </Grid>
 
-
-      </VStack>
+        {/* Footer */}
+        <Flex justify="center" mt={10}>
+          <Text fontSize="sm" color="gray.500">© {new Date().getFullYear()} Salathiel Ojage. All rights reserved.</Text>
+        </Flex>
+      </Box>
     </Box>
   );
 };
