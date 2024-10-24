@@ -1,17 +1,19 @@
-// data.ts
 import TtdiaLogo from "../assets/images/TeksTedialogo.png";
 import RhibmsLogo from "../assets/images/rhibms.png";
 import greenBack from "../assets/images/898.jpg";
 import Mologo from "../assets/images/mologo.png";
-export const projects = [
+import { Project } from "../types";
+
+// Project data array with type safety
+export const projects: Project[] = [
   {
     id: 1,
-    title: "rhibms",
-    description: "The RHIBMS website",
+    title: "RHIBMS",
+    description: "The official website for RHIBMS, a healthcare training institution.",
     img: RhibmsLogo,
     back: greenBack,
     brief:
-      "RHIBMS is a reputable institution specializing in training skilled personnel in various healthcare disciplines, including nursing and laboratory studies. and others.",
+      "RHIBMS is a reputable institution specializing in training skilled personnel in various healthcare disciplines, including nursing and laboratory studies.",
     scopeOfWork: [
       "Developing a visual concept that aligns with RHIBMS's values and mission.",
       "Designing a user-friendly website layout with intuitive navigation.",
@@ -23,16 +25,17 @@ export const projects = [
     relatedImgs: [
       "https://rhibms.org/assets/img/requirementsPics/tinified/_DSC0012.JPG",
     ],
-    idea: "The main idea of the RHIBMS (Redemption Higher Institute of Biomedical and Management Sciences) website is to serve as an informative and interactive online platform for a reputable institution specializing in the training of skilled personnel in various healthcare disciplines. ",
-    // Other project details
+    idea: "The main idea of the RHIBMS website is to serve as an informative and interactive platform for healthcare education.",
+    projectUrl: "https://rhibms.org", // Adding project URL
+    technologiesUsed: ["React", "Chakra UI", "Node.js", "MongoDB"], // Technologies used
   },
   {
     id: 2,
-    title: "mologo",
-    description: "Image Compression site",
+    title: "Mologo",
+    description: "An online image compression platform.",
     img: Mologo,
     brief:
-      'embarking on the development of "Mologo,"("small"-in Ejagham dialect) an online image compression website that allows users to efficiently compress their images for free. This project aims to provide a user-friendly and intuitive platform for individuals and businesses to reduce the file size of their images without compromising quality.',
+      "Mologo ('small' in the Ejagham dialect) is an online image compression website that allows users to efficiently compress their images for free without compromising quality.",
     scopeOfWork: [
       "Develop a user-friendly and visually appealing website.",
       "Implement efficient image compression algorithms.",
@@ -43,16 +46,17 @@ export const projects = [
     relatedImgs: [
       "https://images.unsplash.com/photo-1682167176169-c74f2a6c6b84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60",
     ],
-    idea: '"Mologo" offers a straightforward and user-friendly interface for uploading and compressing images, helping individuals and businesses optimize their website or application performance by reducing image loading times and saving storage space.',
-    // Other project details
+    idea: "Mologo offers an intuitive interface for individuals and businesses to compress images efficiently, optimizing website performance and saving storage space.",
+    projectUrl: "https://mologo.com", // Placeholder URL
+    technologiesUsed: ["Next.js", "Web Workers", "Node.js", "S3 Storage"],
   },
   {
     id: 3,
     title: "Apply Tekstedia",
-    description: "Apply for jobs online",
+    description: "A job application platform for Tekstedia.",
     img: TtdiaLogo,
     brief:
-      "Apply Tekstedia is a cutting-edge project aimed at streamlining the application process for Tekstedia, a forward-thinking technology company specializing in software development and IT services.",
+      "Apply Tekstedia is a platform aimed at streamlining the application process for Tekstedia, a technology company specializing in software development and IT services.",
     scopeOfWork: [
       "Developing a modern and visually appealing user interface that reflects Tekstedia's innovative approach to technology.",
       "Designing an intuitive and user-friendly application portal with seamless navigation.",
@@ -64,13 +68,9 @@ export const projects = [
     relatedImgs: [
       "https://apply.tekstedia.com/static/media/mologo_compressed-flyer2.393f74a4967226965584.png",
     ],
-    // Other project details
+    idea: "The Apply Tekstedia platform simplifies the hiring process and ensures a user-friendly experience for job applicants.",
+    projectUrl: "https://apply.tekstedia.com",
+    technologiesUsed: ["React", "Chakra UI", "TypeScript", "Node.js"],
   },
-  // More project objects
+  // Additional projects can be added here
 ];
-
-export const aboutMe = {
-  name: "Your Name",
-  bio: "A brief bio about yourself...",
-  // Other personal details
-};
