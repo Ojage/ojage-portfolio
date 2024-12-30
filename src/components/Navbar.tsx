@@ -55,9 +55,14 @@ const Nav = () => {
   const bgColor = useColorModeValue("gray.100", "gray.900");
 
   const leftPosition = useBreakpointValue({
-    base: isHome ? "20%" : "35%", // Smaller percentages for mobile
+    base: isHome ? "35%" : "90%", // Smaller percentages for mobile
     md: isHome ? "44%" : "50%",  // Default percentages for desktop
   });
+
+  const topPosition = useBreakpointValue({
+    base: isHome ? "-3.5rem":"inherit",
+    md: "0%",
+  })
 
   return (
     <Box
@@ -66,6 +71,8 @@ const Nav = () => {
       bg={bgColor}
       px={{ base: 3, md: 4 }}
       pos="fixed"
+      w="100vw"
+      overflowX="hidden"
       top={0}
       left={0}
       right={0}
@@ -103,6 +110,7 @@ const Nav = () => {
           style={{
             position: "absolute",
             left: leftPosition, 
+            top: topPosition
           }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

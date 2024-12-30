@@ -24,8 +24,9 @@ const Home = () => {
       alignItems="center"
       minH="90vh"
       minW="95vw"
+      maxW="100vw" overflowX="hidden"
     >
-      <Text fontFamily="'Neutra Text'" fontWeight={900} fontSize="190px" color="gainsboro">
+      <Text fontFamily="'Neutra Text'" fontWeight={900} fontSize={{base: "70px", md: "190px"}} color="gainsboro">
         projects
       </Text>
       <Flex
@@ -87,7 +88,7 @@ const Home = () => {
         h="200px"
         w="305px"
         top="47%"
-        right="8.1%"
+        right={{base: "4.1%", md: "8.1%"}}
         transform="translate(-100%, -50%)"
         zIndex="2"
       >

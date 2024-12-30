@@ -11,7 +11,7 @@ const Project = () => {
     (eachProject) => eachProject.id.toString() === id
   );
   return (
-    <Box mt="3rem" textAlign="center" textTransform="uppercase">
+    <Box  mt="3rem" textAlign="center" textTransform="uppercase">
       <Box
         background={!project?.back ? `#410FF8` : `inherit`}
         backgroundImage={!project?.back ? `inherit` : project.back}
