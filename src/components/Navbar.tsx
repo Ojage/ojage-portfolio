@@ -96,7 +96,7 @@ const Nav = () => {
         {/* Centered Logo and Title */}
         <MotionBox
           position="absolute"
-          left="50%"
+          left={isHome ? "44%" : "50%"}
           transform="translateX(-50%)"
           justifyContent="center"
           alignItems="center"
@@ -105,7 +105,7 @@ const Nav = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <HStack spacing={4} mt={isHome ? "4rem" : "0"} transition="all 0.3s ease" h="auto">
+          <HStack spacing={4} mt={isHome ? "4rem" : "0"} flexDir={{base: "row-reverse", md: "row"}} transition="all 0.3s ease" h="auto">
             <Flex
               as={Link}
               to="/"
