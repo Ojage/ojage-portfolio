@@ -11,6 +11,8 @@ import {
   useColorModeValue,
   Collapse,
   IconButton,
+  VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineInstagram, AiOutlineDribbble, AiOutlineWhatsApp } from "react-icons/ai";
@@ -28,8 +30,6 @@ const socialLinks = [
   { href: "https://wa.me/681402886", icon: AiOutlineWhatsApp, label: "WhatsApp" },
 ];
 
-const MotionBox = motion(Box);
-
 const SocialLink = ({ href, icon: Icon, label }: any) => (
   <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
     <motion.div
@@ -37,7 +37,7 @@ const SocialLink = ({ href, icon: Icon, label }: any) => (
       whileTap={{ scale: 0.9 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <Icon size="15px" />
+      <Icon size="20px" />
     </motion.div>
   </a>
 );
@@ -53,6 +53,11 @@ const Nav = () => {
   }, [location]);
 
   const bgColor = useColorModeValue("gray.100", "gray.900");
+
+  const leftPosition = useBreakpointValue({
+    base: isHome ? "22%" : "35%", // Smaller percentages for mobile
+    md: isHome ? "44%" : "50%",  // Default percentages for desktop
+  });
 
   return (
     <Box
@@ -72,7 +77,7 @@ const Nav = () => {
         justifyContent="space-between"
         position="relative"
       >
-        {/* About or Mobile Menu */}
+        {/* Mobile Menu Toggle */}
         <Box display={{ base: "block", md: "none" }}>
           <IconButton
             icon={isMobileMenuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
@@ -94,18 +99,16 @@ const Nav = () => {
         </Text>
 
         {/* Centered Logo and Title */}
-        <MotionBox
-          position="absolute"
-          left={isHome ? "44%" : "50%"}
-          transform="translateX(-50%)"
-          justifyContent="center"
-          alignItems="center"
-          textAlign="center"
+        <motion.div
+          style={{
+            position: "absolute",
+            left: leftPosition, 
+          }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <HStack spacing={4} mt={isHome ? "4rem" : "0"} flexDir={{base: "row-reverse", md: "row"}} transition="all 0.3s ease" h="auto">
+          <HStack spacing={4} flexDir={{base: "row-reverse", md: "row"}} mt={isHome ? "4rem" : "0"} transition="all 0.3s ease" h="auto">
             <Flex
               as={Link}
               to="/"
@@ -138,13 +141,13 @@ const Nav = () => {
               </Box>
             )}
           </HStack>
-        </MotionBox>
+        </motion.div>
 
-        {/* Contact Section */}
+        {/* Desktop Contact Section */}
         <Box
           w={{ base: "260px", md: "325px" }}
           textAlign="right"
-          display={{ base: isMobileMenuOpen ? "block" : "none", md: "block" }}
+          display={{ base: "none", md: "block" }}
         >
           {showContact ? (
             <Collapse
@@ -171,6 +174,37 @@ const Nav = () => {
           )}
         </Box>
       </Flex>
+
+      {/* Mobile Dropdown for Contact Section */}
+      <Collapse in={isMobileMenuOpen} animateOpacity>
+        <VStack
+          bg={bgColor}
+          spacing={4}
+          mt={4}
+          p={4}
+          rounded="md"
+          shadow="md"
+          display={{ base: "block", md: "none" }}
+        >
+          <Text
+          as={Link}
+          to="/about"
+          fontWeight="bold"
+          _hover={{ textDecoration: "none" }}
+          display={{ base: "inline-block", md: "none" }}
+        >
+          About
+        </Text>
+          <HStack>
+          {socialLinks.map(({ href, icon, label }) => (
+            <SocialLink key={label} href={href} icon={icon} label={label} />
+          ))}
+          </HStack>
+          <Text fontSize="sm" mt={2}>
+            <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+          </Text>
+        </VStack>
+      </Collapse>
     </Box>
   );
 };
