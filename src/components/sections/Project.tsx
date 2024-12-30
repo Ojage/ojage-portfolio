@@ -11,7 +11,7 @@ const Project = () => {
     (eachProject) => eachProject.id.toString() === id
   );
   return (
-    <Box textAlign="center" textTransform="uppercase">
+    <Box mt="3rem" textAlign="center" textTransform="uppercase">
       <Box
         background={!project?.back ? `#410FF8` : `inherit`}
         backgroundImage={!project?.back ? `inherit` : project.back}
@@ -60,7 +60,8 @@ const Project = () => {
         fontSize="12px"
         mt="5rem"
         as="a"
-        href="https://rhibms.org"
+        color="white"
+        href={"https://rhibms.org"}
         target="_blank"
       >
         view website

@@ -25,7 +25,7 @@ const Home = () => {
       minH="90vh"
       minW="95vw"
     >
-      <Text fontWeight={900} fontSize="190px" color="gainsboro">
+      <Text fontFamily="'Neutra Text'" fontWeight={900} fontSize="190px" color="gainsboro">
         projects
       </Text>
       <Flex
@@ -39,6 +39,7 @@ const Home = () => {
         zIndex="1"
       >
         <Stack
+          fontFamily="'Neutra Text'"
           className="animate__animated animate__bounceIn"
           onMouseEnter={() => setProjectListHovered(!projectListHovered)}
           display={projectListHovered ? "none" : "flex"}
@@ -60,6 +61,7 @@ const Home = () => {
             return (
               <Text
                 key={id}
+                fontFamily="'Neutra Text'"
                 _hover={{ color: "black", cursor: "pointer" }}
                 textAlign="right"
                 fontSize="12px"

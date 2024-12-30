@@ -14,6 +14,7 @@ import {
   Image,
   useColorModeValue,
   Stack,
+  HStack,
 } from "@chakra-ui/react";
 
 import O from "../assets/images/732.svg";
@@ -59,34 +60,45 @@ const Nav = () => {
       textTransform="uppercase"
       bg={useColorModeValue("gray.100", "gray.900")}
       px={4}
+      pos="fixed"
+      top="0"
+      left="0"
+      right="0"
     >
-      <Flex mt="1rem" h={16} alignItems="center" justifyContent="space-between">
+      <Flex h={16} alignItems="center" justifyContent="space-between">
         <Text as={Link} to="/about">
           About
         </Text>
-        <Box pos="fixed" left="45%" top={isHome ? "4%" : "0"}>
-          <Stack
-            fontSize="12px"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box as={Link} className="logoA" to="/" h="54px" onClick={() => setIsHome(true)}>
-              <Image color="red" h="100%" src={O} alt="Logo" />
-            </Box>
-            <Box pr=".7rem" display={isHome ? "block": "none"}>
-              <Text
-                fontFamily="'Neutra Text Light', sans-serif"
-                transform="rotate(270deg)"
-                textAlign="left"
-              >
-                Ojage Salathiel
-              </Text>
-              <Text pt="1.8rem" transform="rotate(270deg)" textAlign="left">
-                Full Stack Developer
-              </Text>
-            </Box>
-          </Stack>
-        </Box>
+        <HStack spacing={4}
+          mt={isHome ? '4rem' : '0'}
+          // border="1px solid red"
+          fontSize="12px"
+          w="fit-content"
+          textAlign="right"
+          h="fit-content"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Flex as={Link} className="logoA" to="/" h="54px" w="54px" onClick={() => setIsHome(true)}>
+            <Image rounded="50%" bgColor="white" shadow="md" color="black" h="90%" src={O} alt="Logo" />
+          </Flex>
+          <Box fontWeight={600} display={isHome ? "block" : "none"}>
+            <Text
+              
+              w="fit-content"
+              fontFamily="'Neutra Text Light', sans-serif"
+              // transform="rotate(270deg)"
+              textAlign="left"
+            >
+              Ojage Salathiel
+            </Text>
+            <Text pt=".5rem"
+              // transform="rotate(270deg)"
+              textAlign="left">
+              Full Stack Developer
+            </Text>
+          </Box>
+        </HStack>
 
         <Box>
           <Flex
