@@ -55,7 +55,7 @@ const Nav = () => {
   const bgColor = useColorModeValue("gray.100", "gray.900");
 
   const leftPosition = useBreakpointValue({
-    base: isHome ? "22%" : "35%", // Smaller percentages for mobile
+    base: isHome ? "20%" : "35%", // Smaller percentages for mobile
     md: isHome ? "44%" : "50%",  // Default percentages for desktop
   });
 
