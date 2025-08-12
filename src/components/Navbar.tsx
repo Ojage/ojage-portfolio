@@ -40,7 +40,7 @@ const SocialLink = ({ href, icon: Icon, label }: any) => (
       transition={{ type: "spring", stiffness: 200 }}
       style={{ margin: "0 5px" }}
     >
-      <Icon size="20px" />
+      <Icon size="20px" color="white" />
     </motion.div>
   </a>
 );
@@ -51,12 +51,12 @@ const Nav = () => {
   const isHome = location.pathname === "/";
 
   const bgColor = useColorModeValue("#fef4e8", "#1a202c");
-  const textColor = useColorModeValue("#3d3d3d", "white");
+  const textColor = "white";
   const hoverColor = useColorModeValue("#ff4c60", "#ff8a65");
 
   return (
     <Box
-      bg={bgColor}
+      bg={'#1a202c'}
       px={4}
       py={2}
       w="100vw"
@@ -96,6 +96,15 @@ const Nav = () => {
             About
           </Text>
           <Text
+            as={Link}
+            to="/internships"
+            color={textColor}
+            fontWeight="bold"
+            _hover={{ color: hoverColor }}
+          >
+            My Internships
+          </Text>
+          <Text
             as="a"
             href={`mailto:${contactInfo.email}`}
             _hover={{ color: hoverColor }}
@@ -125,6 +134,15 @@ const Nav = () => {
           </Text>
           <Text as={Link} to="/about" color={textColor} fontWeight="bold" _hover={{ color: hoverColor }}>
             About
+          </Text>
+          <Text
+            as={Link}
+            to="/internships"
+            color={textColor}
+            fontWeight="bold"
+            _hover={{ color: hoverColor }}
+          >
+            My Internships
           </Text>
           <Text
             as="a"

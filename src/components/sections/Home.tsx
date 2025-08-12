@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Container,
@@ -6,36 +5,26 @@ import {
   Text,
   VStack,
   HStack,
-  Button,
   Card,
   CardBody,
   Badge,
   Grid,
   GridItem,
   Avatar,
-  Flex,
   Icon,
-  useColorModeValue,
-  Divider,
   Link
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { BiBriefcase, BiCode, BiWorld } from 'react-icons/bi';
-import { FaBrain, FaGithub, FaGraduationCap, FaLinkedinIn, FaRocket, FaAward, FaCog } from 'react-icons/fa';
+import { BiCode, BiWorld } from 'react-icons/bi';
+import { FaBrain, FaGithub, FaLinkedinIn, FaRocket, FaCog } from 'react-icons/fa';
 import { MotionBox, MotionButton } from '../common/MotionElts';
 import { MorphCard } from '../common/MorphCard';
 import { itemVariantTypes } from '../../types';
+import { useStylesConstants } from '../../constants/styleConstants';
 
 
 
 const Home = () => {
-  const bgColor = useColorModeValue('#0a0a0a', '#000000');
-  const cardBg = useColorModeValue('#1a1a1a', '#111111');
-  const accentCardBg = useColorModeValue('#2d2d2d', '#1f1f1f');
-  const textColor = useColorModeValue('#e0e0e0', '#f0f0f0');
-  const accentColor = useColorModeValue('#00ff88', '#00ff88');
-  const secondaryAccent = useColorModeValue('#ff6b35', '#ff6b35');
-  const tertiaryAccent = useColorModeValue('#4ecdc4', '#4ecdc4');
+  const {bgColor, cardBg, accentCardBg, textColor, accentColor, secondaryAccent, tertiaryAccent} = useStylesConstants();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -123,7 +112,7 @@ const Home = () => {
                       mb={4}
                       letterSpacing="wider"
                     >
-                      [ELITE SOFTWARE ARCHITECT]
+                      [ONE BIG SOFTWARE ARCHITECT]
                     </Text>
                     <Heading
                       size="4xl"
