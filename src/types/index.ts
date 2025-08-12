@@ -40,3 +40,8 @@ export interface Project {
     name: string;
     proficiency: string;
   }
+
+export type itemVariantTypes = {
+    hidden: {opacity: number, y: number},
+    visible: {opacity: number, y: number, transition: {duration: number, ease: string}}
+  }

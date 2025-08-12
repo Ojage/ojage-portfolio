@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "animate.css";
-import "./nav.css";
 import {
   Box,
   Flex,
   Text,
-  Image,
-  HStack,
+  VStack,
+  IconButton,
   useColorModeValue,
   Collapse,
-  IconButton,
-  VStack,
-  useBreakpointValue,
+  HStack,
+  Image,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { AiOutlineMenu, AiOutlineClose, AiOutlineInstagram, AiOutlineDribbble, AiOutlineWhatsApp } from "react-icons/ai";
+import {
+  AiOutlineMenu,
+  AiOutlineClose,
+  AiOutlineInstagram,
+  AiOutlineDribbble,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
 import { LiaBehanceSquare } from "react-icons/lia";
 import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import O from "../assets/images/732.svg";
@@ -33,9 +36,9 @@ const socialLinks = [
 const SocialLink = ({ href, icon: Icon, label }: any) => (
   <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
     <motion.div
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      transition={{ type: "spring", stiffness: 300 }}
+      whileHover={{ scale: 1.2, rotate: -5 }}
+      transition={{ type: "spring", stiffness: 200 }}
+      style={{ margin: "0 5px" }}
     >
       <Icon size="20px" />
     </motion.div>
@@ -43,174 +46,96 @@ const SocialLink = ({ href, icon: Icon, label }: any) => (
 );
 
 const Nav = () => {
-  const [showContact, setShowContact] = useState(false);
-  const [isHome, setIsHome] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/";
 
-  useEffect(() => {
-    setIsHome(location.pathname === "/");
-  }, [location]);
-
-  const bgColor = useColorModeValue("gray.100", "gray.900");
-
-  const leftPosition = useBreakpointValue({
-    base: isHome ? "35%" : "90%", // Smaller percentages for mobile
-    md: isHome ? "44%" : "50%",  // Default percentages for desktop
-  });
-
-  const topPosition = useBreakpointValue({
-    base: isHome ? "-3.5rem":"inherit",
-    md: "0%",
-  })
+  const bgColor = useColorModeValue("#fef4e8", "#1a202c");
+  const textColor = useColorModeValue("#3d3d3d", "white");
+  const hoverColor = useColorModeValue("#ff4c60", "#ff8a65");
 
   return (
     <Box
-      fontSize="11px"
-      textTransform="uppercase"
       bg={bgColor}
-      px={{ base: 3, md: 4 }}
-      pos="fixed"
+      px={4}
+      py={2}
       w="100vw"
-      overflowX="hidden"
+      pos="fixed"
       top={0}
       left={0}
-      right={0}
-      zIndex={10}
+      zIndex={1000}
+      borderBottom="4px double #ff4c60"
+      boxShadow="0 2px 10px rgba(0,0,0,0.08)"
+      fontFamily="'Courier New', monospace"
     >
-      <Flex
-        h={{ base: 14, md: 16 }}
-        alignItems="center"
-        justifyContent="space-between"
-        position="relative"
-      >
-        {/* Mobile Menu Toggle */}
-        <Box display={{ base: "block", md: "none" }}>
-          <IconButton
-            icon={isMobileMenuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
-            aria-label="Toggle Menu"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            variant="ghost"
-            fontSize="24px"
-          />
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center" gap={3}>
+          <Image src={O} alt="logo" boxSize="40px" borderRadius="full" bg="white" />
+          <Text fontWeight="bold" fontSize="lg" color={textColor}>
+            {contactInfo.name}
+          </Text>
+        </Flex>
+
+        <Box display={{ base: "none", md: "flex" }} alignItems="center" gap={6}>
+          <Text
+            as={Link}
+            to="/"
+            _hover={{ color: hoverColor }}
+            fontWeight="bold"
+            color={textColor}
+          >
+            Home
+          </Text>
+          <Text
+            as={Link}
+            to="/about"
+            _hover={{ color: hoverColor }}
+            fontWeight="bold"
+            color={textColor}
+          >
+            About
+          </Text>
+          <Text
+            as="a"
+            href={`mailto:${contactInfo.email}`}
+            _hover={{ color: hoverColor }}
+            fontWeight="bold"
+            color={textColor}
+          >
+            {contactInfo.email}
+          </Text>
+          <HStack spacing={2}>{socialLinks.map(SocialLink)}</HStack>
         </Box>
 
-        <Text
-          as={Link}
-          to="/about"
-          fontWeight="bold"
-          _hover={{ textDecoration: "none" }}
-          display={{ base: "none", md: "block" }}
-        >
-          About
-        </Text>
-
-        {/* Centered Logo and Title */}
-        <motion.div
-          style={{
-            position: "absolute",
-            left: leftPosition, 
-            top: topPosition
-          }}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <HStack spacing={4} flexDir={{base: "row-reverse", md: "row"}} mt={isHome ? "4rem" : "0"} transition="all 0.3s ease" h="auto">
-            <Flex
-              as={Link}
-              to="/"
-              className="logoA"
-              h={{ base: "40px", md: "54px" }}
-              w={{ base: "40px", md: "54px" }}
-              onClick={() => setIsHome(true)}
-            >
-              <Image
-                rounded="full"
-                bg="white"
-                shadow="md"
-                h="90%"
-                src={O}
-                alt="Logo"
-              />
-            </Flex>
-            {isHome && (
-              <Box fontWeight={600}>
-                <Text
-                  fontFamily="'Neutra Text Light', sans-serif"
-                  textAlign="left"
-                  fontSize={{ base: "xs", md: "md" }}
-                >
-                  {contactInfo.name}
-                </Text>
-                <Text pt="0.5rem" textAlign="left" fontSize={{ base: "xs", md: "sm" }}>
-                  {contactInfo.title}
-                </Text>
-              </Box>
-            )}
-          </HStack>
-        </motion.div>
-
-        {/* Desktop Contact Section */}
-        <Box
-          w={{ base: "260px", md: "325px" }}
-          textAlign="right"
-          display={{ base: "none", md: "block" }}
-        >
-          {showContact ? (
-            <Collapse
-              className="animate__animated fadeInDownBig"
-              in={showContact}
-              onMouseLeave={() => setShowContact(!showContact)}
-              animateOpacity
-            >
-              <Flex gap="1rem" alignItems="end">
-                {socialLinks.map(({ href, icon, label }) => (
-                  <SocialLink key={label} href={href} icon={icon} label={label} />
-                ))}
-                <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-              </Flex>
-            </Collapse>
-          ) : (
-            <Text
-              cursor="pointer"
-              onMouseEnter={() => setShowContact(true)}
-              fontWeight="bold"
-            >
-              Get in touch
-            </Text>
-          )}
-        </Box>
+        <IconButton
+          aria-label="Toggle menu"
+          icon={isMobileMenuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+          display={{ base: "inline-flex", md: "none" }}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          variant="ghost"
+          fontSize="22px"
+          color={textColor}
+        />
       </Flex>
 
-      {/* Mobile Dropdown for Contact Section */}
       <Collapse in={isMobileMenuOpen} animateOpacity>
-        <VStack
-          bg={bgColor}
-          spacing={4}
-          mt={4}
-          p={4}
-          rounded="md"
-          shadow="md"
-          display={{ base: "block", md: "none" }}
-        >
-          <Text
-          as={Link}
-          to="/about"
-          fontWeight="bold"
-          _hover={{ textDecoration: "none" }}
-          display={{ base: "inline-block", md: "none" }}
-        >
-          About
-        </Text>
-          <HStack>
-          {socialLinks.map(({ href, icon, label }) => (
-            <SocialLink key={label} href={href} icon={icon} label={label} />
-          ))}
-          </HStack>
-          <Text fontSize="sm" mt={2}>
-            <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+        <VStack spacing={4} mt={3} display={{ base: "flex", md: "none" }}>
+          <Text as={Link} to="/" color={textColor} fontWeight="bold" _hover={{ color: hoverColor }}>
+            Home
           </Text>
+          <Text as={Link} to="/about" color={textColor} fontWeight="bold" _hover={{ color: hoverColor }}>
+            About
+          </Text>
+          <Text
+            as="a"
+            href={`mailto:${contactInfo.email}`}
+            color={textColor}
+            fontWeight="bold"
+            _hover={{ color: hoverColor }}
+          >
+            {contactInfo.email}
+          </Text>
+          <HStack>{socialLinks.map(SocialLink)}</HStack>
         </VStack>
       </Collapse>
     </Box>

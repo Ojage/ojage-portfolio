@@ -1,7 +1,7 @@
 // Projects.tsx
 import { useParams } from "react-router-dom";
 import { Box, Heading, Text, Image, Flex } from "@chakra-ui/react";
-import { projects } from "../../utils.ts/data";
+import { projects } from "../../utils/data";
 import "./project.css";
 import Marquee from "../Marquee";
 
