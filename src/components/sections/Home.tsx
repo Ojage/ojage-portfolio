@@ -12,19 +12,24 @@ import {
   GridItem,
   Avatar,
   Icon,
-  Link
+  Link,
+  Button,
+  Image,
+  Skeleton,
+  AspectRatio
 } from '@chakra-ui/react';
 import { BiCode, BiWorld } from 'react-icons/bi';
-import { FaBrain, FaGithub, FaLinkedinIn, FaRocket, FaCog } from 'react-icons/fa';
+import { FaBrain, FaGithub, FaLinkedinIn, FaRocket, FaCog, FaLink, FaShieldAlt, FaLightbulb } from 'react-icons/fa';
 import { MotionBox, MotionButton } from '../common/MotionElts';
 import { MorphCard } from '../common/MorphCard';
 import { itemVariantTypes } from '../../types';
 import { useStylesConstants } from '../../constants/styleConstants';
+import myPicProfessional from "../../assets/images/myPicProfessional.jpeg"
 
 
 
 const Home = () => {
-  const {bgColor, cardBg, accentCardBg, textColor, accentColor, secondaryAccent, tertiaryAccent} = useStylesConstants();
+  const { bgColor, cardBg, accentCardBg, textColor, accentColor, secondaryAccent, tertiaryAccent } = useStylesConstants();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,14 +86,15 @@ const Home = () => {
                     borderColor={accentColor}
                     boxShadow="0 0 30px rgba(0, 255, 136, 0.3)"
                   >
-                    <Avatar
+                    {/* <Avatar
                       size="2xl"
                       name="Ojage Salathiel Ayuk"
                       bg={accentColor}
                       color="black"
                       fontSize="3xl"
                       borderRadius="0"
-                    />
+                    /> */}
+                    <img src={myPicProfessional} alt="Ojage Professional portrait" />
                   </Box>
 
                   <VStack spacing={3} align="start">
@@ -166,6 +172,133 @@ const Home = () => {
             </VStack>
 
             <Grid templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }} gap={8}>
+              <GridItem colSpan={{ base: 1, lg: 2 }}>
+                <MorphCard
+                  bg={cardBg}
+                  borderRadius="0"
+                  border="3px solid"
+                  borderColor={accentColor}
+                  h="full"
+                  overflow="hidden"
+                  // subtle highlight glow
+                  sx={{ boxShadow: `0 0 0 1px ${accentColor}, 0 0 40px -10px ${accentColor}` }}
+                >
+                  <CardBody p={{ base: 8, md: 10 }}>
+                    <VStack align="start" spacing={8} h="full">
+                      {/* Header */}
+                      <HStack spacing={4} align="center">
+                        <Box
+                          p={4}
+                          bg={accentColor}
+                          borderRadius="0"
+                          border="2px solid"
+                          borderColor={accentColor}
+                        >
+                          <Icon as={FaShieldAlt} color="black" boxSize={8} />
+                        </Box>
+                        <VStack align="start" spacing={1}>
+                          <Text color={accentColor} fontSize="sm" fontFamily="mono" fontWeight="bold">
+                            MODULE_00
+                          </Text>
+                          <Heading
+                            size="xl"
+                            color={textColor}
+                            fontFamily="mono"
+                            textTransform="uppercase"
+                            letterSpacing="wide"
+                          >
+                            CM SENTINEL — .CM DOMAIN INSPECTION
+                          </Heading>
+                        </VStack>
+                      </HStack>
+
+                      {/* Copy */}
+                      <Text color={textColor} fontSize={{ base: "md", md: "lg" }} lineHeight="tall" maxW="3xl">
+                        An awesome, very useful, web app that inspects <b>.cm</b> domains for WHOIS & DNS,
+                        detects typosquatting (TLD swaps, keyboard errors), and prioritizes risks.
+                        Built with React/TypeScript, Tailwind (UI), and a Flask API (DNS over HTTPS + optional WHOIS).
+                      </Text>
+
+                      {/* Preview + Actions */}
+                      <Box w="full">
+                        <AspectRatio ratio={16 / 9} border="2px solid" borderColor={secondaryAccent}>
+                          <Box position="relative" bg="black">
+                            <Skeleton startColor="gray.700" endColor="gray.600" isLoaded={true}>
+                              <Image
+                                src={"https://sentinel.ojage.com/assets/cmSentinelLogo-CTXLkV5l.png"}
+                                alt="CM Sentinel preview"
+                                objectFit="cover"
+                                w="100%"
+                                h="100%"
+                                fallbackSrc="/android-chrome-512x512.png"
+                              />
+                            </Skeleton>
+                            {/* subtle overlay for readability */}
+                            <Box
+                              position="absolute"
+                              inset={0}
+                              bgGradient="linear(to-t, blackAlpha.500 5%, transparent 35%)"
+                              pointerEvents="none"
+                            />
+                          </Box>
+                        </AspectRatio>
+
+                        {/* Meta / Badges / CTA */}
+                        <HStack mt={4} spacing={3} flexWrap="wrap">
+                          <Badge bg={accentColor} color="black" fontFamily="mono" fontSize="xs" px={3} py={1} borderRadius="0">
+                            REACT + TS
+                          </Badge>
+                          <Badge bg={accentColor} color="black" fontFamily="mono" fontSize="xs" px={3} py={1} borderRadius="0">
+                            FLASK API
+                          </Badge>
+                          <Badge bg={accentColor} color="black" fontFamily="mono" fontSize="xs" px={3} py={1} borderRadius="0">
+                            WHOIS/DNS
+                          </Badge>
+                          <Badge bg={accentColor} color="black" fontFamily="mono" fontSize="xs" px={3} py={1} borderRadius="0">
+                            TYPOSQUATTING
+                          </Badge>
+                          <HStack ml="auto" spacing={2} color="gainsboro">
+                            <Icon as={FaLightbulb} />
+                            <Text fontSize="sm">Live</Text>
+                          </HStack>
+                        </HStack>
+
+                        <HStack mt={6} spacing={4}>
+                          <Button
+                            as={Link}
+                            href="https://sentinel.ojage.com"
+                            isExternal
+                            rightIcon={<FaLink />}
+                            size="md"
+                            borderRadius="0"
+                            bg={accentColor}
+                            color="black"
+                            _hover={{ opacity: 0.9 }}
+                            rel="noopener noreferrer"
+                          >
+                            Open CM Sentinel
+                          </Button>
+
+                          {/* Optional: secondary link to repo or case study */}
+                           {/* <Button
+                          as={Link}
+                          href="https://github.com/youruser/cm-sentinel"
+                          isExternal
+                          variant="outline"
+                          borderRadius="0"
+                          borderColor={secondaryAccent}
+                          color={textColor}
+                          rightIcon={<FiExternalLink />}
+                          rel="noopener noreferrer"
+                        >
+                          View Source
+            </Button> */}
+                        </HStack>
+                      </Box>
+                    </VStack>
+                  </CardBody>
+                </MorphCard>
+              </GridItem>
               <GridItem>
                 <MorphCard
                   bg={cardBg}

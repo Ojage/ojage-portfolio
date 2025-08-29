@@ -9,10 +9,10 @@ const AVGInternship = () => {
 
   // Sample contacts
   const contacts = [
-    { name: "John Doe", role: "Backend Intern", avatar: "" },
-    { name: "Jane Smith", role: "Frontend Intern", avatar: "" },
-    { name: "Mr. Bossman", role: "Lead Developer", avatar: "" },
-    { name: "Ms. Manager", role: "Project Manager", avatar: "" },
+    { name: "Kelsey", role: "Mobile Developer", avatar: "" },
+    { name: "Kay", role: "Frontend Intern", avatar: "" },
+    { name: "Mr. Glenn", role: "Lead Developer", avatar: "" },
+    { name: "Mr. Churchill", role: "Project Manager", avatar: "" },
   ];
 
   return (

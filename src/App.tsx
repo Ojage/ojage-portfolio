@@ -50,7 +50,7 @@ const App: React.FC = () => {
         <Route path="/internships">
           <Route index element={<MyInternships />} />
           <Route path="afrovision" element={<AVGInternship />} />
-          <Route path="test" element={<div>Test Route Working</div>} />
+          <Route path="test" element={<div>Okay, clap for yourself! Test Route Working</div>} />
         </Route>
       </Route>
     )}
