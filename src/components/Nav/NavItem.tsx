@@ -6,12 +6,16 @@ import { NavItem as NavItemType } from '../../data/navData';
 
 interface NavItemProps {
     navItem: NavItemType;
+    isActive?: boolean;
     onClick?: () => void;
 }
 
-export const NavItem: React.FC<NavItemProps> = ({ navItem, onClick }) => {
-    const { textColor, hoverColor } = useNavThemeConstants();
+export const NavItem: React.FC<NavItemProps> = ({ navItem, isActive = false, onClick }) => {
+    const { textColor, hoverColor, activeColor } = useNavThemeConstants();
     const { label, href, isExternal } = navItem;
+
+    // Use active color if item is active, otherwise use normal text color
+    const currentColor = isActive ? activeColor : textColor;
 
     if (isExternal) {
         return (
@@ -19,10 +23,13 @@ export const NavItem: React.FC<NavItemProps> = ({ navItem, onClick }) => {
                 as="a"
                 href={href}
                 target="_blank"
-                rel="noreferrer"
-                color={textColor}
+                rel="noopener noreferrer"
+                color={currentColor}
                 fontWeight="bold"
                 _hover={{ color: hoverColor }}
+                transition="color 0.2s ease-in-out"
+                borderBottom={isActive ? `2px solid ${activeColor}` : '2px solid transparent'}
+                pb={1}
                 onClick={onClick}
             >
                 {label}
@@ -34,9 +41,12 @@ export const NavItem: React.FC<NavItemProps> = ({ navItem, onClick }) => {
         <Text
             as={Link}
             to={href}
-            color={textColor}
+            color={currentColor}
             fontWeight="bold"
             _hover={{ color: hoverColor }}
+            transition="color 0.2s ease-in-out"
+            borderBottom={isActive ? `2px solid ${activeColor}` : '2px solid transparent'}
+            pb={1}
             onClick={onClick}
         >
             {label}
