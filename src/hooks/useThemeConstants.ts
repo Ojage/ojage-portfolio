@@ -1,6 +1,7 @@
 import { useTheme } from '../contexts/ThemeContext';
 
 interface ThemeConstants {
+  isDark: boolean;
   bgColor: string;
   cardBg: string;
   accentCardBg: string;
@@ -14,6 +15,7 @@ export const useThemeConstants = (): ThemeConstants => {
   const { isDark } = useTheme();
 
   const darkTheme = {
+    isDark: true,
     bgColor: "#0a0a0a",
     cardBg: "#1a1a1a",
     accentCardBg: "#262626",
@@ -24,6 +26,7 @@ export const useThemeConstants = (): ThemeConstants => {
   };
 
   const lightTheme = {
+    isDark: false,
     bgColor: "#ffffff",
     cardBg: "#f8f9fa",
     accentCardBg: "#e9ecef",
