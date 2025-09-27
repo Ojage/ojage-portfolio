@@ -1,6 +1,7 @@
+// components/About/ProfessionalSummary.tsx
 import React from 'react';
-import { Box, Heading, Text, HStack, Icon, VStack } from "@chakra-ui/react";
-import { FaLightbulb } from "react-icons/fa";
+import { Box, Heading, Text, HStack, Icon, VStack } from '@chakra-ui/react';
+import { FaLightbulb } from 'react-icons/fa';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 
 interface ProfessionalSummaryProps {
@@ -14,33 +15,31 @@ const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({ summary }) =>
         <Box
             bg={theme.cardBg}
             borderRadius="0"
-            p={{ base: 6, md: 10 }}
+            p={{ base: 4, sm: 6, md: 8, lg: 10 }}
             border="2px solid"
             borderColor={theme.cardBorder}
             position="relative"
             overflow="hidden"
         >
-            <VStack align="start" spacing={6} width="full">
+            <VStack align="start" spacing={{ base: 4, md: 6 }} width="full">
                 {/* Header with Icon */}
-                <HStack spacing={4} align="center">
+                <HStack spacing={{ base: 3, md: 4 }} align="center" w="full">
                     <Box
-                        p={3}
+                        p={{ base: 2, sm: 2.5, md: 3 }}
                         bg={theme.accent}
                         borderRadius="0"
                         border="2px solid"
                         borderColor={theme.accent}
+                        flexShrink={0}
+                        aria-label="Professional summary icon"
                     >
-                        <Icon
-                            as={FaLightbulb}
-                            color="black"
-                            boxSize={6}
-                        />
+                        <Icon as={FaLightbulb} color="black" boxSize={{ base: 5, sm: 6, md: 7 }} aria-hidden />
                     </Box>
 
-                    <VStack align="start" spacing={1}>
+                    <VStack align="start" spacing={{ base: 0.5, md: 1 }} minW={0}>
                         <Text
                             color={theme.accent}
-                            fontSize="sm"
+                            fontSize={{ base: 'xs', sm: 'sm' }}
                             fontFamily="mono"
                             fontWeight="bold"
                             textTransform="uppercase"
@@ -50,11 +49,13 @@ const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({ summary }) =>
                         </Text>
                         <Heading
                             as="h2"
-                            size="xl"
                             color={theme.primaryText}
                             fontFamily="mono"
                             textTransform="uppercase"
                             letterSpacing="wide"
+                            lineHeight={1.2}
+                            fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
+                            noOfLines={{ base: 2, md: undefined }}
                         >
                             About Me
                         </Heading>
@@ -64,22 +65,18 @@ const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({ summary }) =>
                 {/* Summary Content */}
                 <Text
                     color={theme.primaryText}
-                    fontSize={{ base: "md", md: "lg" }}
-                    lineHeight="tall"
+                    fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }}
+                    lineHeight={{ base: 'tall', md: 'taller' }}
                     letterSpacing="0.01em"
-                    maxW="none"
+                    maxW={{ base: 'none', lg: '65ch' }}
                     fontWeight="400"
+                    sx={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
                 >
                     {summary}
                 </Text>
 
                 {/* Bottom accent line */}
-                <Box
-                    w="full"
-                    h="2px"
-                    bg={theme.accent}
-                    mt={2}
-                />
+                <Box w="full" h={{ base: '1px', md: '2px' }} bg={theme.accent} mt={{ base: 1, md: 2 }} />
             </VStack>
         </Box>
     );

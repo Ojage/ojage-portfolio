@@ -1,3 +1,4 @@
+// components/About/ExperienceSection.tsx
 import React from 'react';
 import {
     Box,
@@ -8,9 +9,14 @@ import {
     UnorderedList,
     ListItem,
     Icon,
-    Stack
-} from "@chakra-ui/react";
-import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+    Stack,
+    SimpleGrid,
+    Button,
+    Collapse,
+    useDisclosure,
+    useBreakpointValue,
+} from '@chakra-ui/react';
+import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import { Experience } from '../../data/aboutData';
 
@@ -25,44 +31,55 @@ interface ExperienceCardProps {
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index }) => {
     const theme = useAboutThemeConstants();
+    const { isOpen, onToggle } = useDisclosure();
+    const previewCount = useBreakpointValue({ base: 3, sm: 4, md: experience.responsibilities.length }) ?? 3;
+    const showToggle = experience.responsibilities.length > (previewCount ?? 0);
+
+    const visibleItems =
+        isOpen || previewCount === experience.responsibilities.length
+            ? experience.responsibilities
+            : experience.responsibilities.slice(0, previewCount);
 
     return (
         <Box
             bg={theme.cardBg}
             borderRadius="0"
-            p={{ base: 6, md: 8 }}
-            border="2px solid"
+            p={{ base: 4, sm: 5, md: 7, lg: 8 }}
+            border={{ base: '1px solid', md: '2px solid' }}
             borderColor={theme.cardBorder}
             position="relative"
-            mb={4}
+            overflow="hidden"
+            mb={{ base: 3, md: 4 }}
+            sx={{
+                overflowWrap: 'anywhere',
+                wordBreak: 'break-word',
+                hyphens: 'auto',
+            }}
         >
-            <VStack align="start" spacing={4}>
-                {/* Header with Icon and Position */}
+            <VStack align="start" spacing={{ base: 3.5, md: 5 }} w="full">
+                {/* Header: icon + role/company */}
                 <Stack
-                    direction={{ base: 'column', sm: 'row' }}
-                    spacing={4}
-                    align={{ base: 'start', sm: 'center' }}
+                    direction={{ base: 'row', sm: 'row' }}
+                    spacing={{ base: 3, sm: 4 }}
+                    align="start"
                     w="full"
                 >
                     <Box
-                        p={3}
+                        p={{ base: 2, sm: 2.5, md: 3 }}
                         bg={theme.accent}
                         borderRadius="0"
                         border="2px solid"
                         borderColor={theme.accent}
                         flexShrink={0}
+                        aria-label="Experience"
                     >
-                        <Icon
-                            as={FaBriefcase}
-                            color="black"
-                            boxSize={6}
-                        />
+                        <Icon as={FaBriefcase} color="black" boxSize={{ base: 5, sm: 6 }} aria-hidden />
                     </Box>
 
-                    <VStack align="start" spacing={1} flex={1} minW={0}>
+                    <VStack align="start" spacing={{ base: 1, md: 1.5 }} flex={1} minW={0}>
                         <Text
                             color={theme.accent}
-                            fontSize="sm"
+                            fontSize={{ base: 'xs', sm: 'sm' }}
                             fontFamily="mono"
                             fontWeight="bold"
                             textTransform="uppercase"
@@ -70,109 +87,119 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index }) =>
                         >
                             {String(index + 1).padStart(2, '0')}_EXPERIENCE
                         </Text>
+
                         <Heading
                             as="h3"
-                            size="lg"
                             color={theme.primaryText}
                             fontFamily="mono"
                             textTransform="uppercase"
                             letterSpacing="wide"
-                            fontSize={{ base: 'lg', md: 'xl' }}
                             lineHeight={1.2}
+                            fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
+                            noOfLines={{ base: 2, md: 1 }}
                         >
                             {experience.position}
                         </Heading>
-                        <Text
-                            color={theme.accent}
-                            fontSize={{ base: 'md', md: 'lg' }}
-                            fontFamily="mono"
-                            fontWeight="600"
-                        >
-                            {experience.company}
-                        </Text>
+
+                        {experience.company && (
+                            <Text
+                                color={theme.accent}
+                                fontSize={{ base: 'sm', md: 'lg' }}
+                                fontFamily="mono"
+                                fontWeight="600"
+                                noOfLines={1}
+                            >
+                                {experience.company}
+                            </Text>
+                        )}
                     </VStack>
                 </Stack>
 
-                {/* Meta Information */}
-                <HStack
-                    spacing={6}
-                    wrap="wrap"
-                    divider={<Box w="2px" h="4" bg={theme.divider} />}
+                {/* Meta: period + location (mobile-first grid) */}
+                <SimpleGrid
+                    columns={{ base: 1, xs: 2, sm: 2 }}
+                    spacingY={{ base: 2, md: 0 }}
+                    spacingX={{ base: 0, xs: 6 }}
+                    w="full"
                 >
-                    <HStack spacing={2}>
-                        <Icon as={FaCalendarAlt} color={theme.accent} size="14px" />
-                        <Text
-                            color={theme.primaryText}
-                            fontSize="sm"
-                            fontFamily="mono"
-                            fontWeight="bold"
-                        >
+                    <HStack spacing={2} minW={0}>
+                        <Icon as={FaCalendarAlt} color={theme.accent} boxSize={{ base: 3.5, sm: 4 }} aria-hidden />
+                        <Text color={theme.primaryText} fontSize={{ base: 'xs', sm: 'sm' }} fontFamily="mono" fontWeight="bold">
                             {experience.period}
                         </Text>
                     </HStack>
-                    <HStack spacing={2}>
-                        <Icon as={FaMapMarkerAlt} color={theme.accent} size="14px" />
-                        <Text
-                            color={theme.primaryText}
-                            fontSize="sm"
-                            fontFamily="mono"
-                            fontWeight="bold"
-                        >
+
+                    <HStack spacing={2} minW={0}>
+                        <Icon as={FaMapMarkerAlt} color={theme.accent} boxSize={{ base: 3.5, sm: 4 }} aria-hidden />
+                        <Text color={theme.primaryText} fontSize={{ base: 'xs', sm: 'sm' }} fontFamily="mono" fontWeight="bold">
                             {experience.location}
                         </Text>
                     </HStack>
-                </HStack>
+                </SimpleGrid>
 
-                {/* Responsibilities */}
+                {/* Responsibilities (collapsible on small screens) */}
                 <Box w="full">
                     <Text
                         color={theme.accent}
-                        fontSize="sm"
+                        fontSize={{ base: 'xs', sm: 'sm' }}
                         fontFamily="mono"
                         fontWeight="bold"
                         textTransform="uppercase"
                         letterSpacing="wider"
-                        mb={3}
+                        mb={{ base: 1.5, md: 2.5 }}
                     >
                         Key Responsibilities:
                     </Text>
-                    <UnorderedList spacing={2} ml={6}>
-                        {experience.responsibilities.map((responsibility, idx) => (
+
+                    <UnorderedList
+                        spacing={{ base: 1.5, md: 2 }}
+                        ml={{ base: 4, md: 6 }}
+                        maxW={{ base: 'none', lg: '68ch' }}
+                    >
+                        {visibleItems.map((responsibility, idx) => (
                             <ListItem
                                 key={idx}
                                 color={theme.primaryText}
-                                fontSize="sm"
-                                lineHeight="1.6"
+                                fontSize={{ base: 'sm', md: 'sm' }}
+                                lineHeight={{ base: 1.6, md: 1.7 }}
                             >
                                 {responsibility}
                             </ListItem>
                         ))}
                     </UnorderedList>
+
+                    {showToggle && (
+                        <Button
+                            onClick={onToggle}
+                            variant="link"
+                            color={theme.accent}
+                            fontFamily="mono"
+                            fontWeight="bold"
+                            mt={{ base: 1, md: 1.5 }}
+                            fontSize={{ base: 'sm', md: 'sm' }}
+                            _hover={{ textDecoration: 'underline' }}
+                            aria-expanded={isOpen}
+                            aria-controls={`exp-resp-${index}`}
+                        >
+                            {isOpen ? 'Show less' : 'Show more'}
+                        </Button>
+                    )}
+                    {/* For a11y: keep a collapsible region id referenced above (content is the same list) */}
+                    <Collapse in={false} animateOpacity id={`exp-resp-${index}`} />
                 </Box>
 
-                {/* Bottom accent line */}
-                <Box
-                    w="full"
-                    h="2px"
-                    bg={theme.accent}
-                    mt={2}
-                />
+                {/* Accent line */}
+                <Box w="full" h={{ base: '1px', md: '2px' }} bg={theme.accent} mt={{ base: 1, md: 2 }} />
             </VStack>
         </Box>
     );
 };
 
 const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences }) => {
-    const theme = useAboutThemeConstants();
-
     return (
-        <VStack spacing={4} align="stretch">
+        <VStack spacing={{ base: 3, md: 4 }} align="stretch">
             {experiences.map((experience, index) => (
-                <ExperienceCard
-                    key={experience.id}
-                    experience={experience}
-                    index={index}
-                />
+                <ExperienceCard key={experience.id} experience={experience} index={index} />
             ))}
         </VStack>
     );
