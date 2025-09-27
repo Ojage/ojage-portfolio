@@ -24,11 +24,7 @@ const Home: React.FC = () => {
 
   return (
     <Box minH="100vh" mt="2rem" bg={bgColor} py={16} position="relative">
-      {/* Theme Toggle Button */}
-      <Box position="fixed" top={100} right={4} zIndex={1000}>
-        <ThemeToggle />
-      </Box>
-
+      
       <Container maxW="8xl" px={8}>
         <MotionBox
           variants={containerVariants}
