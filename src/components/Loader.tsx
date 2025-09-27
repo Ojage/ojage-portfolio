@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useThemeConstants } from "../hooks/useThemeConstants";
 
 const MotionSVG = motion.svg;
 
-const colorCycle = ["#2B6CB0", "#38A169", "#D69E2E", "#DD6B20", "#E53E3E", "#805AD5"];
-
 const Loader = () => {
+  const { bgColor, accentColor, secondaryAccent, tertiaryAccent } = useThemeConstants();
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
+
+  // Theme-aware color cycles
+  const colorCycle = [
+    accentColor,      // Primary accent
+    secondaryAccent,  // Secondary accent  
+    tertiaryAccent,   // Tertiary accent
+    "#D69E2E",        // Golden yellow
+    "#DD6B20",        // Orange
+    "#E53E3E",        // Red
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentColorIndex((prev) => (prev + 1) % colorCycle.length);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [colorCycle.length]);
 
   const fillColor = colorCycle[currentColorIndex];
 
@@ -25,10 +35,11 @@ const Loader = () => {
       position="fixed"
       top="0"
       left="0"
-      backgroundColor="gray.900"
+      backgroundColor={bgColor}
       display="flex"
       alignItems="center"
       justifyContent="center"
+      zIndex={9999}
     >
       <MotionSVG
         width="120"

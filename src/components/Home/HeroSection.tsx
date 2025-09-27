@@ -1,3 +1,4 @@
+// components/Home/HeroSection.tsx
 import React from 'react';
 import {
     Grid,
@@ -22,14 +23,24 @@ export const HeroSection: React.FC = () => {
             <GridItem>
                 <VStack spacing={6} align="start">
                     <Box
-                        p={6}
+                        p={{ base: 4, md: 6 }}
                         bg={cardBg}
                         borderRadius="0"
                         border="3px solid"
                         borderColor={accentColor}
                         boxShadow="0 0 30px rgba(0, 255, 136, 0.3)"
+                        w={{ base: "200px", md: "300px" }}
+                        h={{ base: "200px", md: "300px" }}
                     >
-                        <img src={myPicProfessional} alt="Ojage Professional portrait" />
+                        <img
+                            src={myPicProfessional}
+                            alt="Ojage Professional portrait"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover"
+                            }}
+                        />
                     </Box>
 
                     <VStack spacing={3} align="start">
@@ -56,7 +67,7 @@ export const HeroSection: React.FC = () => {
                             [{personalInfo.title}]
                         </Text>
                         <Heading
-                            size="4xl"
+                            size={{base: "2xl", md: "3xl", lg: "4xl"}}
                             color={textColor}
                             fontWeight="900"
                             lineHeight="1.1"
@@ -66,7 +77,7 @@ export const HeroSection: React.FC = () => {
                         >
                             {personalInfo.name}
                         </Heading>
-                        <Text fontSize="xl" color={textColor} maxW="4xl" lineHeight="tall" mb={8}>
+                        <Text fontSize={{base: "md", md: "lg", lg: "xl"}} color={textColor} maxW="4xl" lineHeight="tall" mb={8}>
                             {personalInfo.description}
                         </Text>
                     </Box>
