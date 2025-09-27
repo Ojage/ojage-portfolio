@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Box, Heading, Text, Stack, Grid, Flex, HStack, Badge, Divider, Button } from "@chakra-ui/react";
 import { FaEnvelope, FaPhone, FaLinkedin } from "react-icons/fa";
-import Nav from "../Navbar";
+import Nav from "../Nav/Nav";
 import { useReactToPrint } from "react-to-print";
 import { contactInfo, summary, experience, education, strengths, achievements, skills } from '../../constants/resumeConstants'; // Adjust the import path
 import { Achievement, Experience, Skill, Strength } from '../../types';
