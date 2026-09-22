@@ -165,8 +165,6 @@ const EducationCard: React.FC<EducationCardProps> = ({ education, index }) => {
 };
 
 const EducationSection: React.FC<EducationSectionProps> = ({ education }) => {
-    const theme = useAboutThemeConstants();
-
     return (
         <VStack spacing={4} align="stretch">
             {education.map((edu, index) => (
