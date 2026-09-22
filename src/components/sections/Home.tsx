@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Box,
   Container,
-  Grid,
-  GridItem,
 } from '@chakra-ui/react';
 import { MotionBox } from '../common/MotionElts';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
@@ -12,7 +10,7 @@ import { coreCompetencies } from '../../data/homeData';
 
 // Components
 import { HeroSection } from '../Home/HeroSection';
-import { ProjectCard } from '../Home/ProjectCard';
+import { CaseStudyCarousel } from '../Home/CaseStudyCarousel';
 import { LeadershipSection } from '../Home/LeadershipSection';
 import { ReferencesSection } from '../Home/ReferencesSection';
 import { CTASection } from '../Home/CTASection';
@@ -40,26 +38,10 @@ const Home: React.FC = () => {
             <HeroSection />
           </MotionBox>
 
-          {/* Selected Projects Grid */}
+          {/* Case Studies Carousel */}
           <MotionBox variants={itemVariants} mb={20}>
-            <SectionHeader title="SELECTED PROJECTS" color={accentColor} />
-
-            <Grid templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }} gap={8}>
-              {/* Highlighted CM Sentinel Project */}
-              <GridItem colSpan={{ base: 1, lg: 2 }}>
-                <ProjectCard 
-                  project={coreCompetencies[0]} 
-                  isHighlighted={true}
-                />
-              </GridItem>
-
-              {/* Other Projects */}
-              {coreCompetencies.slice(1).map((project) => (
-                <GridItem key={project.id}>
-                  <ProjectCard project={project} />
-                </GridItem>
-              ))}
-            </Grid>
+            <SectionHeader title="CASE STUDIES" color={accentColor} />
+            <CaseStudyCarousel projects={coreCompetencies} />
           </MotionBox>
 
           {/* Leadership Section */}

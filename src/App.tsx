@@ -13,6 +13,7 @@ import Contact from "./components/sections/Contact";
 import "animate.css";
 import Nav from "./components/Nav/Nav";
 import AVGInternship from "./Pages/Internships/AfroVision/AfrovisionInternship";
+import CSKYInternship from "./Pages/Internships/CSKY/CSKYInternship";
 import MyInternships from "./Pages/Internships/MyInternships";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -52,6 +53,7 @@ const App: React.FC = () => {
                 <Route path="/internships">
                   <Route index element={<MyInternships />} />
                   <Route path="afrovision" element={<AVGInternship />} />
+                  <Route path="csky" element={<CSKYInternship />} />
                   <Route path="test" element={<div>Okay, clap for yourself! Test Route Working</div>} />
                 </Route>
               </Route>
