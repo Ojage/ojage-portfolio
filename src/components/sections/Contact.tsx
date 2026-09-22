@@ -14,8 +14,9 @@ import {
     Textarea,
     Grid,
     useToast,
+    Tooltip,
 } from '@chakra-ui/react';
-import { FaEnvelope, FaMapMarkerAlt, FaGithub, FaLinkedinIn, FaCopy, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaGithub, FaLinkedinIn, FaCopy, FaPaperPlane, FaPhoneAlt } from 'react-icons/fa';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
 import { contactInfo, socialLinks } from '../../data/navData';
 import { ThemeToggle } from '../common/ThemeToggle';
@@ -46,10 +47,57 @@ const Contact = () => {
         }
     };
 
+    const handleCopyPhone = async () => {
+        try {
+            await navigator.clipboard.writeText(contactInfo.phone);
+            toast({
+                title: 'Phone copied',
+                description: `${contactInfo.phone} copied to clipboard`,
+                status: 'success',
+                duration: 2000,
+                isClosable: true,
+            });
+        } catch {
+            toast({
+                title: 'Copy failed',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            });
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!form.name.trim() || !form.message.trim()) {
+            toast({
+                title: 'Almost there',
+                description: 'Please add your name and a message before sending.',
+                status: 'warning',
+                duration: 2500,
+                isClosable: true,
+            });
+            return;
+        }
+        if (form.email.trim() && !form.email.includes('@')) {
+            toast({
+                title: 'Check your email',
+                description: `${form.email} does not look like a valid address.`,
+                status: 'warning',
+                duration: 2500,
+                isClosable: true,
+            });
+            return;
+        }
         const subject = encodeURIComponent(`[Portfolio Contact] ${form.name || 'Inquiry'}`);
         const body = encodeURIComponent(`${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ''}`);
+        toast({
+            title: 'Opening your email client…',
+            description: `Message pre-filled for ${contactInfo.email}`,
+            status: 'info',
+            duration: 2500,
+            isClosable: true,
+        });
         window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`;
     };
 
@@ -154,19 +202,64 @@ const Contact = () => {
                                 </HStack>
                                 <HStack justify="space-between" wrap="wrap" gap={2}>
                                     <Text color={textColor} fontSize="md" fontFamily="mono">{contactInfo.email}</Text>
-                                    <Button
-                                        onClick={handleCopy}
-                                        size="sm"
-                                        leftIcon={<FaCopy />}
-                                        borderRadius="0"
-                                        bg="transparent"
-                                        color={textColor}
-                                        border="2px solid"
-                                        borderColor={textColor}
-                                        _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
-                                    >
-                                        Copy
-                                    </Button>
+                                    <Tooltip label="Copy email address" aria-label="Copy email address" placement="top">
+                                        <Button
+                                            onClick={handleCopy}
+                                            size="sm"
+                                            leftIcon={<FaCopy />}
+                                            borderRadius="0"
+                                            bg="transparent"
+                                            color={textColor}
+                                            border="2px solid"
+                                            borderColor={textColor}
+                                            _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
+                                        >
+                                            Copy
+                                        </Button>
+                                    </Tooltip>
+                                </HStack>
+                            </Box>
+
+                            <Box w="full">
+                                <HStack spacing={3} mb={1}>
+                                    <Icon as={FaPhoneAlt} color={accentColor} boxSize={5} />
+                                    <Text color={accentColor} fontFamily="mono" fontSize="sm" fontWeight="bold" textTransform="uppercase">PHONE</Text>
+                                </HStack>
+                                <HStack justify="space-between" wrap="wrap" gap={2}>
+                                    <Text as="a" href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} color={textColor} fontSize="md" fontFamily="mono" _hover={{ color: accentColor }}>
+                                        {contactInfo.phone}
+                                    </Text>
+                                    <HStack spacing={2}>
+                                        <Tooltip label="Copy phone number" aria-label="Copy phone number" placement="top">
+                                            <Button
+                                                onClick={handleCopyPhone}
+                                                size="sm"
+                                                leftIcon={<FaCopy />}
+                                                borderRadius="0"
+                                                bg="transparent"
+                                                color={textColor}
+                                                border="2px solid"
+                                                borderColor={textColor}
+                                                _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
+                                            >
+                                                Copy
+                                            </Button>
+                                        </Tooltip>
+                                        <Button
+                                            as="a"
+                                            href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
+                                            size="sm"
+                                            leftIcon={<FaPhoneAlt />}
+                                            borderRadius="0"
+                                            bg="transparent"
+                                            color={textColor}
+                                            border="2px solid"
+                                            borderColor={textColor}
+                                            _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
+                                        >
+                                            Call
+                                        </Button>
+                                    </HStack>
                                 </HStack>
                             </Box>
 

@@ -1,5 +1,6 @@
 // components/Home/HeroSection.tsx
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
     Grid,
     GridItem,
@@ -12,6 +13,7 @@ import {
     Button,
     Link,
     SimpleGrid,
+    IconButton,
 } from '@chakra-ui/react';
 import {
     BiWorld,
@@ -22,6 +24,8 @@ import {
     FaGraduationCap,
     FaBriefcase,
     FaRocket,
+    FaChevronDown,
+    FaTimes,
 } from 'react-icons/fa';
 import {
     motion,
@@ -30,6 +34,8 @@ import {
     useTransform,
     useScroll,
     useReducedMotion,
+    useMotionValueEvent,
+    AnimatePresence,
 } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
@@ -103,6 +109,31 @@ export const HeroSection: React.FC = () => {
         my.set((e.clientY - rect.top) / rect.height - 0.5);
     };
 
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [showScrollHint, setShowScrollHint] = useState(true);
+
+    useMotionValueEvent(scrollY, 'change', (v) => {
+        setShowScrollHint(v < 80);
+    });
+
+    const openLightbox = useCallback(() => setLightboxOpen(true), []);
+    const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+
+    // Lightbox a11y + page scroll lock
+    useEffect(() => {
+        if (!lightboxOpen) return;
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') closeLightbox();
+        };
+        document.addEventListener('keydown', handleKey);
+        return () => {
+            document.body.style.overflow = prevOverflow;
+            document.removeEventListener('keydown', handleKey);
+        };
+    }, [lightboxOpen, closeLightbox]);
+
     const nameLetters = personalInfo.name.split('');
     const descriptionWords = personalInfo.description.split(' ');
     const divider = isDark ? darkInactive : lightInactive;
@@ -170,10 +201,23 @@ export const HeroSection: React.FC = () => {
                                             borderColor={accentColor}
                                             boxShadow={`0 0 40px ${isDark ? 'rgba(0,255,136,0.35)' : 'rgba(40,167,69,0.3)'}`}
                                             className="shine-card"
+                                            cursor="zoom-in"
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="Enlarge portrait of Ojage Salathiel Ayuk"
+                                            onClick={openLightbox}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    openLightbox();
+                                                }
+                                            }}
                                         >
                                             <img
                                                 src={myPicProfessional}
                                                 alt="Ojage Professional portrait"
+                                                decoding="async"
+                                                loading="eager"
                                                 style={{
                                                     width: '100%',
                                                     height: '100%',
@@ -499,6 +543,104 @@ export const HeroSection: React.FC = () => {
                     </motion.div>
                 </GridItem>
             </Grid>
+
+            {/* Bouncing scroll-hint that fades once the user scrolls */}
+            <motion.div
+                className="no-print"
+                animate={{ opacity: showScrollHint ? 1 : 0, y: showScrollHint ? 0 : 18 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                style={{ display: 'flex', justifyContent: 'center', paddingTop: '2.5rem', paddingBottom: '0.5rem' }}
+            >
+                <VStack spacing={1} align="center">
+                    <Text
+                        color={secondaryAccent}
+                        fontFamily="mono"
+                        fontSize="xs"
+                        fontWeight="bold"
+                        letterSpacing="wider"
+                        textTransform="uppercase"
+                    >
+                        Scroll
+                    </Text>
+                    <Icon as={FaChevronDown} className="hero-scroll-hint" color={secondaryAccent} boxSize={5} aria-hidden />
+                </VStack>
+            </motion.div>
+
+            {/* Portrait lightbox */}
+            {createPortal(
+                <AnimatePresence>
+                    {lightboxOpen && (
+                        <motion.div
+                            key="portrait-lightbox"
+                            className="no-print"
+                            style={{
+                                position: 'fixed',
+                                inset: 0,
+                                zIndex: 3000,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                background: 'rgba(0,0,0,0.9)',
+                                padding: '1rem',
+                            }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            onClick={closeLightbox}
+                        >
+                            <Box
+                                position="relative"
+                                maxW="90vw"
+                                maxH="88vh"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <img
+                                    src={myPicProfessional}
+                                    alt="Ojage Salathiel Ayuk, enlarged portrait"
+                                    decoding="async"
+                                    loading="lazy"
+                                    style={{
+                                        maxWidth: '90vw',
+                                        maxHeight: '86vh',
+                                        objectFit: 'contain',
+                                        display: 'block',
+                                        border: `3px solid ${accentColor}`,
+                                        background: cardBg,
+                                    }}
+                                />
+                                <IconButton
+                                    aria-label="Close portrait preview"
+                                    icon={<FaTimes />}
+                                    onClick={closeLightbox}
+                                    position="absolute"
+                                    top={-4}
+                                    right={-4}
+                                    borderRadius="0"
+                                    color={textColor}
+                                    bg={cardBg}
+                                    border="2px solid"
+                                    borderColor={accentColor}
+                                    _hover={{ bg: accentColor, color: 'black' }}
+                                    size="sm"
+                                />
+                                <Text
+                                    color="white"
+                                    fontFamily="mono"
+                                    fontSize="xs"
+                                    letterSpacing="wider"
+                                    textAlign="center"
+                                    mt={3}
+                                    opacity={0.85}
+                                >
+                                    OJAGE SALATHIEL AYUK — FULL-STACK AI PRODUCT DEVELOPER
+                                </Text>
+                            </Box>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </Box>
     );
 };

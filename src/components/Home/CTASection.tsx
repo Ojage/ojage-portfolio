@@ -11,14 +11,38 @@ import {
     Link,
     UnorderedList,
     ListItem,
+    HStack,
+    useToast,
 } from '@chakra-ui/react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaCopy, FaPhoneAlt } from 'react-icons/fa';
 import { MotionButton } from '../common/MotionElts';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
 import { engagementTypes, socialLinks } from '../../data/homeData';
+import { contactInfo } from '../../data/navData';
 
 export const CTASection: React.FC = () => {
     const { cardBg, textColor, accentColor } = useThemeConstants();
+    const toast = useToast();
+
+    const handleCopyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(contactInfo.email);
+            toast({
+                title: 'Email copied',
+                description: `${contactInfo.email} copied to clipboard`,
+                status: 'success',
+                duration: 2000,
+                isClosable: true,
+            });
+        } catch {
+            toast({
+                title: 'Copy failed',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            });
+        }
+    };
 
     return (
         <Card
@@ -54,6 +78,53 @@ export const CTASection: React.FC = () => {
                                 I&apos;m open to full-stack AI product roles, freelance work, and technical
                                 collaborations. Email me at salathiel.ojage@gmail.com or reach out on LinkedIn.
                             </Text>
+
+                            {/* Quick actions */}
+                            <HStack spacing={{ base: 2, sm: 3 }} wrap="wrap">
+                                <MotionButton
+                                    whileHover={{ scale: 1.04 }}
+                                    whileTap={{ scale: 0.96 }}
+                                    onClick={handleCopyEmail}
+                                    leftIcon={<Icon as={FaCopy} boxSize={{ base: 3, sm: 4 }} aria-hidden />}
+                                    size={{ base: 'sm', sm: 'md' }}
+                                    borderRadius="0"
+                                    bg="transparent"
+                                    color={accentColor}
+                                    border="2px solid"
+                                    borderColor={accentColor}
+                                    fontFamily="mono"
+                                    fontWeight="bold"
+                                    fontSize={{ base: 'xs', sm: 'sm' }}
+                                    textTransform="uppercase"
+                                    letterSpacing="wider"
+                                    _hover={{ bg: accentColor, color: 'black' }}
+                                    aria-label="Copy email address to clipboard"
+                                >
+                                    Copy Email
+                                </MotionButton>
+                                <MotionButton
+                                    whileHover={{ scale: 1.04 }}
+                                    whileTap={{ scale: 0.96 }}
+                                    as="a"
+                                    href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
+                                    leftIcon={<Icon as={FaPhoneAlt} boxSize={{ base: 3, sm: 4 }} aria-hidden />}
+                                    size={{ base: 'sm', sm: 'md' }}
+                                    borderRadius="0"
+                                    bg="transparent"
+                                    color={textColor}
+                                    border="2px solid"
+                                    borderColor={textColor}
+                                    fontFamily="mono"
+                                    fontWeight="bold"
+                                    fontSize={{ base: 'xs', sm: 'sm' }}
+                                    textTransform="uppercase"
+                                    letterSpacing="wider"
+                                    _hover={{ bg: textColor, color: textColor === '#212529' ? 'white' : 'black' }}
+                                    aria-label={`Call ${contactInfo.phone}`}
+                                >
+                                    Call Me
+                                </MotionButton>
+                            </HStack>
 
                             <VStack spacing={{ base: 2, md: 3 }} align="start" w="full">
                                 <Text

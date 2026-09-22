@@ -26,6 +26,7 @@ export const DesktopNavigation: React.FC = () => {
                     key={item.href} 
                     navItem={item} 
                     isActive={isActivePath(item.href)}
+                    animated
                 />
             ))}
 

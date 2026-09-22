@@ -337,3 +337,115 @@ code {
     background: rgba(255, 255, 255, 0.92);
   }
 }
+
+/* ---- Global a11y / base polish ---- */
+
+/* Themed text selection */
+::selection {
+  background: #00ff88;
+  color: #0a0a0a;
+}
+[data-theme="light"] ::selection {
+  background: #28a745;
+  color: #ffffff;
+}
+
+/* Reserve room for the fixed nav on any anchor jump / focus */
+[id] {
+  scroll-margin-top: 90px;
+}
+
+/* Themed scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 136, 0.55) rgba(0, 0, 0, 0.25);
+}
+[data-theme="light"] * {
+  scrollbar-color: rgba(40, 167, 69, 0.55) rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+}
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.45);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.75);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(40, 167, 69, 0.5);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(40, 167, 69, 0.8);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+
+/* Skip-to-content link (visually hidden until focused) */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 2000;
+  background: #00ff88;
+  color: #0a0a0a;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 10px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 12px;
+}
+[data-theme="light"] .skip-link {
+  background: #28a745;
+  color: #ffffff;
+}
+
+/* Frosted nav once the user scrolls */
+.nav-scrolled {
+  background: rgba(10, 10, 10, 0.82) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border-bottom-color: rgba(0, 255, 136, 0.35) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+}
+[data-theme="light"] .nav-scrolled {
+  background: rgba(248, 250, 248, 0.82) !important;
+  border-bottom-color: rgba(40, 167, 69, 0.35) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .nav-scrolled,
+  [data-theme="light"] .nav-scrolled {
+    background: rgba(10, 10, 10, 0.97) !important;
+  }
+  [data-theme="light"] .nav-scrolled {
+    background: rgba(255, 255, 255, 0.97) !important;
+  }
+}
+
+/* Bouncing "scroll down" hint on the hero */
+@keyframes hero-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(7px); opacity: 0.5; }
+}
+.hero-scroll-hint {
+  animation: hero-bounce 1.8s ease-in-out infinite;
+}

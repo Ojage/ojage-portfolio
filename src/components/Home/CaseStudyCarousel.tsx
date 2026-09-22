@@ -84,6 +84,8 @@ const CaseStudySlide: React.FC<{ project: ProjectData; index: number; total: num
                                     objectFit="cover"
                                     w="100%"
                                     h="100%"
+                                    loading="lazy"
+                                    decoding="async"
                                     onError={() => setImgFailed(true)}
                                 />
                             </Box>
@@ -297,6 +299,16 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
 
     const project = projects[index];
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            paginate(-1);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            paginate(1);
+        }
+    };
+
     return (
         <Box
             position="relative"
@@ -305,7 +317,22 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
             onFocus={() => setPaused(true)}
             onBlur={() => setPaused(false)}
             outline="none"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Case studies"
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
         >
+            {/* Screen-reader announcement of the active slide */}
+            <Text
+                as="span"
+                srOnly
+                role="status"
+                aria-live="polite"
+                aria-atomic
+            >
+                {`Showing case study ${index + 1} of ${projects.length}: ${project.title}`}
+            </Text>
             <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                     key={project.id}

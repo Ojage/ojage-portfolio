@@ -30,9 +30,14 @@ const getInitialTheme = (): Theme => {
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const [theme, setTheme] = useState<Theme>(getInitialTheme);
+    const [announcement, setAnnouncement] = useState('');
 
     const toggleTheme = () => {
-        setTheme(prev => prev === 'light' ? 'dark' : 'light');
+        setTheme(prev => {
+            const next = prev === 'light' ? 'dark' : 'light';
+            setAnnouncement(`${next === 'dark' ? 'Dark' : 'Light'} theme activated`);
+            return next;
+        });
     };
 
     const isDark = theme === 'dark';
@@ -40,12 +45,36 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('theme', theme);
         document.documentElement.setAttribute('data-theme', theme);
+
+        // Keep the browser chrome color in sync with the active theme
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+            meta.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
+        }
     }, [theme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, isDark }}>
-            {children}
-        </ThemeContext.Provider>
+        <>
+            <ThemeContext.Provider value={{ theme, toggleTheme, isDark }}>
+                {children}
+            </ThemeContext.Provider>
+            {/* Visually hidden live region announcing theme changes to screen readers */}
+            <span
+                role="status"
+                aria-live="polite"
+                style={{
+                    position: 'absolute',
+                    width: '1px',
+                    height: '1px',
+                    overflow: 'hidden',
+                    clip: 'rect(0 0 0 0)',
+                    whiteSpace: 'nowrap',
+                    clipPath: 'inset(50%)',
+                }}
+            >
+                {announcement}
+            </span>
+        </>
     );
 };
 

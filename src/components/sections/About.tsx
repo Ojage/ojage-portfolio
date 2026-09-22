@@ -8,6 +8,7 @@ import {
     Stack,
     Grid,
     Icon,
+    useToast,
 } from '@chakra-ui/react';
 import { FaPrint, FaDownload, FaFilePdf } from 'react-icons/fa';
 import { resumeData } from '../../data/aboutData';
@@ -19,7 +20,6 @@ import PersonalHeader from '../About/PersonalHeader';
 import ProfessionalSummary from '../About/ProfessionalSummary';
 import SkillsSection from '../About/SkillsSection';
 import { ThemeToggle } from '../common/ThemeToggle';
-import { ReadingProgress } from '../About/ReadingProgress';
 import { ScrollSpyRail } from '../About/ScrollSpyRail';
 import { StatsBand } from '../About/StatsBand';
 import { MagneticButton } from '../About/MagneticButton';
@@ -28,6 +28,7 @@ import { Reveal } from '../About/Reveal';
 const About: React.FC = () => {
     const resumeRef = useRef<HTMLDivElement>(null);
     const themeConstants = useAboutThemeConstants();
+    const toast = useToast();
 
     // Strip framer-motion inline styles (opacity/transform/filter) before
     // cloning the resume so printed/downloaded output is never stuck hidden.
@@ -42,6 +43,12 @@ const About: React.FC = () => {
 
     // Primary print function using window.print
     const handlePrint = useCallback(() => {
+        toast({
+            title: 'Opening print window…',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+        });
         if (resumeRef.current) {
             const printContent = flushMotionStyles(
                 resumeRef.current.cloneNode(true) as HTMLDivElement
@@ -114,7 +121,7 @@ const About: React.FC = () => {
                 printWindow.document.close();
             }
         }
-    }, []);
+    }, [toast]);
 
     // Download as HTML file
     const handleDownloadHTML = useCallback(() => {
@@ -155,14 +162,17 @@ const About: React.FC = () => {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
+            toast({
+                title: 'HTML resume downloaded',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
         }
-    }, []);
+    }, [toast]);
 
     return (
         <Box minH="100vh" bg={themeConstants.pageBg}>
-            {/* Reading progress bar */}
-            <ReadingProgress />
-
             {/* Scroll-spy rail */}
             <ScrollSpyRail />
 
