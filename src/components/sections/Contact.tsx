@@ -24,6 +24,7 @@ import {
 } from '@chakra-ui/react';
 import {
     FaEnvelope,
+    FaMapMarkerAlt,
     FaGithub,
     FaLinkedinIn,
     FaCopy,
@@ -598,9 +599,12 @@ const Contact = () => {
                                     >
                                         ↔ 24–48H RESPONSE
                                     </Text>
-                                    <Text color={isDark ? '#a0aec0' : '#4a5568'} fontFamily="mono" fontSize="xs">
-                                        Buea, Cameroon
-                                    </Text>
+                                    <HStack spacing={2} align="center" wrap="wrap">
+                                        <Icon as={FaMapMarkerAlt} color={tertiaryAccent} boxSize={3.5} aria-hidden />
+                                        <Text color={isDark ? '#a0aec0' : '#4a5568'} fontFamily="mono" fontSize="xs">
+                                            Buea, Cameroon · 4.16° N, 9.26° E
+                                        </Text>
+                                    </HStack>
                                 </HStack>
                             </Box>
                         </Reveal>
