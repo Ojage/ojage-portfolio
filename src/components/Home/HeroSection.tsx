@@ -78,7 +78,7 @@ const darkInactive = 'rgba(255,255,255,0.16)';
 const lightInactive = 'rgba(0,0,0,0.16)';
 
 export const HeroSection: React.FC = () => {
-    const { cardBg, accentColor, textColor, secondaryAccent, tertiaryAccent, isDark, bgColor } = useThemeConstants();
+    const { cardBg, accentColor, textColor, secondaryAccent, tertiaryAccent, isDark } = useThemeConstants();
     const reduce = useReducedMotion();
 
     // Scroll parallax
@@ -131,6 +131,17 @@ export const HeroSection: React.FC = () => {
                     style={{ animationDelay: '3s' }}
                 />
             </motion.div>
+            <motion.div style={{ x: blobX, y: blobY }}>
+                <Box
+                    className="hero-blob no-print"
+                    w={64}
+                    h={64}
+                    top="24%"
+                    right="28%"
+                    bg={isDark ? 'rgba(78,205,196,0.12)' : 'rgba(23,162,184,0.10)'}
+                    style={{ animationDelay: '1.5s' }}
+                />
+            </motion.div>
 
             <Grid
                 templateColumns={{ base: '1fr', lg: '320px 1fr' }}
@@ -180,7 +191,7 @@ export const HeroSection: React.FC = () => {
                                 {badges.map((badge) => (
                                     <Box
                                         key={badge.label}
-                                        className="ps-float no-print"
+                                        className="ps-float no-print glass"
                                         position="absolute"
                                         top={badge.top}
                                         right={badge.right}
@@ -191,8 +202,6 @@ export const HeroSection: React.FC = () => {
                                         gap={2}
                                         px={3}
                                         py={1.5}
-                                        bg={bgColor}
-                                        border="1px solid"
                                         borderColor={badge.color}
                                         boxShadow={`0 0 16px ${isDark ? badge.color + '44' : badge.color + '33'}`}
                                         style={{ animationDelay: badge.delay, animationDuration: badge.duration }}
@@ -214,11 +223,13 @@ export const HeroSection: React.FC = () => {
                             </Box>
 
                             {/* Location */}
-                            <HStack spacing={2}>
-                                <Icon as={BiWorld} color={accentColor} boxSize={5} />
-                                <Text color={textColor} fontSize="sm" fontFamily="mono">LOCATION</Text>
-                            </HStack>
-                            <Text color={textColor} fontSize="lg" fontWeight="bold">{personalInfo.location}</Text>
+                            <Box className="glass" px={4} py={3} w="full">
+                                <HStack spacing={2}>
+                                    <Icon as={BiWorld} color={accentColor} boxSize={5} />
+                                    <Text color={isDark ? '#a0aec0' : '#4a5568'} fontSize="sm" fontFamily="mono">LOCATION</Text>
+                                </HStack>
+                                <Text color={textColor} fontSize="lg" fontWeight="bold">{personalInfo.location}</Text>
+                            </Box>
                         </VStack>
                     </motion.div>
                 </GridItem>
@@ -229,12 +240,11 @@ export const HeroSection: React.FC = () => {
                         <VStack spacing={8} align="start">
                             {/* Terminal window tab */}
                             <HStack
+                                className="glass"
                                 spacing={2.5}
                                 fontFamily="mono"
                                 fontSize="xs"
-                                color={isDark ? '#718096' : '#4a5568'}
-                                border="1px solid"
-                                borderColor={divider}
+                                color={isDark ? '#a0aec0' : '#4a5568'}
                                 px={4}
                                 py={2}
                             >
@@ -245,7 +255,7 @@ export const HeroSection: React.FC = () => {
                             </HStack>
 
                             {/* Rotating typewriter title */}
-                            <Box minH={{ base: '1.6em', md: '1.7em' }}>
+                            <Box minH={{ base: '2.5em', md: '1.7em' }} w="full">
                                 <Text
                                     color={accentColor}
                                     fontSize={{ base: 'lg', md: 'xl' }}
@@ -425,10 +435,9 @@ export const HeroSection: React.FC = () => {
                                             transition={{ duration: 0.45, delay: i * 0.12, ease: 'easeOut' }}
                                         >
                                             <Box
+                                                className="glass"
                                                 position="relative"
                                                 overflow="hidden"
-                                                bg={cardBg}
-                                                border="1px solid"
                                                 borderColor={divider}
                                                 p={4}
                                                 h="full"
@@ -436,8 +445,9 @@ export const HeroSection: React.FC = () => {
                                                     transform: 'translateY(-4px)',
                                                     borderColor: factAccent,
                                                     boxShadow: `0 12px 32px -14px ${factAccent}`,
+                                                    bg: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.8)',
                                                 }}
-                                                sx={{ transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease' }}
+                                                sx={{ transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease' }}
                                             >
                                                 {/* Top accent bar */}
                                                 <motion.div
