@@ -1,6 +1,6 @@
 // components/Nav/MobileNavigation.tsx
 import React, { useEffect } from 'react';
-import { VStack, HStack, Text, Collapse } from '@chakra-ui/react';
+import { VStack, HStack, Text, Box, Collapse } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import { useNavThemeConstants } from '../../hooks/useNavThemeConstants';
 import { navigationItems, socialLinks, contactInfo } from '../../data/navData';
@@ -29,7 +29,15 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
     return (
         <Collapse in={isOpen} animateOpacity>
-            <VStack spacing={4} mt={3} display={{ base: "flex", md: "none" }} id="mobile-menu">
+            <VStack
+                spacing={4}
+                mt={3}
+                display={{ base: "flex", md: "none" }}
+                id="mobile-menu"
+                as="ul"
+                listStyleType="none"
+                style={{ margin: 0, padding: 0 }}
+            >
                 {/* Navigation Items */}
                 {navigationItems.map((item) => (
                     <NavItem
@@ -41,23 +49,27 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
                 ))}
 
                 {/* Email Contact */}
-                <Text
-                    as="a"
-                    href={`mailto:${contactInfo.email}`}
-                    color={textColor}
-                    fontWeight="bold"
-                    _hover={{ color: hoverColor }}
-                    onClick={onClose}
-                >
-                    {contactInfo.email}
-                </Text>
+                <Box as="li">
+                    <Text
+                        as="a"
+                        href={`mailto:${contactInfo.email}`}
+                        color={textColor}
+                        fontWeight="bold"
+                        _hover={{ color: hoverColor }}
+                        onClick={onClose}
+                    >
+                        {contactInfo.email}
+                    </Text>
+                </Box>
 
                 {/* Social Links */}
-                <HStack>
-                    {socialLinks.map((socialLink, index) => (
-                        <SocialLink key={index} socialLink={socialLink} />
-                    ))}
-                </HStack>
+                <Box as="li">
+                    <HStack>
+                        {socialLinks.map((socialLink, index) => (
+                            <SocialLink key={index} socialLink={socialLink} />
+                        ))}
+                    </HStack>
+                </Box>
             </VStack>
         </Collapse>
     );

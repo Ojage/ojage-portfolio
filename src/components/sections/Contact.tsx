@@ -289,7 +289,7 @@ const Contact = () => {
 
             <Container maxW="7xl" px={{ base: 4, sm: 6 }} position="relative" zIndex={1}>
                 <Reveal amount={0.3}>
-                    <SectionHeader title="GET IN TOUCH" color={accentColor} />
+                    <SectionHeader title="GET IN TOUCH" color={accentColor} as="h1" />
                 </Reveal>
 
                 <Grid templateColumns={{ base: '1fr', lg: '5fr 4fr' }} gap={{ base: 6, md: 8 }}>
@@ -335,7 +335,7 @@ const Contact = () => {
                                 </Text>
                             </HStack>
 
-                            <form onSubmit={handleSubmit} noValidate>
+                            <form onSubmit={handleSubmit} noValidate aria-describedby="contact-form-note">
                                 <VStack spacing={4} align="stretch">
                                     {/* Honeypot (hidden from humans) */}
                                     <Input
@@ -403,7 +403,7 @@ const Contact = () => {
                                             _focus={{ borderColor: accentColor, boxShadow: `0 0 0 1px ${accentColor}` }}
                                         />
                                         {errors.name && (
-                                            <FormErrorMessage id="contact-name-error" fontFamily="mono" fontSize="xs">
+                                            <FormErrorMessage id="contact-name-error" role="alert" fontFamily="mono" fontSize="xs">
                                                 {errors.name}
                                             </FormErrorMessage>
                                         )}
@@ -431,7 +431,7 @@ const Contact = () => {
                                             _focus={{ borderColor: accentColor, boxShadow: `0 0 0 1px ${accentColor}` }}
                                         />
                                         {errors.email && (
-                                            <FormErrorMessage id="contact-email-error" fontFamily="mono" fontSize="xs">
+                                            <FormErrorMessage id="contact-email-error" role="alert" fontFamily="mono" fontSize="xs">
                                                 {errors.email}
                                             </FormErrorMessage>
                                         )}
@@ -473,7 +473,7 @@ const Contact = () => {
                                             minH="140px"
                                         />
                                         {errors.message && (
-                                            <FormErrorMessage id="contact-message-error" fontFamily="mono" fontSize="xs">
+                                            <FormErrorMessage id="contact-message-error" role="alert" fontFamily="mono" fontSize="xs">
                                                 {errors.message}
                                             </FormErrorMessage>
                                         )}
@@ -537,7 +537,7 @@ const Contact = () => {
                                 </VStack>
                             </form>
 
-                            <Text color={textColor} opacity={0.6} fontSize="xs" fontFamily="mono" mt={4}>
+                            <Text id="contact-form-note" color={textColor} opacity={0.6} fontSize="xs" fontFamily="mono" mt={4}>
                                 * The button opens your email client with the message pre-filled (no backend).
                             </Text>
                         </Box>
@@ -558,7 +558,14 @@ const Contact = () => {
                                 </HStack>
 
                                 <HStack spacing={3} align="baseline" mb={2}>
-                                    <Text color={textColor} fontFamily="mono" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="bold" lineHeight={1}>
+                                    <Text
+                                        color={textColor}
+                                        fontFamily="mono"
+                                        fontSize={{ base: '3xl', md: '4xl' }}
+                                        fontWeight="bold"
+                                        lineHeight={1}
+                                        aria-label={`${localTime} West Africa Time`}
+                                    >
                                         {localTime}
                                     </Text>
                                     <Text color={isDark ? '#a0aec0' : '#4a5568'} fontFamily="mono" fontSize="sm">
@@ -801,7 +808,7 @@ const Contact = () => {
 
                 {/* Footer micro-copy */}
                 <Reveal amount={0.4}>
-                    <HStack justify="space-between" align="center" wrap="wrap" gap={3} mt={{ base: 10, md: 14 }} pb={4} borderTop="1px solid" borderColor={isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'} pt={6}>
+                    <HStack as="footer" justify="space-between" align="center" wrap="wrap" gap={3} mt={{ base: 10, md: 14 }} pb={4} borderTop="1px solid" borderColor={isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'} pt={6}>
                         <Text color={isDark ? '#a0aec0' : '#4a5568'} fontSize="xs" fontFamily="mono">
                             © {new Date().getFullYear()} Ojage Salathiel Ayuk · Buea, Cameroon
                         </Text>

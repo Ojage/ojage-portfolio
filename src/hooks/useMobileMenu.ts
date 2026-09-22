@@ -26,6 +26,24 @@ export const useMobileMenu = (): UseMobileMenuReturn => {
                 if (e.key === 'Escape') {
                     e.preventDefault();
                     setIsOpen(false);
+                    return;
+                }
+                if (e.key !== 'Tab') return;
+                // Keep Tab / Shift+Tab cycling inside the open menu
+                const menu = document.getElementById('mobile-menu');
+                if (!menu) return;
+                const focusables = Array.from(
+                    menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled])')
+                ).filter((el) => el.offsetWidth > 0 || el.offsetHeight > 0);
+                if (focusables.length === 0) return;
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
                 }
             };
             document.addEventListener('keydown', handleKeyDown);

@@ -44,10 +44,11 @@ const Project = () => {
         top="-6rem"
         zIndex="-1"
         left="38%"
+        aria-hidden
       >
         0{id}.
       </Heading>
-      <Heading color="white" fontSize="100px">{project?.title}</Heading>
+      <Heading as="h1" color="white" fontSize="100px">{project?.title}</Heading>
       <Box h="160px">
         <Image
           h="100%"
@@ -63,6 +64,8 @@ const Project = () => {
         color="white"
         href={"https://rhibms.org"}
         target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`View ${project?.title} website (opens in new tab)`}
       >
         view website
       </Text>
@@ -84,7 +87,7 @@ const Project = () => {
         <span className="left"></span>
       </Box>
       <Box mt="30rem" as="section" id="brief">
-        <Heading>brief</Heading>
+        <Heading as="h2">brief</Heading>
         <Box maxW="50vw" m="0 auto">
           <Text
             fontFamily="'Neutra Text Light', sans-serif"

@@ -69,6 +69,34 @@ const RouteFallback: React.FC = () => (
   </Flex>
 );
 
+// After a route transition finishes, move keyboard focus to the new page's
+// main content and announce the page change to assistive tech.
+const RouteAnnouncer: React.FC = () => {
+  const { pathname } = useLocation();
+  const [announcement, setAnnouncement] = useState('');
+
+  useEffect(() => {
+    let clear: number | undefined;
+    const t = window.setTimeout(() => {
+      const main = document.getElementById('main-content');
+      if (!main) return;
+      main.focus({ preventScroll: true });
+      setAnnouncement(`Navigated to ${document.title || pathname}`);
+      clear = window.setTimeout(() => setAnnouncement(''), 2000);
+    }, 480);
+    return () => {
+      window.clearTimeout(t);
+      if (clear !== undefined) window.clearTimeout(clear);
+    };
+  }, [pathname]);
+
+  return (
+    <span role="status" aria-live="polite" className="sr-only">
+      {announcement}
+    </span>
+  );
+};
+
 // Layout component for pages that need the Navbar
 const NavLayout = () => (
   <>
@@ -78,7 +106,7 @@ const NavLayout = () => (
     </a>
     <ReadingProgress />
     <Nav />
-    <Box as="main" id="main-content">
+    <Box as="main" id="main-content" tabIndex={-1} outline="none">
       <Suspense fallback={<RouteFallback />}>
         <Outlet />
       </Suspense>
@@ -138,6 +166,7 @@ const App: React.FC = () => {
       <Router>
         <ScrollToTop />
         <TitleManager />
+        <RouteAnnouncer />
         <Suspense fallback={<RouteFallback />}>
           {isLoading ? (
             <Routes>

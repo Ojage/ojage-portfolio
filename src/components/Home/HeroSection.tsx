@@ -1,5 +1,5 @@
 // components/Home/HeroSection.tsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {
     Grid,
@@ -111,6 +111,9 @@ export const HeroSection: React.FC = () => {
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [showScrollHint, setShowScrollHint] = useState(true);
+    const portraitRef = useRef<HTMLDivElement>(null);
+    const lightboxRef = useRef<HTMLDivElement>(null);
+    const closeBtnRef = useRef<HTMLButtonElement>(null);
 
     useMotionValueEvent(scrollY, 'change', (v) => {
         setShowScrollHint(v < 80);
@@ -119,18 +122,52 @@ export const HeroSection: React.FC = () => {
     const openLightbox = useCallback(() => setLightboxOpen(true), []);
     const closeLightbox = useCallback(() => setLightboxOpen(false), []);
 
-    // Lightbox a11y + page scroll lock
+    // Lightbox a11y + page scroll lock + focus management
     useEffect(() => {
         if (!lightboxOpen) return;
         const prevOverflow = document.body.style.overflow;
+        const prevActive = document.activeElement as HTMLElement | null;
         document.body.style.overflow = 'hidden';
-        const handleKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') closeLightbox();
+
+        const restoreFocus = () => {
+            const target = portraitRef.current ?? prevActive;
+            target?.focus?.();
         };
+
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeLightbox();
+                return;
+            }
+            if (e.key !== 'Tab' || !lightboxRef.current) return;
+            // Trap focus within the lightbox so keyboard users cannot tab out
+            const focusables = Array.from(
+                lightboxRef.current.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter((el) => el.offsetWidth > 0 || el.offsetHeight > 0);
+            if (focusables.length === 0) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
         document.addEventListener('keydown', handleKey);
+        // Move focus onto the close button once the lightbox has mounted
+        const focusT = window.setTimeout(() => closeBtnRef.current?.focus(), 30);
+
         return () => {
-            document.body.style.overflow = prevOverflow;
+            window.clearTimeout(focusT);
             document.removeEventListener('keydown', handleKey);
+            document.body.style.overflow = prevOverflow;
+            restoreFocus();
         };
     }, [lightboxOpen, closeLightbox]);
 
@@ -192,6 +229,7 @@ export const HeroSection: React.FC = () => {
                                 <motion.div style={{ x: reduce ? 0 : portraitX, y: reduce ? 0 : portraitY }}>
                                     <TiltCard>
                                         <Box
+                                            ref={portraitRef}
                                             position="relative"
                                             overflow="hidden"
                                             p={{ base: 4, md: 6 }}
@@ -590,6 +628,7 @@ export const HeroSection: React.FC = () => {
                             onClick={closeLightbox}
                         >
                             <Box
+                                ref={lightboxRef}
                                 position="relative"
                                 maxW="90vw"
                                 maxH="88vh"
@@ -610,6 +649,7 @@ export const HeroSection: React.FC = () => {
                                     }}
                                 />
                                 <IconButton
+                                    ref={closeBtnRef}
                                     aria-label="Close portrait preview"
                                     icon={<FaTimes />}
                                     onClick={closeLightbox}

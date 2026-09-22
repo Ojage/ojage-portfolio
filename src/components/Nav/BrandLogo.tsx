@@ -9,10 +9,18 @@ export const BrandLogo: React.FC = () => {
     const { textColor } = useNavThemeConstants();
 
     return (
-        <Flex as={Link} to="/" alignItems="center" gap={3} _hover={{ textDecoration: 'none' }}>
+        <Flex
+            as={Link}
+            to="/"
+            aria-label={`${contactInfo.name} — Home`}
+            alignItems="center"
+            gap={3}
+            _hover={{ textDecoration: 'none' }}
+        >
             <Image
                 src={O}
-                alt="logo"
+                alt=""
+                aria-hidden
                 boxSize="40px"
                 borderRadius="full"
                 bg="white"

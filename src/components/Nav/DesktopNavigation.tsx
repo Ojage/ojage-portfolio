@@ -19,7 +19,14 @@ export const DesktopNavigation: React.FC = () => {
     };
 
     return (
-        <Box display={{ base: "none", md: "flex" }} alignItems="center" gap={6}>
+        <Box
+            as="ul"
+            display={{ base: "none", md: "flex" }}
+            alignItems="center"
+            gap={6}
+            listStyleType="none"
+            style={{ margin: 0, padding: 0 }}
+        >
             {/* Navigation Items */}
             {navigationItems.map((item) => (
                 <NavItem 
@@ -31,23 +38,27 @@ export const DesktopNavigation: React.FC = () => {
             ))}
 
             {/* Email Contact */}
-            <Text
-                as="a"
-                href={`mailto:${contactInfo.email}`}
-                _hover={{ color: hoverColor }}
-                fontWeight="bold"
-                color={textColor}
-                transition="color 0.2s ease-in-out"
-            >
-                {contactInfo.email}
-            </Text>
+            <Box as="li">
+                <Text
+                    as="a"
+                    href={`mailto:${contactInfo.email}`}
+                    _hover={{ color: hoverColor }}
+                    fontWeight="bold"
+                    color={textColor}
+                    transition="color 0.2s ease-in-out"
+                >
+                    {contactInfo.email}
+                </Text>
+            </Box>
 
             {/* Social Links */}
-            <HStack spacing={2}>
-                {socialLinks.map((socialLink, index) => (
-                    <SocialLink key={index} socialLink={socialLink} />
-                ))}
-            </HStack>
+            <Box as="li">
+                <HStack spacing={2}>
+                    {socialLinks.map((socialLink, index) => (
+                        <SocialLink key={index} socialLink={socialLink} />
+                    ))}
+                </HStack>
+            </Box>
         </Box>
     );
 };

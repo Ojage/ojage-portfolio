@@ -24,6 +24,8 @@ const Nav: React.FC = () => {
 
     return (
         <Box
+            as="nav"
+            aria-label="Main navigation"
             bg={bgColor}
             px={4}
             py={scrolled ? 1.5 : 2}

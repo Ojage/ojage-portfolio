@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@chakra-ui/react';
+import { Text, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useNavThemeConstants } from '../../hooks/useNavThemeConstants';
@@ -66,13 +66,15 @@ export const NavItem: React.FC<NavItemProps> = ({
     };
 
     return (
-        <Text
-            as={isExternal ? 'a' : Link}
-            {...(isExternal ? { href, target: '_blank', rel: 'noopener noreferrer' } : { to: href })}
-            {...sharedProps}
-        >
-            {label}
-            {underline}
-        </Text>
+        <Box as="li">
+            <Text
+                as={isExternal ? 'a' : Link}
+                {...(isExternal ? { href, target: '_blank', rel: 'noopener noreferrer' } : { to: href })}
+                {...sharedProps}
+            >
+                {label}
+                {underline}
+            </Text>
+        </Box>
     );
 };

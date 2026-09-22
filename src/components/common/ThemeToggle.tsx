@@ -11,6 +11,7 @@ export const ThemeToggle: React.FC = () => {
     return (
         <IconButton
             aria-label="Toggle theme"
+            title={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
             icon={<Icon as={theme === 'light' ? FaMoon : FaSun} />}
             onClick={toggleTheme}
             variant="outline"

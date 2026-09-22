@@ -394,6 +394,49 @@ code {
   border: 2px solid transparent;
 }
 
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+/* High-contrast + forced-colors support so the UI stays readable when
+   users override colours for clarity. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid ButtonText;
+    outline-offset: 2px;
+  }
+  .skip-link {
+    background: HighlightText;
+    color: Highlight;
+  }
+  .glass,
+  .nav-scrolled {
+    border-color: ButtonText;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass {
+    border-color: currentColor;
+  }
+  :focus-visible {
+    outline-color: CanvasText;
+  }
+  ::placeholder {
+    opacity: 0.75;
+  }
+}
+
 /* Skip-to-content link (visually hidden until focused) */
 .skip-link {
   position: fixed;

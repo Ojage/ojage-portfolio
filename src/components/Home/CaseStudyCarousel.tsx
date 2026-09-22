@@ -18,8 +18,15 @@ import {
     Wrap,
     WrapItem,
 } from '@chakra-ui/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FaChevronLeft, FaChevronRight, FaLink, FaGithub } from 'react-icons/fa';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import {
+    FaChevronLeft,
+    FaChevronRight,
+    FaLink,
+    FaGithub,
+    FaPause,
+    FaPlay,
+} from 'react-icons/fa';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
 import { ProjectData } from '../../data/homeData';
 import { getIcon } from '../../utils/iconMapper';
@@ -36,7 +43,7 @@ const slideVariants = {
 };
 
 const ProgressBar: React.FC<{ duration: number; accent: string; paused: boolean }> = ({ duration, accent, paused }) => (
-    <Box w="full" h={1} bg="whiteAlpha.300" position="relative" overflow="hidden">
+    <Box w="full" h={1} bg="whiteAlpha.300" position="relative" overflow="hidden" aria-hidden>
         <motion.div
             key={paused ? 'paused' : 'running'}
             initial={{ width: '0%' }}
@@ -282,9 +289,11 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
     autoPlayInterval = 7000,
 }) => {
     const { textColor, accentColor, tertiaryAccent } = useThemeConstants();
+    const reduce = useReducedMotion();
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(1);
     const [paused, setPaused] = useState(false);
+    const [playing, setPlaying] = useState(true);
 
     const paginate = useCallback((dir: number) => {
         setDirection(dir);
@@ -292,10 +301,11 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
     }, [projects.length]);
 
     useEffect(() => {
-        if (paused || projects.length <= 1) return;
+        // Autoplay is skipped entirely under prefers-reduced-motion
+        if (reduce || !playing || paused || projects.length <= 1) return;
         const id = setInterval(() => paginate(1), autoPlayInterval);
         return () => clearInterval(id);
-    }, [paused, index, autoPlayInterval, paginate, projects.length]);
+    }, [paused, playing, reduce, index, autoPlayInterval, paginate, projects.length]);
 
     const project = projects[index];
 
@@ -319,7 +329,7 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
             outline="none"
             role="region"
             aria-roledescription="carousel"
-            aria-label="Case studies"
+            aria-label="Case study carousel — use the left and right arrow keys to move between slides"
             tabIndex={0}
             onKeyDown={handleKeyDown}
         >
@@ -331,7 +341,7 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
                 aria-live="polite"
                 aria-atomic
             >
-                {`Showing case study ${index + 1} of ${projects.length}: ${project.title}`}
+                {`Showing case study ${index + 1} of ${projects.length}: ${project.title}. Autoplay ${playing ? 'running' : 'paused'}.`}
             </Text>
             <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
@@ -363,7 +373,9 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
                         border="2px solid"
                         borderColor={textColor}
                         _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
-                        fontSize={12}
+                        fontSize={16}
+                        minW={10}
+                        minH={10}
                     />
                     <IconButton
                         icon={<FaChevronRight />}
@@ -375,7 +387,25 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
                         border="2px solid"
                         borderColor={textColor}
                         _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
-                        fontSize={12}
+                        fontSize={16}
+                        minW={10}
+                        minH={10}
+                    />
+                    <IconButton
+                        icon={playing ? <FaPause /> : <FaPlay />}
+                        aria-label={playing ? 'Pause autoplay' : 'Play autoplay'}
+                        aria-pressed={!playing}
+                        title={playing ? 'Pause autoplay' : 'Play autoplay'}
+                        onClick={() => setPlaying((p) => !p)}
+                        borderRadius="0"
+                        bg="transparent"
+                        color={textColor}
+                        border="2px solid"
+                        borderColor={textColor}
+                        _hover={{ bg: accentColor, color: 'black', borderColor: accentColor }}
+                        fontSize={14}
+                        minW={10}
+                        minH={10}
                     />
                 </HStack>
 
@@ -386,6 +416,7 @@ export const CaseStudyCarousel: React.FC<CaseStudyCarouselProps> = ({
                             key={p.id}
                             onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
                             aria-label={`Go to case study ${i + 1}`}
+                            aria-current={i === index ? 'true' : undefined}
                             bg="transparent"
                             p={0}
                             minW="auto"

@@ -59,19 +59,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
                 {children}
             </ThemeContext.Provider>
             {/* Visually hidden live region announcing theme changes to screen readers */}
-            <span
-                role="status"
-                aria-live="polite"
-                style={{
-                    position: 'absolute',
-                    width: '1px',
-                    height: '1px',
-                    overflow: 'hidden',
-                    clip: 'rect(0 0 0 0)',
-                    whiteSpace: 'nowrap',
-                    clipPath: 'inset(50%)',
-                }}
-            >
+            <span role="status" aria-live="polite" className="sr-only">
                 {announcement}
             </span>
         </>

@@ -18,7 +18,8 @@ const Marquee = ({ img }: marquee) => {
         <Image
           boxShadow="rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
           src={img}
-          alt="Image"
+          alt=""
+          aria-hidden
           className="animate__animated animate__fadeIn"
           boxSize="auto"
           h="100%"
@@ -35,7 +36,8 @@ const Marquee = ({ img }: marquee) => {
         <Image
           className="animate__animated animate__fadeIn"
           src={img}
-          alt="Image"
+          alt=""
+          aria-hidden
           boxSize="auto"
           h="100%"
         />

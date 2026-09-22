@@ -12,7 +12,7 @@ export const SocialLink: React.FC<SocialLinkProps> = ({ socialLink }) => {
   const { href, icon: Icon, label } = socialLink;
 
   return (
-    <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in new tab)`}>
       <motion.div
         whileHover={{ scale: 1.2, rotate: -5 }}
         transition={{ type: "spring", stiffness: 200 }}
