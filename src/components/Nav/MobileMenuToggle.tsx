@@ -16,7 +16,9 @@ export const MobileMenuToggle: React.FC<MobileMenuToggleProps> = ({
 
     return (
         <IconButton
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
             icon={isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
             display={{ base: "inline-flex", md: "none" }}
             onClick={onToggle}

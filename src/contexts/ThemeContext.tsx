@@ -14,11 +14,22 @@ interface ThemeProviderProps {
     children: ReactNode;
 }
 
+const getInitialTheme = (): Theme => {
+    const rootTheme = typeof document !== 'undefined'
+        ? document.documentElement.getAttribute('data-theme')
+        : null;
+    if (rootTheme === 'light' || rootTheme === 'dark') return rootTheme;
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+
+    const prefersLight = window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: light)').matches;
+    return prefersLight ? 'light' : 'dark';
+};
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-    const [theme, setTheme] = useState<Theme>(() => {
-        const savedTheme = localStorage.getItem('theme') as Theme;
-        return savedTheme || 'dark';
-    });
+    const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
     const toggleTheme = () => {
         setTheme(prev => prev === 'light' ? 'dark' : 'light');
@@ -28,6 +39,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
     }, [theme]);
 
     return (

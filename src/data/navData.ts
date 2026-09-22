@@ -55,6 +55,7 @@ export const navigationItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "My Internships", href: "/internships" },
+  { label: "Contact", href: "/contact" },
 ];
 
 // You'll need to import this from your constants

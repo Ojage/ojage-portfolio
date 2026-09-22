@@ -9,8 +9,7 @@ import {
     Grid,
     Icon,
 } from '@chakra-ui/react';
-import { FaPrint, FaDownload, FaFileDownload, FaFilePdf } from 'react-icons/fa';
-import Nav from '../Nav/Nav';
+import { FaPrint, FaDownload, FaFilePdf } from 'react-icons/fa';
 import { resumeData } from '../../data/aboutData';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import CertificationsSection from '../About/CertificationsSection';
@@ -99,29 +98,6 @@ const About: React.FC = () => {
         }
     }, []);
 
-    // Quick browser print
-    const handleQuickPrint = useCallback(() => {
-        if (resumeRef.current) {
-            const originalContent = document.body.innerHTML;
-            const printContent = resumeRef.current.innerHTML;
-
-            const printStyles = `
-        <style>
-          @page { size: A4; margin: 0.5in; }
-          body { font-family: system-ui, sans-serif; color: #2d3748; }
-          .no-print { display: none !important; }
-          h1, h2, h3 { color: #3182ce; }
-          .card { border: 1px solid #e2e8f0; padding: 20px; margin: 20px 0; border-radius: 8px; }
-        </style>
-      `;
-
-            document.body.innerHTML = printStyles + printContent;
-            window.print();
-            document.body.innerHTML = originalContent;
-            setTimeout(() => window.location.reload(), 100);
-        }
-    }, []);
-
     // Download as HTML file
     const handleDownloadHTML = useCallback(() => {
         if (resumeRef.current) {
@@ -163,8 +139,6 @@ const About: React.FC = () => {
 
     return (
         <Box minH="100vh" bg={themeConstants.pageBg}>
-            <Nav />
-
             {/* Theme Toggle */}
             <Box
                 position="fixed"
@@ -238,30 +212,8 @@ const About: React.FC = () => {
                         Print Resume
                     </Button>
 
-                    <Button
+<Button
                         leftIcon={<Icon as={FaDownload} boxSize={{ base: 4, md: 5 }} aria-hidden />}
-                        size={{ base: 'sm', md: 'md' }}
-                        onClick={handleQuickPrint}
-                        bg="transparent"
-                        color={themeConstants.mutedText}
-                        border="2px solid"
-                        borderColor={themeConstants.divider}
-                        _hover={{ bg: themeConstants.divider, color: themeConstants.primaryText }}
-                        borderRadius="0"
-                        px={{ base: 5, md: 6 }}
-                        py={{ base: 5, md: 0 }}
-                        fontFamily="mono"
-                        textTransform="uppercase"
-                        fontSize={{ base: 'xs', md: 'sm' }}
-                        fontWeight="bold"
-                        w={{ base: 'full', sm: 'auto' }}
-                        aria-label="Quick print resume"
-                    >
-                        Quick Print
-                    </Button>
-
-                    <Button
-                        leftIcon={<Icon as={FaFileDownload} boxSize={{ base: 4, md: 5 }} aria-hidden />}
                         size={{ base: 'sm', md: 'md' }}
                         onClick={handleDownloadHTML}
                         bg="transparent"

@@ -4,7 +4,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Apply theme before paint to avoid dark/light flash -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored !== 'light' && stored !== 'dark') {
+          stored = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        var root = document.documentElement;
+        root.setAttribute('data-theme', stored);
+        root.style.background = stored === 'dark' ? '#0a0a0a' : '#ffffff';
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
 
   <!-- SEO Meta Tags -->
   <title>Ojage Salathiel Ayuk | Full-Stack AI Product Developer</title>

@@ -1,20 +1,34 @@
 body {
   margin: 1rem;
-  font-family: 'Neutra Text Alt', sans-serif;
-  font-family: 'Neutra Text Light', sans-serif;
-  font-family: 'Neutra Text TF', sans-serif;
-  font-family: 'Neutra Text', sans-serif, "montserrat", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  font-family: "Neutra Text", "montserrat", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
-  font-family: "Neutra Text",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* *{
-  outline: 1px solid red;
-} */
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Accessible focus indicators for keyboard users */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid #00ff88;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+[data-theme="light"] :focus-visible {
+  outline-color: #28a745;
+}
+
+/* Remove the focus ring exception on the carousel slide wrapper */
+[data-theme] a:focus:not(:focus-visible),
+[data-theme] button:focus:not(:focus-visible) {
+  outline: none;
 }
