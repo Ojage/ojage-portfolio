@@ -8,15 +8,19 @@ import {
     Box,
     Text,
     Heading,
-    Icon
+    Icon,
+    Button,
+    Link,
 } from '@chakra-ui/react';
 import { BiWorld } from 'react-icons/bi';
+import { FaFileDownload, FaGithub } from 'react-icons/fa';
+import { Link as RouterLink } from 'react-router-dom';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
-import { personalInfo } from '../../data/homeData';
+import { personalInfo, socialLinks } from '../../data/homeData';
 import myPicProfessional from "../../assets/images/myPicProfessional.jpeg";
 
 export const HeroSection: React.FC = () => {
-    const { bgColor, cardBg, accentColor, textColor, secondaryAccent, tertiaryAccent } = useThemeConstants();
+    const { cardBg, accentColor, textColor, secondaryAccent, tertiaryAccent } = useThemeConstants();
 
     return (
         <Grid templateColumns={{ base: "1fr", lg: "300px 1fr" }} gap={12} alignItems="start">
@@ -64,7 +68,7 @@ export const HeroSection: React.FC = () => {
                             mb={4}
                             letterSpacing="wider"
                         >
-                            [{personalInfo.title}]
+                            {personalInfo.title}
                         </Text>
                         <Heading
                             size={{base: "2xl", md: "3xl", lg: "4xl"}}
@@ -77,12 +81,61 @@ export const HeroSection: React.FC = () => {
                         >
                             {personalInfo.name}
                         </Heading>
-                        <Text fontSize={{base: "md", md: "lg", lg: "xl"}} color={textColor} maxW="4xl" lineHeight="tall" mb={8}>
+                        <Text fontSize={{base: "md", md: "lg", lg: "xl"}} color={textColor} maxW="4xl" lineHeight="tall" mb={4}>
                             {personalInfo.description}
+                        </Text>
+                        <Text fontSize={{base: "sm", md: "md"}} color={secondaryAccent} maxW="4xl" lineHeight="tall" mb={8}>
+                            {personalInfo.status}
                         </Text>
                     </Box>
 
-                    <HStack spacing={8} flexWrap="wrap">
+                    <HStack spacing={4} flexWrap="wrap">
+                        <Link
+                            as={RouterLink}
+                            to="/about"
+                            display="inline-flex"
+                            alignItems="center"
+                            gap={2}
+                            bg={accentColor}
+                            color="black"
+                            fontFamily="mono"
+                            fontWeight="bold"
+                            textTransform="uppercase"
+                            fontSize={{ base: 'sm', md: 'md' }}
+                            px={6}
+                            py={4}
+                            borderRadius="0"
+                            _hover={{ opacity: 0.9 }}
+                            aria-label="View resume"
+                        >
+                            <Icon as={FaFileDownload} />
+                            View Resume
+                        </Link>
+                        <Button
+                            as="a"
+                            href={socialLinks.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            leftIcon={<Icon as={FaGithub} />}
+                            size={{ base: 'md', md: 'lg' }}
+                            borderRadius="0"
+                            bg="transparent"
+                            color={textColor}
+                            border="2px solid"
+                            borderColor={textColor}
+                            fontFamily="mono"
+                            fontWeight="bold"
+                            textTransform="uppercase"
+                            px={6}
+                            py={5}
+                            _hover={{ bg: textColor, color: textColor === '#212529' ? 'white' : 'black' }}
+                            aria-label="Open GitHub profile"
+                        >
+                            GitHub
+                        </Button>
+                    </HStack>
+
+                    <HStack spacing={8} flexWrap="wrap" mt={4}>
                         <VStack spacing={2} align="start">
                             <Text color={accentColor} fontSize="sm" fontFamily="mono" fontWeight="bold">EDUCATION</Text>
                             <Text color={textColor} fontSize="lg">{personalInfo.education}</Text>

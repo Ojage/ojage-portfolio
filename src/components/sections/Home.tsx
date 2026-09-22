@@ -40,9 +40,9 @@ const Home: React.FC = () => {
             <HeroSection />
           </MotionBox>
 
-          {/* Core Competencies Grid */}
+          {/* Selected Projects Grid */}
           <MotionBox variants={itemVariants} mb={20}>
-            <SectionHeader title="CORE COMPETENCIES" color={accentColor} />
+            <SectionHeader title="SELECTED PROJECTS" color={accentColor} />
 
             <Grid templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }} gap={8}>
               {/* Highlighted CM Sentinel Project */}
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
 
           {/* Leadership Section */}
           <MotionBox variants={itemVariants} mb={20}>
-            <SectionHeader title="EXECUTIVE LEADERSHIP" color={tertiaryAccent} />
+            <SectionHeader title="CURRENTLY" color={tertiaryAccent} />
             <LeadershipSection />
           </MotionBox>
 
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
           {/* Call to Action */}
           <MotionBox variants={itemVariants}>
-            <SectionHeader title="COLLABORATION PROTOCOL" color={accentColor} />
+            <SectionHeader title="GET IN TOUCH" color={accentColor} />
             <CTASection />
           </MotionBox>
         </MotionBox>

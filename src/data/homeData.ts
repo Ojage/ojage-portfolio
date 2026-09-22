@@ -6,119 +6,118 @@ export interface Reference {
   contact: string;
 }
 
+export interface CaseStudy {
+  problem: string;
+  role: string;
+  stackDecision: string;
+  outcome?: string;
+  nextSteps?: string;
+}
+
 export interface ProjectData {
   id: string;
-  moduleNumber: string;
   title: string;
   description: string;
-  projects?: Array<{
-    name: string;
-    description: string;
-  }>;
+  caseStudy: CaseStudy;
   badges: string[];
   icon: string;
   accentType: 'primary' | 'secondary' | 'tertiary';
   liveUrl?: string;
+  githubUrl?: string;
   imageUrl?: string;
+  status?: 'LIVE' | 'IN PROGRESS' | 'RESEARCH' | 'COMPLETED';
 }
 
 export const personalInfo = {
   name: "OJAGE SALATHIEL AYUK",
-  title: "ONE BIG SOFTWARE ARCHITECT",
-  description: `FULL STACK SOFTWARE ENGINEER & AI INNOVATOR SPECIALIZING IN
-    ENTERPRISE-GRADE REACT ECOSYSTEMS, TYPESCRIPT ARCHITECTURES,
-    AND CUTTING-EDGE AI/ML SOLUTIONS FOR CULTURAL INTEGRATION.`,
+  title: "FULL-STACK AI PRODUCT DEVELOPER",
+  description: `Full-Stack Engineer with 4+ years building and shipping production web apps, dashboards, REST APIs, and AI-powered product experiences using TypeScript, NestJS, Node.js, React, and PostgreSQL on Google Cloud Platform.`,
+  status: "B.Tech Software Engineering graduate (HIMS Buea) · Full-Stack Engineer at CSKY Telecom · Building NNACT Pro — an AI-integrated field service platform",
   location: "Buea, Cameroon",
-  education: "HIMS BUEA",
-  position: "CO-FOUNDER @ NNACT",
-  experience: "FORMER TECHNICAL DIRECTOR",
+  education: "HIMS BUEA (B.TECH, SOFTWARE ENGINEERING)",
+  position: "FULL-STACK ENGINEER @ CSKY TELECOM",
+  experience: "BUILDING NNACT PRO · FORMER TECHNICAL DIRECTOR",
   profileImage: "../../assets/images/myPicProfessional.jpeg"
 };
 
 export const coreCompetencies: ProjectData[] = [
   {
+    id: "nnact-pro",
+    title: "NNACT PRO — FIELD SERVICE PLATFORM",
+    description: `A real-world AI-integrated field service management platform covering customers, equipment tracking, work orders, technician dispatch, quotations, invoicing, payments, inventory, and preventive maintenance.`,
+    caseStudy: {
+      problem: `Appliance repair operations ran on WhatsApp messages, paper notes, and memory — no shared record of jobs, equipment, or payments.`,
+      role: `Architected and built end-to-end as full-stack developer for NNACT; designed role-based workflows for 5 user types.`,
+      stackDecision: `NestJS + TypeScript backend with a role-based access model (technicians, dispatchers, senior techs, finance, admins) and a structured API, instead of a shared spreadsheet that everyone could edit.`,
+      outcome: `A production platform with quoted-to-paid job flow, technician dispatch, inventory, and mobile-friendly field workflows.`,
+      nextSteps: `Ship mobile/offline field workflows and extend multi-platform content publishing.`
+    },
+    badges: ["NESTJS", "REACT + TS", "POSTGRESQL", "RBAC"],
+    icon: "FaWrench",
+    accentType: "primary",
+    githubUrl: "https://github.com/ojage",
+    status: "LIVE"
+  },
+  {
+    id: "ai-cultural-app",
+    title: "AI CULTURAL-LINGUISTIC INTEGRATION APP",
+    description: `Final-year academic project: a NestJS backend on GCP Cloud Run integrates a custom-trained NLP model via the OpenAI API and serves a React Native mobile client with real-time AI language processing.`,
+    caseStudy: {
+      problem: `Most consumer AI assistants handle Pidgin English and Cameroonian cultural context poorly — greetings, proverbs, and everyday phrasing get mangled.`,
+      role: `Solo build of the full AI integration layer — prompt engineering, API consumption, response parsing, and error handling — end to end.`,
+      stackDecision: `NestJS + TypeScript on GCP Cloud Run talking to the OpenAI API, with PostgreSQL persistence, so the model logic stays replaceable behind an integration layer.`,
+      outcome: `A working LLM-powered product: real-time cultural/linguistic processing served to a React Native client.`,
+      nextSteps: `Publish the dataset-prep tooling and add an evaluation set so accuracy is measurable.`
+    },
+    badges: ["NESTJS", "GCP CLOUD RUN", "OPENAI API", "REACT NATIVE"],
+    icon: "FaBrain",
+    accentType: "secondary",
+    githubUrl: "https://github.com/ojage",
+    status: "COMPLETED"
+  },
+  {
     id: "cm-sentinel",
-    moduleNumber: "MODULE_00",
     title: "CM SENTINEL — .CM DOMAIN INSPECTION",
-    description: `An awesome, very useful, web app that inspects .cm domains for WHOIS & DNS,
-      detects typosquatting (TLD swaps, keyboard errors), and prioritizes risks.
-      Built with React/TypeScript, Tailwind (UI), and a Flask API (DNS over HTTPS + optional WHOIS).`,
-    badges: ["REACT + TS", "FLASK API", "WHOIS/DNS", "TYPOSQUATTING"],
+    description: `A web app that inspects .cm domains for WHOIS & DNS records and flags typosquatting risks (TLD swaps, keyboard errors) for domain owners and brands.`,
+    caseStudy: {
+      problem: `Typosquatted and look-alike .cm domains cost Cameroonian businesses traffic, revenue, and trust. There was no single place to check a .cm domain's WHOIS, DNS, and typosquat exposure.`,
+      role: `Solo design + build — React frontend, Flask API, and infrastructure.`,
+      stackDecision: `Uses DNS-over-HTTPS (DoH) to keep DNS lookups private and a Flask API to centralize WHOIS + DNS checks behind a simple typed interface, instead of scattering them across five CLI tools.`,
+      outcome: `One live URL now resolves WHOIS, DNS, and typosquat risk checks for any .cm domain in a single screen.`,
+      nextSteps: `Add expiry watchlists and DMARC/DKIM checks.`
+    },
+    badges: ["REACT + TS", "FLASK API", "DNS-OVER-HTTPS", "TYPOSQUATTING"],
     icon: "FaShieldAlt",
     accentType: "primary",
     liveUrl: "https://sentinel.ojage.com",
-    imageUrl: "https://sentinel.ojage.com/assets/cmSentinelLogo-CTXLkV5l.png"
+    githubUrl: "https://github.com/ojage",
+    imageUrl: "https://sentinel.ojage.com/assets/cmSentinelLogo-CTXLkV5l.png",
+    status: "LIVE"
   },
   {
-    id: "react-engineering",
-    moduleNumber: "MODULE_01",
-    title: "REACT ENGINEERING",
-    description: `ARCHITECTING ENTERPRISE-SCALE SAAS PLATFORMS WITH REACT, TYPESCRIPT,
-      AND ADVANCED WEB TECHNOLOGIES. SPECIALIZING IN COMPLEX STATE MANAGEMENT,
-      OFFLINE-FIRST APPLICATIONS, AND HIGH-PERFORMANCE UI SYSTEMS.`,
-    projects: [
-      {
-        name: "LIAHAPPLY",
-        description: "Advanced job management system with enterprise-grade role-based access control"
-      },
-      {
-        name: "SAAS PLATFORMS",
-        description: "Multiple modern SaaS solutions with offline-first architecture"
-      }
-    ],
-    badges: ["REACT", "TYPESCRIPT", "NESTJS", "SAAS"],
-    icon: "BiCode",
-    accentType: "primary"
-  },
-  {
-    id: "ai-ml-innovation",
-    moduleNumber: "MODULE_02",
-    title: "AI/ML INNOVATION",
-    description: `PIONEERING ARTIFICIAL INTELLIGENCE SOLUTIONS FOR CULTURAL AND
-      LINGUISTIC INTEGRATION. DEVELOPING PIDGIN AND EJAGHAM-AWARE MODELS
-      THAT BRIDGE LANGUAGE BARRIERS AND PRESERVE CULTURAL HERITAGE.`,
-    projects: [
-      {
-        name: "LOKKITO GPT",
-        description: "Revolutionary AI chatbot with Pidgin/English voice synthesis and cultural context"
-      },
-      {
-        name: "NAUGHTML",
-        description: "Automated data preparation engine for machine learning workflows"
-      },
-      {
-        name: "CULTURAL AI MODELS",
-        description: "Custom linguistic models preserving African language structures"
-      }
-    ],
-    badges: ["AI/ML", "NLP", "VOICE AI", "CULTURAL TECH"],
-    icon: "FaBrain",
-    accentType: "secondary"
-  },
-  {
-    id: "linux-kernel",
-    moduleNumber: "MODULE_03",
-    title: "LINUX KERNEL DEV",
-    description: `BUILDING CUSTOM LINUX KERNEL MODULES FOR HIGHLY SPECIALIZED OPERATING SYSTEMS
-      WITH DEEP AI/ML INTEGRATION. TUNING SYSTEM PERFORMANCE AND INTERFACING WITH
-      NEURAL COMPUTATION ENGINES.`,
-    projects: [
-      {
-        name: "COMPATOS",
-        description: "Custom Linux-based AI-enhanced OS kernel designed for neural interaction, offline inference, and microservice orchestration."
-      }
-    ],
-    badges: ["LINUX", "KERNEL", "C", "AI/OS"],
+    id: "auto-publishing-pipeline",
+    title: "AI CONTENT & AUTO-PUBLISHING PIPELINE",
+    description: `A Claude-powered automated pipeline that generates scheduled, context-aware blog posts, publishes them to nnact.com, and is being extended to LinkedIn, Facebook, and Instagram via their APIs.`,
+    caseStudy: {
+      problem: `NNACT needed a consistent content presence but had no time for manual writing across multiple platforms every week.`,
+      role: `Designed and built the pipeline, including the LLM prompt layer and multi-platform publishing integrations.`,
+      stackDecision: `Scheduled jobs generate articles from the Institutional Repair Brain knowledge base and post through each platform's API, keeping content context-aware instead of boilerplate.`,
+      outcome: `Automated blog generation + publishing to nnact.com; social multi-platform publishing in progress.`,
+      nextSteps: `Productize the pipeline as a reusable multi-platform social publishing service.`
+    },
+    badges: ["CLAUDE API", "META GRAPH API", "SCHEDULING", "AUTOMATION"],
     icon: "FaCog",
-    accentType: "tertiary"
+    accentType: "tertiary",
+    githubUrl: "https://github.com/ojage",
+    status: "IN PROGRESS"
   }
 ];
 
 export const leadershipMetrics = [
-  { label: "Projects Delivered", value: "50+" },
-  { label: "Team Members Led", value: "10+" },
-  { label: "Years Experience", value: "5+" },
-  { label: "Client Satisfaction", value: "100%" }
+  { label: "Years Building Products", value: "4+" },
+  { label: "Platform Users", value: "500+" },
+  { label: "Production Uptime", value: "99.9%" },
+  { label: "Manual Deploy Steps Removed", value: "70%" }
 ];
 
 export const professionalReferences: Reference[] = [
@@ -126,45 +125,45 @@ export const professionalReferences: Reference[] = [
     name: "Mme. Fonkem Benita",
     role: "Lecturer, HIMS Buea",
     relation: "Academic Supervisor",
-    contact: "+237 672 880 062",
+    contact: "Available on request",
   },
   {
     name: "Mr. Nkeng Arrey A.",
     role: "Co-founder, NNACT",
     relation: "Business Partner",
-    contact: "+237 651 385 746",
+    contact: "Available on request",
   },
   {
     name: "Mme Rohda Assem",
     role: "Managing Director, ORA Consulting",
     relation: "Former Boss",
-    contact: "rohdaassem1@gmail.com",
+    contact: "Available on request",
   },
   {
     name: "Mr. Nsah Esli",
     role: "Managing Director, Tekstedia|Liah Technology",
     relation: "Former Boss",
-    contact: "+237 678 425 491",
+    contact: "Available on request",
   },
   {
     name: "Mr. Sakwe BetranCliff",
     role: "Mobile App Engineer & Trainer, Liah Technology",
     relation: "Former Teammate",
-    contact: "+237 672 973 390",
+    contact: "Available on request",
   },
   {
     name: "Mr. Nkwetacha Terence",
     role: "Full Stack Engineer & Trainer, Liah Technology",
     relation: "Former Teammate",
-    contact: "+237 695 442 479",
+    contact: "Available on request",
   },
 ];
 
 export const engagementTypes = [
-  "ENTERPRISE SOFTWARE ARCHITECTURE",
-  "AI/ML SYSTEM DEVELOPMENT",
-  "TECHNICAL LEADERSHIP & CONSULTING",
-  "PRODUCT STRATEGY & INNOVATION"
+  "Full-stack product development (React, TypeScript, NestJS, PostgreSQL)",
+  "AI & LLM integrations (OpenAI, Claude, prompt engineering)",
+  "Cloud deployment on GCP (Cloud Run, Cloud Build, Cloud Logging)",
+  "Content automation and multi-platform publishing pipelines"
 ];
 
 export const socialLinks = {

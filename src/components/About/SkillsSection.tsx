@@ -11,7 +11,7 @@ import {
     Icon,
     Stack
 } from "@chakra-ui/react";
-import { FaCode, FaDatabase, FaTools, FaBrain, FaLaptopCode } from "react-icons/fa";
+import { FaCode, FaDatabase, FaBrain, FaLaptopCode } from "react-icons/fa";
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import { SkillCategory } from '../../data/aboutData';
 
@@ -21,16 +21,22 @@ interface SkillsSectionProps {
 
 const getCategoryIcon = (category: string) => {
     switch (category.toLowerCase()) {
-        case 'frontend development':
+        case 'frontend':
             return FaCode;
-        case 'backend development':
+        case 'backend':
             return FaLaptopCode;
-        case 'database & tools':
+        case 'databases':
             return FaDatabase;
-        case 'emerging technologies':
+        case 'ai & llm':
             return FaBrain;
-        case 'platforms & tools':
-            return FaTools;
+        case 'cloud & devops':
+            return FaDatabase;
+        case 'automation':
+            return FaCode;
+        case 'third-party apis':
+            return FaLaptopCode;
+        case 'engineering':
+            return FaLaptopCode;
         default:
             return FaCode;
     }

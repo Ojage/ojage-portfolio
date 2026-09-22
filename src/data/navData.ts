@@ -60,5 +60,5 @@ export const navigationItems: NavItem[] = [
 // You'll need to import this from your constants
 export const contactInfo = {
   name: "Ojage Salathiel Ayuk",
-  email: "salathiel@ojage.com" 
+  email: "salathiel.ojage@gmail.com" 
 };

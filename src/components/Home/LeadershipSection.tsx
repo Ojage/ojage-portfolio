@@ -63,7 +63,7 @@ export const LeadershipSection: React.FC = () => {
                                     fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
                                     lineHeight={{ base: 1.2, md: 1.25 }}
                                 >
-                                    CO-FOUNDER
+                                    FULL-STACK ENGINEER
                                 </Heading>
                                 <Text
                                     color={textColor}
@@ -71,7 +71,7 @@ export const LeadershipSection: React.FC = () => {
                                     fontWeight="bold"
                                     noOfLines={1}
                                 >
-                                    NNACT
+                                    CSKY TELECOM
                                 </Text>
                             </VStack>
                         </VStack>
@@ -85,9 +85,10 @@ export const LeadershipSection: React.FC = () => {
                                 color={textColor}
                                 lineHeight={{ base: 'tall', md: 'taller' }}
                             >
-                                CURRENTLY ARCHITECTING THE FUTURE OF TECHNOLOGY AT NNACT AS CO-FOUNDER. FORMER
-                                TECHNICAL DIRECTOR AT ORA CONSULTING, WHERE I LED CROSS-FUNCTIONAL TEAMS AND
-                                DELIVERED MISSION-CRITICAL SOFTWARE SOLUTIONS.
+                                Full-Stack Engineer at CSKY Telecom (NestJS, TypeScript, React on GCP Cloud Run).
+                                Co-founder of NNACT, where I'm building NNACT Pro — an AI-integrated field service
+                                platform with a Claude-powered content pipeline. B.Tech in Software Engineering
+                                (HIMS Buea, 2025).
                             </Text>
 
                             <VStack spacing={{ base: 2, md: 4 }} align="start" w="full">
@@ -97,7 +98,7 @@ export const LeadershipSection: React.FC = () => {
                                     fontWeight="bold"
                                     fontSize={{ base: 'xs', sm: 'sm' }}
                                 >
-                                    LEADERSHIP METRICS:
+                                    AT A GLANCE:
                                 </Text>
 
                                 {/* Responsive metrics grid */}

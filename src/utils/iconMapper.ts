@@ -7,7 +7,9 @@ import {
     FaCog,
     FaLink,
     FaShieldAlt,
-    FaLightbulb
+    FaLightbulb,
+    FaBriefcase,
+    FaWrench
 } from 'react-icons/fa';
 
 export const iconMap = {
@@ -20,7 +22,9 @@ export const iconMap = {
     FaCog,
     FaLink,
     FaShieldAlt,
-    FaLightbulb
+    FaLightbulb,
+    FaBriefcase,
+    FaWrench
 };
 
 export const getIcon = (iconName: string) => {

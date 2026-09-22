@@ -1,0 +1,124 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 8859 >>
+stream
+0.196 0.486 0.808 rg BT /F2 14 Tf 56 800 Td (OJAGE SALATHIEL AYUK) Tj ET 0 g
+0.196 0.486 0.808 RG 1 w 56 782 m 551 782 l S
+BT /F1 11 Tf 56 768 Td (Full-Stack AI Product Developer) Tj ET
+BT /F1 11 Tf 56 749 Td (React | NestJS | TypeScript | Node.js | GCP) Tj ET
+BT /F1 11 Tf 56 730 Td (Buea, Cameroon | salathiel.ojage@gmail.com | +237 681 402 886) Tj ET
+BT /F1 11 Tf 56 711 Td (linkedin.com/in/ojage-sala) Tj ET
+0.749 0.792 0.824 RG 1 w 56 692 m 551 692 l S
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 672 Td (PROFESSIONAL SUMMARY) Tj ET 0 g
+BT /F1 11 Tf 56 656 Td (Full-Stack Engineer with 4+ years building and shipping production web applications,) Tj ET
+BT /F1 11 Tf 56 641 Td (dashboards, REST APIs, and AI-powered product experiences using TypeScript, NestJS, Node.js,) Tj ET
+BT /F1 11 Tf 56 626 Td (React, and PostgreSQL on Google Cloud Platform. Experienced integrating third-party platforms) Tj ET
+BT /F1 11 Tf 56 611 Td (including OpenAI and LLM services, and proficient with AI-assisted development tools including) Tj ET
+BT /F1 11 Tf 56 596 Td (Claude Code, GitHub Copilot, and Cursor. Currently building NNACT Pro - a real-world) Tj ET
+BT /F1 11 Tf 56 581 Td (AI-integrated field service platform with automated content pipelines, multi-platform) Tj ET
+BT /F1 11 Tf 56 566 Td (publishing to LinkedIn, Facebook, and Instagram, and Claude-powered blog generation.) Tj ET
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 547 Td (TECHNICAL SKILLS) Tj ET 0 g
+BT /F1 11 Tf 56 531 Td (Frontend: React, TypeScript, JavaScript, HTML5/CSS3, Responsive UI, React Native) Tj ET
+BT /F1 11 Tf 56 512 Td (Backend: NestJS, Node.js, REST API design, JWT auth, RBAC, Async Queuing, Microservices) Tj ET
+BT /F1 11 Tf 56 493 Td (AI & LLM: OpenAI API, Claude API, LLM integration, Prompt engineering, Claude Code, GitHub) Tj ET
+BT /F1 11 Tf 56 478 Td (Copilot, Cursor) Tj ET
+BT /F1 11 Tf 56 459 Td (Automation: Scheduled content pipelines, Multi-platform social publishing, Marketing automation) Tj ET
+BT /F1 11 Tf 56 440 Td (Third-party APIs: OpenAI, Claude API, Meta Graph API, Google Ads API, GCP services) Tj ET
+BT /F1 11 Tf 56 421 Td (Databases: PostgreSQL, Schema design, Query optimisation, Indexing, Migrations) Tj ET
+BT /F1 11 Tf 56 402 Td (Cloud & DevOps: GCP \(Cloud Run, Cloud Build, Cloud Logging, GCS, IAM\), GitHub Actions, Docker,) Tj ET
+BT /F1 11 Tf 56 387 Td (CI/CD) Tj ET
+BT /F1 11 Tf 56 368 Td (Engineering: Git, Software architecture, Code review, Testing, Debugging, Agile/Scrum) Tj ET
+0.749 0.792 0.824 RG 1 w 56 349 m 551 349 l S
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 329 Td (PROFESSIONAL EXPERIENCE) Tj ET 0 g
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 313 Td (Full-Stack Engineer - CSKY Telecom, Limbe: Oct 2025 - Present) Tj ET 0 g
+BT /F1 11 Tf 70 297 Td (- Built and maintained production web applications and backend services using NestJS,) Tj ET
+BT /F1 11 Tf 70 282 Td (TypeScript, and React; deployed on GCP Cloud Run with sub-200ms API response times and) Tj ET
+BT /F1 11 Tf 70 267 Td (99.9% uptime.) Tj ET
+BT /F1 11 Tf 70 248 Td (- Designed and automated end-to-end CI/CD pipelines using GitHub Actions and Google Cloud) Tj ET
+BT /F1 11 Tf 70 233 Td (Build; eliminated ~70% of manual deployment steps enabling multiple automated production) Tj ET
+BT /F1 11 Tf 70 218 Td (releases per week.) Tj ET
+BT /F1 11 Tf 70 199 Td (- Architected async background processing pipelines decoupling long-running tasks from the) Tj ET
+BT /F1 11 Tf 70 184 Td (request cycle; reduced UI wait time by over 60% for high-load operations.) Tj ET
+BT /F1 11 Tf 70 165 Td (- Administered GCP Cloud Storage with fine-grained IAM policies and instrumented services) Tj ET
+BT /F1 11 Tf 70 150 Td (with Cloud Logging and Cloud Monitoring; built alerting policies reducing mean) Tj ET
+BT /F1 11 Tf 70 135 Td (time-to-detection for production incidents.) Tj ET
+BT /F1 11 Tf 70 116 Td (- Used AI-assisted development tools including Claude Code and GitHub Copilot daily to) Tj ET
+BT /F1 11 Tf 70 101 Td (accelerate feature delivery while maintaining high standards for security and code quality.) Tj ET
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 82 Td (Full-Stack Developer - NNACT Home Appliance & Maintenance Services, Buea: 2024 - Present) Tj ET 0 g
+BT /F1 11 Tf 70 66 Td (- Architected and built NNACT Pro: a full-stack field service management platform covering) Tj ET
+BT /F1 11 Tf 70 51 Td (customer management, equipment tracking, work orders, technician dispatch, quotations,) Tj ET
+BT /F1 11 Tf 70 36 Td (invoicing, payments, inventory, and preventive maintenance workflows.) Tj ET
+BT /F1 11 Tf 70 17 Td (- Designed an Institutional Repair Brain: a structured AI-ready knowledge base with a Job) Tj ET
+BT /F1 11 Tf 70 2 Td (to Diagnosis to Repair to Outcome to Verified Knowledge promotion pipeline.) Tj ET
+BT /F1 11 Tf 70 -17 Td (- Built a Claude-powered automated blog content pipeline that generates scheduled,) Tj ET
+BT /F1 11 Tf 70 -32 Td (context-aware blog posts and publishes directly to nnact.com; extending it to auto-post to) Tj ET
+BT /F1 11 Tf 70 -47 Td (LinkedIn, Facebook, and Instagram via their APIs.) Tj ET
+BT /F1 11 Tf 70 -66 Td (- Designed role-based workflows and guided in-app onboarding for 5 user types \(technicians,) Tj ET
+BT /F1 11 Tf 70 -81 Td (dispatchers, senior technicians, finance, administrators\); architected for mobile/offline) Tj ET
+BT /F1 11 Tf 70 -96 Td (technician field workflows.) Tj ET
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -115 Td (Full-Stack Developer & Technical Trainer - Liah Technologies \(formerly Tekstedia\), Buea: Jan 2022 - Dec 2024) Tj ET 0 g
+BT /F1 11 Tf 70 -131 Td (- Built and maintained scalable NestJS REST APIs and React web interfaces for a platform) Tj ET
+BT /F1 11 Tf 70 -146 Td (serving 500+ active users; delivered 3 major product releases using clean architecture and) Tj ET
+BT /F1 11 Tf 70 -161 Td (strict service-layer separation.) Tj ET
+BT /F1 11 Tf 70 -180 Td (- Integrated third-party APIs and external services into the product stack; designed) Tj ET
+BT /F1 11 Tf 70 -195 Td (modular integration layers for maintainability and extensibility.) Tj ET
+BT /F1 11 Tf 70 -214 Td (- Optimised PostgreSQL schemas across 10+ tables with proper indexing and query strategies;) Tj ET
+BT /F1 11 Tf 70 -229 Td (reduced average query execution time by ~40% across all releases.) Tj ET
+BT /F1 11 Tf 70 -248 Td (- Implemented RBAC and JWT authentication flows across 5+ user roles; hardened API security) Tj ET
+BT /F1 11 Tf 70 -263 Td (with zero unauthorised access incidents post-deployment.) Tj ET
+BT /F1 11 Tf 70 -282 Td (- Profiled and refactored backend bottlenecks; improved API response times by ~35% and) Tj ET
+BT /F1 11 Tf 70 -297 Td (contributed to a 20% increase in user retention.) Tj ET
+BT /F1 11 Tf 70 -316 Td (- Mentored junior developers through code reviews, architectural guidance, and pair) Tj ET
+BT /F1 11 Tf 70 -331 Td (programming; accelerated onboarding for 3 new engineers.) Tj ET
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -350 Td (Front-End Developer - MUNGWIN Ltd, Buea: Feb 2021 - Nov 2021) Tj ET 0 g
+BT /F1 11 Tf 70 -366 Td (- Built pixel-accurate responsive React interfaces from UX wireframes; implemented custom) Tj ET
+BT /F1 11 Tf 70 -381 Td (SVG components and accessible UI patterns.) Tj ET
+BT /F1 11 Tf 70 -400 Td (- Contributed to a shared Git repository using structured branching and code review) Tj ET
+BT /F1 11 Tf 70 -415 Td (practices.) Tj ET
+0.749 0.792 0.824 RG 1 w 56 -434 m 551 -434 l S
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -454 Td (PROJECTS) Tj ET 0 g
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -470 Td (AI Cultural-Linguistic Integration App - Final-Year Academic Project, 2025) Tj ET 0 g
+BT /F1 11 Tf 70 -486 Td (- Built a full NestJS REST backend on GCP Cloud Run integrating a custom-trained NLP model) Tj ET
+BT /F1 11 Tf 70 -501 Td (via the OpenAI API; served a React Native mobile client with real-time AI language) Tj ET
+BT /F1 11 Tf 70 -516 Td (processing.) Tj ET
+BT /F1 11 Tf 70 -535 Td (- Designed the complete AI integration layer - prompt engineering, API consumption,) Tj ET
+BT /F1 11 Tf 70 -550 Td (response parsing, and error handling - delivering a working LLM-powered product end to end.) Tj ET
+BT /F1 11 Tf 70 -569 Td (- Stack: NestJS, TypeScript, PostgreSQL, GCP Cloud Run, OpenAI API, Python, React Native.) Tj ET
+0.749 0.792 0.824 RG 1 w 56 -588 m 551 -588 l S
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -608 Td (EDUCATION) Tj ET 0 g
+BT /F1 11 Tf 56 -624 Td (B.Tech in Software Engineering - HIMS Buea, Cameroon: 2025 | GPA 3.68 / 4.0) Tj ET
+BT /F1 11 Tf 56 -643 Td (HND in Software Engineering - HIMS Buea, Cameroon: 2024) Tj ET
+0.196 0.486 0.808 rg BT /F2 11 Tf 56 -662 Td (CERTIFICATIONS) Tj ET 0 g
+BT /F1 11 Tf 56 -678 Td (ALX Full-Stack Developer Nanodegree \(Udacity / ALX Africa\)) Tj ET
+BT /F1 11 Tf 56 -697 Td (Google Africa Developer Scholarship \(Google / Andela\)) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000009161 00000 n 
+0000009231 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+9306
+%%EOF

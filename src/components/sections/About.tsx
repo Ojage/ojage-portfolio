@@ -9,7 +9,7 @@ import {
     Grid,
     Icon,
 } from '@chakra-ui/react';
-import { FaPrint, FaDownload, FaFileDownload } from 'react-icons/fa';
+import { FaPrint, FaDownload, FaFileDownload, FaFilePdf } from 'react-icons/fa';
 import Nav from '../Nav/Nav';
 import { resumeData } from '../../data/aboutData';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
@@ -192,9 +192,11 @@ const About: React.FC = () => {
                     className="no-print"
                 >
                     <Button
-                        leftIcon={<Icon as={FaPrint} boxSize={{ base: 4, md: 5 }} aria-hidden />}
+                        as="a"
+                        href="/Ojage_Salathiel_Ayuk_Resume.pdf"
+                        download
+                        leftIcon={<Icon as={FaFilePdf} boxSize={{ base: 4, md: 5 }} aria-hidden />}
                         size={{ base: 'sm', md: 'md' }}
-                        onClick={handlePrint}
                         bg={themeConstants.accent}
                         color="white"
                         _hover={{ bg: themeConstants.accentHover }}
@@ -208,6 +210,29 @@ const About: React.FC = () => {
                         border="2px solid"
                         borderColor={themeConstants.accent}
                         w={{ base: 'full', sm: 'auto' }}
+                        aria-label="Download resume as PDF"
+                        rel="noopener noreferrer"
+                    >
+                        Download PDF
+                    </Button>
+
+                    <Button
+                        leftIcon={<Icon as={FaPrint} boxSize={{ base: 4, md: 5 }} aria-hidden />}
+                        size={{ base: 'sm', md: 'md' }}
+                        onClick={handlePrint}
+                        bg="transparent"
+                        color={themeConstants.accent}
+                        border="2px solid"
+                        borderColor={themeConstants.accent}
+                        _hover={{ bg: themeConstants.accent, color: 'white' }}
+                        borderRadius="0"
+                        px={{ base: 5, md: 6 }}
+                        py={{ base: 5, md: 0 }}
+                        fontFamily="mono"
+                        textTransform="uppercase"
+                        fontSize={{ base: 'xs', md: 'sm' }}
+                        fontWeight="bold"
+                        w={{ base: 'full', sm: 'auto' }}
                         aria-label="Print resume in a new window"
                     >
                         Print Resume
@@ -218,10 +243,10 @@ const About: React.FC = () => {
                         size={{ base: 'sm', md: 'md' }}
                         onClick={handleQuickPrint}
                         bg="transparent"
-                        color={themeConstants.accent}
+                        color={themeConstants.mutedText}
                         border="2px solid"
-                        borderColor={themeConstants.accent}
-                        _hover={{ bg: themeConstants.accent, color: 'white' }}
+                        borderColor={themeConstants.divider}
+                        _hover={{ bg: themeConstants.divider, color: themeConstants.primaryText }}
                         borderRadius="0"
                         px={{ base: 5, md: 6 }}
                         py={{ base: 5, md: 0 }}

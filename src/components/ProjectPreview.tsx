@@ -11,7 +11,6 @@ const ProjectPreview: React.FC<ProjectPreviewProps> = React.memo(({ project }) =
     );
 
     if (!project) return null;
-    console.log(project)
     return (
         <ScaleFade in={!!project} initialScale={0.8}>
             <MotionBox

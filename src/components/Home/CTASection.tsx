@@ -43,7 +43,7 @@ export const CTASection: React.FC = () => {
                                 lineHeight={{ base: 1.2, md: 1.2 }}
                                 fontSize={{ base: 'xl', sm: '2xl', md: '3xl', lg: '4xl' }}
                             >
-                                LET&apos;S BUILD THE FUTURE TOGETHER
+                                LET&apos;S CONNECT
                             </Heading>
 
                             <Text
@@ -51,8 +51,8 @@ export const CTASection: React.FC = () => {
                                 lineHeight={{ base: 'tall', md: 'taller' }}
                                 fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
                             >
-                                READY TO COLLABORATE ON GAME-CHANGING PROJECTS THAT REDEFINE INDUSTRY STANDARDS.
-                                SPECIALIZED IN HIGH-IMPACT SOLUTIONS THAT DELIVER MEASURABLE BUSINESS VALUE.
+                                I&apos;m open to full-stack AI product roles, freelance work, and technical
+                                collaborations. Email me at salathiel.ojage@gmail.com or reach out on LinkedIn.
                             </Text>
 
                             <VStack spacing={{ base: 2, md: 3 }} align="start" w="full">
@@ -62,7 +62,7 @@ export const CTASection: React.FC = () => {
                                     fontWeight="bold"
                                     fontSize={{ base: 'xs', sm: 'sm' }}
                                 >
-                                    ENGAGEMENT TYPES:
+                                    HOW I CAN HELP:
                                 </Text>
                                 <UnorderedList
                                     spacing={{ base: 1.5, md: 2 }}

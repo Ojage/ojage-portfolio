@@ -15,15 +15,10 @@ import {
     Skeleton,
     AspectRatio,
     CardBody,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
     Wrap,
     WrapItem,
 } from '@chakra-ui/react';
-import { FaLink, FaLightbulb } from 'react-icons/fa';
+import { FaLink, FaGithub } from 'react-icons/fa';
 import { MorphCard } from '../common/MorphCard';
 import { useThemeConstants } from '../../hooks/useThemeConstants';
 import { ProjectData } from '../../data/homeData';
@@ -34,6 +29,30 @@ interface ProjectCardProps {
     isHighlighted?: boolean;
     colSpan?: number;
 }
+
+const CaseStudyBlock: React.FC<{ label: string; text: string; color: string; textColor: string }> = ({
+    label,
+    text,
+    color,
+    textColor,
+}) => (
+    <Box w="full">
+        <Text
+            color={color}
+            fontSize={{ base: 'xs', sm: 'sm' }}
+            fontFamily="mono"
+            fontWeight="bold"
+            textTransform="uppercase"
+            letterSpacing="wider"
+            mb={{ base: 1, md: 1.5 }}
+        >
+            {label}
+        </Text>
+        <Text color={textColor} fontSize={{ base: 'sm', sm: 'md' }} lineHeight={{ base: 'tall', md: 'taller' }}>
+            {text}
+        </Text>
+    </Box>
+);
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
     project,
@@ -69,7 +88,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <CardBody p={{ base: 4, sm: 6, md: 8, lg: 10 }}>
                 <VStack align="start" spacing={{ base: 5, md: 8 }} h="full">
                     {/* Header */}
-                    <Stack direction={{ base: 'row', md: 'row' }} spacing={{ base: 3, md: 4 }} align="center" w="full">
+                    <Stack direction="row" spacing={{ base: 3, md: 4 }} align="center" w="full">
                         <Box
                             p={{ base: 2.5, sm: 3, md: 4 }}
                             bg={accent}
@@ -85,16 +104,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                                 aria-label={`${project.title} icon`}
                             />
                         </Box>
-                        <VStack align="start" spacing={{ base: 0.5, md: 1 }} minW={0}>
-                            <Text
-                                color={accent}
-                                fontSize={{ base: 'xs', sm: 'sm' }}
-                                fontFamily="mono"
-                                fontWeight="bold"
-                                noOfLines={1}
-                            >
-                                {project.moduleNumber}
-                            </Text>
+                        <VStack align="start" spacing={{ base: 0.5, md: 1 }} minW={0} flex={1}>
                             <Heading
                                 size="xl"
                                 color={textColor}
@@ -103,17 +113,22 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                                 letterSpacing="wide"
                                 fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
                                 lineHeight={{ base: 1.2, md: 1.25 }}
-                                noOfLines={{ base: 2, md: 1 }}
                             >
                                 {project.title}
                             </Heading>
+                            {project.status && (
+                                <HStack spacing={2} color="gainsboro">
+                                    <Box
+                                        w={2}
+                                        h={2}
+                                        bg={project.status === 'LIVE' ? 'green.400' : project.status === 'COMPLETED' ? tertiaryAccent : 'yellow.400'}
+                                    />
+                                    <Text fontSize={{ base: 'xs', sm: 'sm' }} fontFamily="mono" fontWeight="bold">
+                                        {project.status}
+                                    </Text>
+                                </HStack>
+                            )}
                         </VStack>
-                        {isHighlighted && (
-                            <HStack ml="auto" spacing={2} color="gainsboro" display={{ base: 'none', md: 'flex' }}>
-                                <Icon as={FaLightbulb} />
-                                <Text fontSize="sm">Live</Text>
-                            </HStack>
-                        )}
                     </Stack>
 
                     {/* Description */}
@@ -156,54 +171,44 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                         </Box>
                     )}
 
-                    {/* Projects List (for non-highlighted cards) */}
-                    {!isHighlighted && project.projects && (
-                        <Box flex={1} w="full">
-                            <Text
-                                fontWeight="bold"
+                    {/* Case study blocks */}
+                    {project.caseStudy && (
+                        <VStack align="start" spacing={{ base: 4, md: 5 }} w="full">
+                            <CaseStudyBlock
+                                label="Problem"
+                                text={project.caseStudy.problem}
                                 color={accent}
-                                mb={{ base: 2, md: 4 }}
-                                fontFamily="mono"
-                                fontSize={{ base: 'xs', sm: 'sm' }}
-                            >
-                                FLAGSHIP PROJECTS:
-                            </Text>
-
-                            {/* On mobile, collapse into an accordion for scannability */}
-                            <Box display={{ base: 'block', md: 'none' }}>
-                                <Accordion allowMultiple reduceMotion>
-                                    {project.projects.map((proj, idx) => (
-                                        <AccordionItem key={idx} border="none">
-                                            <h3>
-                                                <AccordionButton px={0}>
-                                                    <Box as="span" flex="1" textAlign="left" color={textColor} fontWeight="bold" pr={2}>
-                                                        {proj.name}
-                                                    </Box>
-                                                    <AccordionIcon />
-                                                </AccordionButton>
-                                            </h3>
-                                            <AccordionPanel px={0} pt={2} pb={3} color={textColor} fontSize="sm">
-                                                {proj.description}
-                                            </AccordionPanel>
-                                        </AccordionItem>
-                                    ))}
-                                </Accordion>
-                            </Box>
-
-                            {/* On md+ show the full list */}
-                            <VStack align="start" spacing={3} pl={6} display={{ base: 'none', md: 'flex' }}>
-                                {project.projects.map((proj, idx) => (
-                                    <Box key={idx}>
-                                        <Text color={textColor} fontWeight="bold" fontSize={{ md: 'md' }}>
-                                            {proj.name}
-                                        </Text>
-                                        <Text color={textColor} fontSize={{ md: 'sm' }}>
-                                            {proj.description}
-                                        </Text>
-                                    </Box>
-                                ))}
-                            </VStack>
-                        </Box>
+                                textColor={textColor}
+                            />
+                            <CaseStudyBlock
+                                label="My Role"
+                                text={project.caseStudy.role}
+                                color={accent}
+                                textColor={textColor}
+                            />
+                            <CaseStudyBlock
+                                label="Stack Decision"
+                                text={project.caseStudy.stackDecision}
+                                color={accent}
+                                textColor={textColor}
+                            />
+                            {project.caseStudy.outcome && (
+                                <CaseStudyBlock
+                                    label="Outcome"
+                                    text={project.caseStudy.outcome}
+                                    color={accent}
+                                    textColor={textColor}
+                                />
+                            )}
+                            {project.caseStudy.nextSteps && (
+                                <CaseStudyBlock
+                                    label="Next Up"
+                                    text={project.caseStudy.nextSteps}
+                                    color={accent}
+                                    textColor={textColor}
+                                />
+                            )}
+                        </VStack>
                     )}
 
                     {/* Badges */}
@@ -224,36 +229,50 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                                     </Badge>
                                 </WrapItem>
                             ))}
-                            {isHighlighted && (
-                                <WrapItem display={{ base: 'flex', md: 'none' }} ml="auto">
-                                    <HStack spacing={2} color="gainsboro">
-                                        <Icon as={FaLightbulb} boxSize={{ base: 3.5, sm: 4 }} />
-                                        <Text fontSize={{ base: 'xs', sm: 'sm' }}>Live</Text>
-                                    </HStack>
-                                </WrapItem>
-                            )}
                         </Wrap>
                     </Box>
 
-                    {/* CTA Buttons (for highlighted cards with live URLs) */}
-                    {isHighlighted && project.liveUrl && (
-                        <HStack mt={{ base: 4, md: 6 }} spacing={{ base: 3, md: 4 }} w="full">
-                            <Button
-                                as={Link}
-                                href={project.liveUrl}
-                                isExternal
-                                rightIcon={<FaLink />}
-                                size={{ base: 'sm', sm: 'md' }}
-                                borderRadius="0"
-                                bg={accent}
-                                color="black"
-                                _hover={{ opacity: 0.9 }}
-                                rel="noopener noreferrer"
-                                w={{ base: 'full', sm: 'auto' }}
-                                aria-label={`Open ${project.title}`}
-                            >
-                                Open {project.title.split(' ')[0]}
-                            </Button>
+                    {/* CTA Buttons */}
+                    {(project.liveUrl || project.githubUrl) && (
+                        <HStack mt={{ base: 4, md: 6 }} spacing={{ base: 3, md: 4 }} w="full" flexWrap="wrap">
+                            {project.liveUrl && (
+                                <Button
+                                    as={Link}
+                                    href={project.liveUrl}
+                                    isExternal
+                                    rightIcon={<FaLink />}
+                                    size={{ base: 'sm', sm: 'md' }}
+                                    borderRadius="0"
+                                    bg={accent}
+                                    color="black"
+                                    _hover={{ opacity: 0.9 }}
+                                    rel="noopener noreferrer"
+                                    w={{ base: 'full', sm: 'auto' }}
+                                    aria-label={`Open live site for ${project.title}`}
+                                >
+                                    View Live
+                                </Button>
+                            )}
+                            {project.githubUrl && (
+                                <Button
+                                    as={Link}
+                                    href={project.githubUrl}
+                                    isExternal
+                                    leftIcon={<FaGithub />}
+                                    size={{ base: 'sm', sm: 'md' }}
+                                    borderRadius="0"
+                                    bg="transparent"
+                                    color={textColor}
+                                    border="2px solid"
+                                    borderColor={accent}
+                                    _hover={{ bg: accent, color: 'black' }}
+                                    rel="noopener noreferrer"
+                                    w={{ base: 'full', sm: 'auto' }}
+                                    aria-label={`View source on GitHub for ${project.title}`}
+                                >
+                                    Source
+                                </Button>
+                            )}
                         </HStack>
                     )}
                 </VStack>
