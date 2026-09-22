@@ -19,15 +19,33 @@ import PersonalHeader from '../About/PersonalHeader';
 import ProfessionalSummary from '../About/ProfessionalSummary';
 import SkillsSection from '../About/SkillsSection';
 import { ThemeToggle } from '../common/ThemeToggle';
+import { ReadingProgress } from '../About/ReadingProgress';
+import { ScrollSpyRail } from '../About/ScrollSpyRail';
+import { StatsBand } from '../About/StatsBand';
+import { MagneticButton } from '../About/MagneticButton';
+import { Reveal } from '../About/Reveal';
 
 const About: React.FC = () => {
     const resumeRef = useRef<HTMLDivElement>(null);
     const themeConstants = useAboutThemeConstants();
 
+    // Strip framer-motion inline styles (opacity/transform/filter) before
+    // cloning the resume so printed/downloaded output is never stuck hidden.
+    const flushMotionStyles = (root: HTMLElement) => {
+        root.querySelectorAll<HTMLElement>('*').forEach((el) => {
+            ['opacity', 'transform', 'filter'].forEach((prop) => {
+                if (el.style[prop as keyof CSSStyleDeclaration]) el.style.removeProperty(prop);
+            });
+        });
+        return root;
+    };
+
     // Primary print function using window.print
     const handlePrint = useCallback(() => {
         if (resumeRef.current) {
-            const printContent = resumeRef.current;
+            const printContent = flushMotionStyles(
+                resumeRef.current.cloneNode(true) as HTMLDivElement
+            );
             const printWindow = window.open('', '_blank');
 
             if (printWindow) {
@@ -101,6 +119,9 @@ const About: React.FC = () => {
     // Download as HTML file
     const handleDownloadHTML = useCallback(() => {
         if (resumeRef.current) {
+            const printContent = flushMotionStyles(
+                resumeRef.current.cloneNode(true) as HTMLDivElement
+            );
             const htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -119,7 +140,7 @@ const About: React.FC = () => {
         </head>
         <body>
           <div style="max-width: 800px; margin: 0 auto;">
-            ${resumeRef.current.innerHTML}
+            ${printContent.innerHTML}
           </div>
         </body>
         </html>
@@ -139,6 +160,12 @@ const About: React.FC = () => {
 
     return (
         <Box minH="100vh" bg={themeConstants.pageBg}>
+            {/* Reading progress bar */}
+            <ReadingProgress />
+
+            {/* Scroll-spy rail */}
+            <ScrollSpyRail />
+
             {/* Theme Toggle */}
             <Box
                 position="fixed"
@@ -165,74 +192,80 @@ const About: React.FC = () => {
                     mb={{ base: 4, md: 6 }}
                     className="no-print"
                 >
-                    <Button
-                        as="a"
-                        href="/Ojage_Salathiel_Ayuk_Resume.pdf"
-                        download
-                        leftIcon={<Icon as={FaFilePdf} boxSize={{ base: 4, md: 5 }} aria-hidden />}
-                        size={{ base: 'sm', md: 'md' }}
-                        bg={themeConstants.accent}
-                        color="white"
-                        _hover={{ bg: themeConstants.accentHover }}
-                        borderRadius="0"
-                        px={{ base: 5, md: 6 }}
-                        py={{ base: 5, md: 0 }}
-                        fontFamily="mono"
-                        textTransform="uppercase"
-                        fontSize={{ base: 'xs', md: 'sm' }}
-                        fontWeight="bold"
-                        border="2px solid"
-                        borderColor={themeConstants.accent}
-                        w={{ base: 'full', sm: 'auto' }}
-                        aria-label="Download resume as PDF"
-                        rel="noopener noreferrer"
-                    >
-                        Download PDF
-                    </Button>
+                    <MagneticButton>
+                        <Button
+                            as="a"
+                            href="/Ojage_Salathiel_Ayuk_Resume.pdf"
+                            download
+                            leftIcon={<Icon as={FaFilePdf} boxSize={{ base: 4, md: 5 }} aria-hidden />}
+                            size={{ base: 'sm', md: 'md' }}
+                            bg={themeConstants.accent}
+                            color="white"
+                            _hover={{ bg: themeConstants.accentHover }}
+                            borderRadius="0"
+                            px={{ base: 5, md: 6 }}
+                            py={{ base: 5, md: 0 }}
+                            fontFamily="mono"
+                            textTransform="uppercase"
+                            fontSize={{ base: 'xs', md: 'sm' }}
+                            fontWeight="bold"
+                            border="2px solid"
+                            borderColor={themeConstants.accent}
+                            w={{ base: 'full', sm: 'auto' }}
+                            aria-label="Download resume as PDF"
+                            rel="noopener noreferrer"
+                        >
+                            Download PDF
+                        </Button>
+                    </MagneticButton>
 
-                    <Button
-                        leftIcon={<Icon as={FaPrint} boxSize={{ base: 4, md: 5 }} aria-hidden />}
-                        size={{ base: 'sm', md: 'md' }}
-                        onClick={handlePrint}
-                        bg="transparent"
-                        color={themeConstants.accent}
-                        border="2px solid"
-                        borderColor={themeConstants.accent}
-                        _hover={{ bg: themeConstants.accent, color: 'white' }}
-                        borderRadius="0"
-                        px={{ base: 5, md: 6 }}
-                        py={{ base: 5, md: 0 }}
-                        fontFamily="mono"
-                        textTransform="uppercase"
-                        fontSize={{ base: 'xs', md: 'sm' }}
-                        fontWeight="bold"
-                        w={{ base: 'full', sm: 'auto' }}
-                        aria-label="Print resume in a new window"
-                    >
-                        Print Resume
-                    </Button>
+                    <MagneticButton>
+                        <Button
+                            leftIcon={<Icon as={FaPrint} boxSize={{ base: 4, md: 5 }} aria-hidden />}
+                            size={{ base: 'sm', md: 'md' }}
+                            onClick={handlePrint}
+                            bg="transparent"
+                            color={themeConstants.accent}
+                            border="2px solid"
+                            borderColor={themeConstants.accent}
+                            _hover={{ bg: themeConstants.accent, color: 'white' }}
+                            borderRadius="0"
+                            px={{ base: 5, md: 6 }}
+                            py={{ base: 5, md: 0 }}
+                            fontFamily="mono"
+                            textTransform="uppercase"
+                            fontSize={{ base: 'xs', md: 'sm' }}
+                            fontWeight="bold"
+                            w={{ base: 'full', sm: 'auto' }}
+                            aria-label="Print resume in a new window"
+                        >
+                            Print Resume
+                        </Button>
+                    </MagneticButton>
 
-<Button
-                        leftIcon={<Icon as={FaDownload} boxSize={{ base: 4, md: 5 }} aria-hidden />}
-                        size={{ base: 'sm', md: 'md' }}
-                        onClick={handleDownloadHTML}
-                        bg="transparent"
-                        color={themeConstants.mutedText}
-                        border="2px solid"
-                        borderColor={themeConstants.divider}
-                        _hover={{ bg: themeConstants.divider, color: themeConstants.primaryText }}
-                        borderRadius="0"
-                        px={{ base: 5, md: 6 }}
-                        py={{ base: 5, md: 0 }}
-                        fontFamily="mono"
-                        textTransform="uppercase"
-                        fontSize={{ base: 'xs', md: 'sm' }}
-                        fontWeight="bold"
-                        w={{ base: 'full', sm: 'auto' }}
-                        aria-label="Download resume as HTML"
-                    >
-                        Download HTML
-                    </Button>
+                    <MagneticButton>
+                        <Button
+                            leftIcon={<Icon as={FaDownload} boxSize={{ base: 4, md: 5 }} aria-hidden />}
+                            size={{ base: 'sm', md: 'md' }}
+                            onClick={handleDownloadHTML}
+                            bg="transparent"
+                            color={themeConstants.mutedText}
+                            border="2px solid"
+                            borderColor={themeConstants.divider}
+                            _hover={{ bg: themeConstants.divider, color: themeConstants.primaryText }}
+                            borderRadius="0"
+                            px={{ base: 5, md: 6 }}
+                            py={{ base: 5, md: 0 }}
+                            fontFamily="mono"
+                            textTransform="uppercase"
+                            fontSize={{ base: 'xs', md: 'sm' }}
+                            fontWeight="bold"
+                            w={{ base: 'full', sm: 'auto' }}
+                            aria-label="Download resume as HTML"
+                        >
+                            Download HTML
+                        </Button>
+                    </MagneticButton>
                 </Stack>
 
                 {/* Resume Content */}
@@ -243,22 +276,35 @@ const About: React.FC = () => {
                 >
                     <VStack spacing={{ base: 5, md: 6 }} align="stretch">
                         <PersonalHeader personal={resumeData.personal} />
-                        <ProfessionalSummary summary={resumeData.summary} />
+                        <Reveal id="resume-summary" style={{ scrollMarginTop: 90 }} amount={0.1}>
+                            <ProfessionalSummary summary={resumeData.summary} />
+                        </Reveal>
+
+                        <StatsBand />
 
                         <Grid
                             templateColumns={{ base: '1fr', lg: '2fr 1fr' }}
                             gap={{ base: 5, md: 6 }}
+                            alignItems="start"
                         >
                             {/* Left Column */}
-                            <VStack spacing={{ base: 5, md: 6 }} align="stretch">
-                                <ExperienceSection experiences={resumeData.experience} />
-                                <EducationSection education={resumeData.education} />
+                            <VStack style={{ minWidth: 0, minHeight: 0 }} spacing={{ base: 5, md: 6 }} align="stretch">
+                                <Reveal id="resume-experience" style={{ scrollMarginTop: 90 }} amount={0.05}>
+                                    <ExperienceSection experiences={resumeData.experience} />
+                                </Reveal>
+                                <Reveal id="resume-education" style={{ scrollMarginTop: 90 }} amount={0.05}>
+                                    <EducationSection education={resumeData.education} />
+                                </Reveal>
                             </VStack>
 
                             {/* Right Column */}
-                            <VStack spacing={{ base: 5, md: 6 }} align="stretch">
-                                <SkillsSection skills={resumeData.skills} />
-                                <CertificationsSection certifications={resumeData.certifications} />
+                            <VStack style={{ minWidth: 0, minHeight: 0 }} spacing={{ base: 5, md: 6 }} align="stretch">
+                                <Reveal id="resume-skills" style={{ scrollMarginTop: 90 }} amount={0.05}>
+                                    <SkillsSection skills={resumeData.skills} />
+                                </Reveal>
+                                <Reveal id="resume-credentials" style={{ scrollMarginTop: 90 }} amount={0.05}>
+                                    <CertificationsSection certifications={resumeData.certifications} />
+                                </Reveal>
                             </VStack>
                         </Grid>
                     </VStack>

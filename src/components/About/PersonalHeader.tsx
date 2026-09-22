@@ -19,6 +19,7 @@ import {
     FaMapMarkerAlt,
     FaUser,
 } from 'react-icons/fa';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import { PersonalInfo } from '../../data/aboutData';
 
@@ -28,6 +29,10 @@ interface PersonalHeaderProps {
 
 const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
     const theme = useAboutThemeConstants();
+    const reduce = useReducedMotion();
+
+    const nameLetters = personal.name.split('');
+    const titleWords = personal.title ? personal.title.split(' ') : [];
 
     const contactItems = [
         {
@@ -71,7 +76,21 @@ const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
             position="relative"
             overflow="hidden"
         >
-            <VStack align="start" spacing={{ base: 4, md: 6 }} width="full">
+            {/* Blueprint grid overlay */}
+            <Box className="blueprint-grid" position="absolute" inset={0} pointerEvents="none" />
+
+            {/* Accent baseline that draws in */}
+            <motion.div
+                style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: '3px', originX: 0 }}
+                initial={reduce ? false : { scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
+            >
+                <Box h="full" bg={theme.headerGradient} />
+            </motion.div>
+
+            <VStack align="start" spacing={{ base: 4, md: 6 }} width="full" position="relative">
                 {/* Header */}
                 <Stack
                     direction={{ base: 'column', sm: 'row' }}
@@ -80,17 +99,25 @@ const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
                     w="full"
                 >
                     {/* Icon */}
-                    <Box
-                        p={{ base: 2.5, sm: 3, md: 4 }}
-                        bg={theme.accent}
-                        borderRadius="0"
-                        border="2px solid"
-                        borderColor={theme.accent}
-                        flexShrink={0}
-                        aria-label="Profile"
+                    <motion.div
+                        initial={reduce ? false : { opacity: 0, rotate: -8, scale: 0.9 }}
+                        whileInView={{ opacity: 1, rotate: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
                     >
-                        <Icon as={FaUser} color="black" boxSize={{ base: 7, sm: 8, md: 10 }} />
-                    </Box>
+                        <Box
+                            p={{ base: 2.5, sm: 3, md: 4 }}
+                            bg={theme.accent}
+                            borderRadius="0"
+                            border="2px solid"
+                            borderColor={theme.accent}
+                            flexShrink={0}
+                            aria-label="Profile"
+                            boxShadow={`6px 6px 0 ${theme.accentLight}`}
+                        >
+                            <Icon as={FaUser} color="black" boxSize={{ base: 7, sm: 8, md: 10 }} />
+                        </Box>
+                    </motion.div>
 
                     {/* Name + Title */}
                     <VStack align="start" spacing={{ base: 1, md: 2 }} minW={0} flex={1}>
@@ -113,9 +140,35 @@ const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
                             letterSpacing="wide"
                             lineHeight={1.2}
                             fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
-                            noOfLines={{ base: 2, md: 1 }}
                         >
-                            {personal.name}
+                            {reduce ? (
+                                <span>{personal.name}</span>
+                            ) : (
+                                <motion.span
+                                    style={{ display: 'inline-flex', flexWrap: 'wrap' }}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={{
+                                        hidden: {},
+                                        visible: { transition: { staggerChildren: 0.035, delayChildren: 0.15 } },
+                                    }}
+                                >
+                                    {nameLetters.map((ch, i) => (
+                                        <motion.span
+                                            key={i}
+                                            style={{ display: 'inline-block', whiteSpace: 'pre' }}
+                                            variants={{
+                                                hidden: { opacity: 0, y: 14 },
+                                                visible: { opacity: 1, y: 0 },
+                                            }}
+                                            transition={{ duration: 0.4, ease: 'easeOut' }}
+                                        >
+                                            {ch}
+                                        </motion.span>
+                                    ))}
+                                </motion.span>
+                            )}
                         </Heading>
 
                         {personal.title && (
@@ -126,9 +179,35 @@ const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
                                 fontWeight="600"
                                 textTransform="uppercase"
                                 letterSpacing="wider"
-                                noOfLines={1}
+                                sx={{ overflowWrap: 'anywhere' }}
                             >
-                                {personal.title}
+                                {reduce ? (
+                                    <span>{personal.title}</span>
+                                ) : (
+                                    <motion.span
+                                        style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '0.35em' }}
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={{ once: true }}
+                                        variants={{
+                                            hidden: {},
+                                            visible: { transition: { staggerChildren: 0.07, delayChildren: 0.5 } },
+                                        }}
+                                    >
+                                        {titleWords.map((word, i) => (
+                                            <motion.span
+                                                key={i}
+                                                variants={{
+                                                    hidden: { opacity: 0, y: 10, filter: 'blur(4px)' },
+                                                    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+                                                }}
+                                                transition={{ duration: 0.45, ease: 'easeOut' }}
+                                            >
+                                                {word}
+                                            </motion.span>
+                                        ))}
+                                    </motion.span>
+                                )}
                             </Text>
                         )}
                     </VStack>
@@ -153,7 +232,12 @@ const PersonalHeader: React.FC<PersonalHeaderProps> = ({ personal }) => {
                             const isHttp = Boolean(item.href && item.href.startsWith('http'));
                             return (
                                 <WrapItem key={`${item.label}-${index}`}>
-                                    <HStack spacing={{ base: 2, sm: 3 }} minW={0}>
+                                    <HStack
+                                        spacing={{ base: 2, sm: 3 }}
+                                        minW={0}
+                                        _hover={{ transform: 'translateY(-2px)' }}
+                                        sx={{ transition: 'transform 0.2s ease' }}
+                                    >
                                         <Box
                                             p={{ base: 1.5, sm: 2 }}
                                             bg="transparent"

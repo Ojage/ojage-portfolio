@@ -7,11 +7,13 @@ import {
     HStack,
     Icon,
     Badge,
-    Stack
+    Stack,
 } from "@chakra-ui/react";
 import { FaCertificate, FaAward, FaCalendarAlt } from "react-icons/fa";
+import { motion, useReducedMotion } from 'framer-motion';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import { Certification } from '../../data/aboutData';
+import { TiltCard } from './TiltCard';
 
 interface CertificationsSectionProps {
     certifications: Certification[];
@@ -26,125 +28,126 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
     const theme = useAboutThemeConstants();
 
     return (
-        <Box
-            bg={theme.cardBg}
-            borderRadius="0"
-            p={{ base: 4, md: 6 }}
-            border="2px solid"
-            borderColor={theme.cardBorder}
-            position="relative"
-            _hover={{
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s ease'
-            }}
-            transition="all 0.2s ease"
-            mb={4}
-        >
-            <VStack align="start" spacing={3}>
-                {/* Header */}
-                <Stack
-                    direction="row"
-                    spacing={3}
-                    align="center"
-                    w="full"
-                >
-                    <Box
-                        p={2}
-                        bg={theme.accent}
-                        borderRadius="0"
-                        border="2px solid"
-                        borderColor={theme.accent}
-                        flexShrink={0}
+        <TiltCard className="shine-card">
+            <Box
+                bg={theme.cardBg}
+                borderRadius="0"
+                p={{ base: 4, md: 6 }}
+                border="2px solid"
+                borderColor={theme.cardBorder}
+                position="relative"
+                sx={{ transition: 'border-color 0.3s ease' }}
+                _hover={{ borderColor: theme.accent }}
+                mb={4}
+            >
+                <VStack align="start" spacing={3}>
+                    {/* Header */}
+                    <Stack
+                        direction="row"
+                        spacing={3}
+                        align="center"
+                        w="full"
                     >
-                        <Icon
-                            as={FaCertificate}
-                            color="black"
-                            boxSize={4}
-                        />
-                    </Box>
+                        <Box
+                            p={2}
+                            bg={theme.accent}
+                            borderRadius="0"
+                            border="2px solid"
+                            borderColor={theme.accent}
+                            flexShrink={0}
+                            boxShadow={`3px 3px 0 ${theme.accentLight}`}
+                        >
+                            <Icon
+                                as={FaCertificate}
+                                color="black"
+                                boxSize={4}
+                            />
+                        </Box>
 
-                    <VStack align="start" spacing={0} flex={1} minW={0}>
-                        <Text
-                            color={theme.accent}
+                        <VStack align="start" spacing={0} flex={1} minW={0}>
+                            <Text
+                                color={theme.accent}
+                                fontSize="xs"
+                                fontFamily="mono"
+                                fontWeight="bold"
+                                textTransform="uppercase"
+                                letterSpacing="wider"
+                            >
+                                {String(index + 1).padStart(2, '0')}_CERTIFICATION
+                            </Text>
+                            <Heading
+                                as="h3"
+                                size="sm"
+                                color={theme.primaryText}
+                                fontFamily="mono"
+                                fontWeight="600"
+                                lineHeight="1.3"
+                                textTransform="uppercase"
+                                letterSpacing="wide"
+                            >
+                                {certification.name}
+                            </Heading>
+                        </VStack>
+                    </Stack>
+
+                    {/* Details */}
+                    <VStack align="start" spacing={2} w="full" pl={12}>
+                        {/* Issuer */}
+                        {certification.issuer && (
+                            <HStack spacing={2}>
+                                <Icon as={FaAward} color={theme.accent} boxSize={3} />
+                                <Text
+                                    color={theme.primaryText}
+                                    fontSize="sm"
+                                    fontWeight="500"
+                                    fontFamily="mono"
+                                >
+                                    {certification.issuer}
+                                </Text>
+                            </HStack>
+                        )}
+
+                        {/* Period */}
+                        {certification.period && (
+                            <HStack spacing={2}>
+                                <Icon as={FaCalendarAlt} color={theme.accent} boxSize={3} />
+                                <Text
+                                    color={theme.primaryText}
+                                    fontSize="sm"
+                                    fontFamily="mono"
+                                >
+                                    {certification.period}
+                                </Text>
+                            </HStack>
+                        )}
+
+                        {/* Status Badge */}
+                        <Badge
+                            bg={theme.badgeBg}
+                            color={theme.badgeText}
+                            borderRadius="0"
+                            px={3}
+                            py={1}
                             fontSize="xs"
-                            fontFamily="mono"
                             fontWeight="bold"
                             textTransform="uppercase"
                             letterSpacing="wider"
-                        >
-                            {String(index + 1).padStart(2, '0')}_CERTIFICATION
-                        </Text>
-                        <Heading
-                            as="h3"
-                            size="sm"
-                            color={theme.primaryText}
                             fontFamily="mono"
-                            fontWeight="600"
-                            lineHeight="1.3"
-                            textTransform="uppercase"
-                            letterSpacing="wide"
+                            border="2px solid"
+                            borderColor={theme.badgeBorder}
                         >
-                            {certification.name}
-                        </Heading>
+                            Verified
+                        </Badge>
                     </VStack>
-                </Stack>
-
-                {/* Details */}
-                <VStack align="start" spacing={2} w="full" pl={12}>
-                    {/* Issuer */}
-                    {certification.issuer && (
-                        <HStack spacing={2}>
-                            <Icon as={FaAward} color={theme.accent} boxSize={3} />
-                            <Text
-                                color={theme.primaryText}
-                                fontSize="sm"
-                                fontWeight="500"
-                                fontFamily="mono"
-                            >
-                                {certification.issuer}
-                            </Text>
-                        </HStack>
-                    )}
-
-                    {/* Period */}
-                    {certification.period && (
-                        <HStack spacing={2}>
-                            <Icon as={FaCalendarAlt} color={theme.accent} boxSize={3} />
-                            <Text
-                                color={theme.primaryText}
-                                fontSize="sm"
-                                fontFamily="mono"
-                            >
-                                {certification.period}
-                            </Text>
-                        </HStack>
-                    )}
-
-                    {/* Status Badge */}
-                    <Badge
-                        bg={theme.badgeBg}
-                        color={theme.badgeText}
-                        borderRadius="0"
-                        px={3}
-                        py={1}
-                        fontSize="xs"
-                        fontWeight="bold"
-                        textTransform="uppercase"
-                        letterSpacing="wider"
-                        fontFamily="mono"
-                        border="2px solid"
-                        borderColor={theme.badgeBorder}
-                    >
-                        Verified
-                    </Badge>
                 </VStack>
-            </VStack>
-        </Box>
+            </Box>
+        </TiltCard>
     );
 };
 
 const CertificationsSection: React.FC<CertificationsSectionProps> = ({ certifications }) => {
     const theme = useAboutThemeConstants();
+    const reduce = useReducedMotion();
 
     return (
         <Box
@@ -170,6 +173,7 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ certifica
                         border="2px solid"
                         borderColor={theme.accent}
                         flexShrink={0}
+                        boxShadow={`5px 5px 0 ${theme.accentLight}`}
                     >
                         <Icon
                             as={FaCertificate}
@@ -205,11 +209,18 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ certifica
                 {/* Certifications List */}
                 <VStack spacing={0} align="stretch" w="full">
                     {certifications.map((certification, index) => (
-                        <CertificationCard
+                        <motion.div
                             key={certification.id}
-                            certification={certification}
-                            index={index}
-                        />
+                            initial={reduce ? false : { opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.4, delay: index * 0.1, ease: 'easeOut' }}
+                        >
+                            <CertificationCard
+                                certification={certification}
+                                index={index}
+                            />
+                        </motion.div>
                     ))}
                 </VStack>
 

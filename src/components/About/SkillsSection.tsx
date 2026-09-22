@@ -6,12 +6,12 @@ import {
     VStack,
     Badge,
     Wrap,
-    WrapItem,
     HStack,
     Icon,
-    Stack
+    Stack,
 } from "@chakra-ui/react";
-import { FaCode, FaDatabase, FaBrain, FaLaptopCode } from "react-icons/fa";
+import { FaCode, FaDatabase, FaBrain, FaLaptopCode, FaTerminal } from "react-icons/fa";
+import { motion, useReducedMotion } from 'framer-motion';
 import { useAboutThemeConstants } from '../../hooks/useAboutThemeConstants';
 import { SkillCategory } from '../../data/aboutData';
 
@@ -32,11 +32,11 @@ const getCategoryIcon = (category: string) => {
         case 'cloud & devops':
             return FaDatabase;
         case 'automation':
-            return FaCode;
+            return FaTerminal;
         case 'third-party apis':
             return FaLaptopCode;
         case 'engineering':
-            return FaLaptopCode;
+            return FaTerminal;
         default:
             return FaCode;
     }
@@ -44,6 +44,10 @@ const getCategoryIcon = (category: string) => {
 
 const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
     const theme = useAboutThemeConstants();
+    const reduce = useReducedMotion();
+
+    const allSkills = skills.flatMap((category) => category.skills);
+    const marqueeSkills = [...allSkills, ...allSkills];
 
     return (
         <Box
@@ -53,6 +57,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
             border="2px solid"
             borderColor={theme.cardBorder}
             position="relative"
+            overflow="hidden"
         >
             <VStack align="start" spacing={6} width="full">
                 {/* Header */}
@@ -69,6 +74,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
                         border="2px solid"
                         borderColor={theme.accent}
                         flexShrink={0}
+                        boxShadow={`5px 5px 0 ${theme.accentLight}`}
                     >
                         <Icon
                             as={FaCode}
@@ -101,6 +107,31 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
                     </VStack>
                 </Stack>
 
+                {/* Marquee strip (decorative, hidden on print) */}
+                <Box className="no-print marquee-mask" w="full" borderY="1px solid" borderColor={theme.divider} py={3}>
+                    <Box className="marquee-track">
+                        {marqueeSkills.map((skill, index) => (
+                            <Text
+                                key={index}
+                                as="span"
+                                fontFamily="mono"
+                                fontSize="sm"
+                                fontWeight="bold"
+                                color={theme.primaryText}
+                                textTransform="uppercase"
+                                letterSpacing="wider"
+                                whiteSpace="nowrap"
+                                mx={4}
+                            >
+                                <Text as="span" color={theme.accent} mr={2}>
+                                    ◆
+                                </Text>
+                                {skill}
+                            </Text>
+                        ))}
+                    </Box>
+                </Box>
+
                 {/* Skills Categories */}
                 <VStack spacing={6} align="stretch" w="full">
                     {skills.map((skillCategory, categoryIndex) => {
@@ -123,7 +154,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
                                             boxSize={4}
                                         />
                                     </Box>
-                                    <VStack align="start" spacing={0}>
+                                    <VStack align="start" spacing={0} w="full">
                                         <Text
                                             color={theme.accent}
                                             fontSize="xs"
@@ -144,13 +175,33 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
                                         >
                                             {skillCategory.category}
                                         </Heading>
+                                        {/* Animated underline */}
+                                        <motion.div
+                                            style={{ width: '100%', originX: 0 }}
+                                            initial={reduce ? false : { scaleX: 0 }}
+                                            whileInView={{ scaleX: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                                        >
+                                            <Box w={24} h="2px" bg={theme.accent} mt={1} />
+                                        </motion.div>
                                     </VStack>
                                 </HStack>
 
                                 {/* Skills Badges */}
                                 <Wrap spacing={3}>
                                     {skillCategory.skills.map((skill, index) => (
-                                        <WrapItem key={index}>
+                                        <motion.div
+                                            key={index}
+                                            initial={reduce ? false : { opacity: 0, y: 12 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.4 }}
+                                            transition={{
+                                                duration: 0.35,
+                                                delay: categoryIndex * 0.04 + index * 0.03,
+                                                ease: 'easeOut',
+                                            }}
+                                        >
                                             <Badge
                                                 bg={theme.badgeBg}
                                                 color={theme.badgeText}
@@ -169,14 +220,15 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
                                                     color: theme.accent,
                                                     borderColor: theme.accent,
                                                     transform: 'translateY(-2px)',
-                                                    transition: 'all 0.2s ease'
+                                                    boxShadow: `0 6px 18px -6px ${theme.accentLight}`,
+                                                    transition: 'all 0.2s ease',
                                                 }}
                                                 cursor="default"
                                                 transition="all 0.2s ease"
                                             >
                                                 {skill}
                                             </Badge>
-                                        </WrapItem>
+                                        </motion.div>
                                     ))}
                                 </Wrap>
                             </Box>
