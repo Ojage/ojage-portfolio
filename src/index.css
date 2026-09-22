@@ -125,6 +125,11 @@ code {
   .no-print {
     display: none !important;
   }
+  .shimmer-text {
+    background: none;
+    color: #111 !important;
+    -webkit-text-fill-color: #111;
+  }
 }
 
 /* Respect reduced-motion preferences site-wide */
@@ -237,4 +242,67 @@ code {
 .ps-word:hover {
   color: var(--ps-accent, #00ff88);
   background-size: 100% 2px;
+}
+
+/* ---- Home hero ---- */
+
+/* Rotating conic halo around the portrait */
+@keyframes hero-spin {
+  to { transform: rotate(360deg); }
+}
+.hero-ring {
+  position: absolute;
+  inset: -16px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 95deg,
+    rgba(0, 255, 136, 0.85) 150deg,
+    transparent 210deg 360deg
+  );
+  animation: hero-spin 7s linear infinite;
+  filter: blur(6px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+[data-theme="light"] .hero-ring {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 95deg,
+    rgba(40, 167, 69, 0.85) 150deg,
+    transparent 210deg 360deg
+  );
+}
+
+/* Shimmering gradient reveal for the name */
+@keyframes hero-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.shimmer-text {
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-shimmer 6s linear infinite;
+}
+
+/* Drifting aurora blobs */
+@keyframes hero-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(28px, -22px) scale(1.12); }
+}
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(54px);
+  pointer-events: none;
+  animation: hero-drift 12s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Terminal window dots used in the hero eyebrow */
+.hero-window-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
 }
