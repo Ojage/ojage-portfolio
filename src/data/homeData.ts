@@ -1,4 +1,5 @@
 // data/homeData.ts
+import nnactProImage from "../assets/images/case-studies/nnact-pro.png";
 export interface Reference {
   name: string;
   role: string;
@@ -56,6 +57,7 @@ export const coreCompetencies: ProjectData[] = [
     icon: "FaWrench",
     accentType: "primary",
     githubUrl: "https://github.com/ojage",
+    imageUrl: nnactProImage,
     status: "LIVE"
   },
   {
