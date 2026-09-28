@@ -114,6 +114,7 @@ jobs:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           OJAGE_PORTFOLIO_ROOT: ${{ vars.OJAGE_PORTFOLIO_ROOT || 'data/ojage-portfolio' }}
+          OJAGE_PORTFOLIO_ADDRESS: ${{ vars.OJAGE_PORTFOLIO_ADDRESS || 'salathiel.ojage.org' }}
         run: |
           set -euo pipefail
           HOST="${DEPLOY_USER}@${DEPLOY_HOST}"
@@ -143,24 +144,38 @@ jobs:
             rm -rf '${TARGET}.previous'
             if [ -d '${TARGET}' ]; then mv '${TARGET}' '${TARGET}.previous'; fi
             mv '${TARGET}.staging' '${TARGET}'
-            echo \"published $(date -u +%FT%TZ)\" > '${TARGET}/.deployed-at'
-            echo \"$STAMP\" > '${TARGET}/.deploy-stamp'
+            # Written to the parent, not the served root, so deploy metadata is
+            # not fetchable by visitors.
+            echo \"$(date -u +%FT%TZ) ${GITHUB_SHA:-unknown}\" > '${TARGET}.deployed-at'
+            echo \"$STAMP\" > '${TARGET}.deploy-stamp'
           "
 
-          # Verify what Caddy will actually serve, not just that rsync returned 0.
-          # This is the guard that catches a permission or path mistake which
-          # would otherwise surface only as a 404 for real visitors.
+          # Confirm Caddy is serving *this* build, not merely that something
+          # answered on 443. The main bundle is content-hashed, so its filename
+          # is a fingerprint: if the live index.html references the hash we just
+          # built, the new code is genuinely being served. A plain status check
+          # would pass even against a stale document root or a wrong vhost.
           echo "=== verifying published site ==="
-          HTTP=$(curl -sS -o /dev/null -w '%{http_code}' \
-            "https://${vars.OJAGE_PORTFOLIO_ADDRESS || 'salathiel.ojage.org'}/" || echo "000")
-          echo "https status: ${HTTP}"
+          LOCAL_BUNDLE=$(basename "$(grep -oE '/static/js/main\.[a-f0-9]+\.js' build/index.html | head -1)")
+          echo "published bundle: ${LOCAL_BUNDLE}"
+
+          HTTP=$(curl -sS -o /tmp/ojage-index.html -w '%{http_code}' \
+            "https://${OJAGE_PORTFOLIO_ADDRESS}/" || echo "000")
+          echo "https://${OJAGE_PORTFOLIO_ADDRESS}/ -> ${HTTP}"
 
           if [ "$HTTP" = "000" ]; then
-            echo "site unreachable — is the DNS A record for the portfolio pointing at this host?" >&2
+            echo "The build was published, but the site is unreachable." >&2
+            echo "Check that the DNS A record for ${OJAGE_PORTFOLIO_ADDRESS} points at this host." >&2
             exit 1
           fi
           if [ "$HTTP" -ge 500 ]; then
-            echo "server error serving the published site" >&2
+            echo "Caddy returned a server error for the published site." >&2
             exit 1
           fi
-          echo "deploy verified: ${GITHUB_SHA}"
+          if ! grep -qF "${LOCAL_BUNDLE}" /tmp/ojage-index.html; then
+            echo "Caddy is serving a DIFFERENT build than the one just published." >&2
+            echo "Expected ${LOCAL_BUNDLE} in the live index.html. Check the vhost root and that" >&2
+            echo "Caddy was recreated after the compose change (docker compose up -d caddy)." >&2
+            exit 1
+          fi
+          echo "deploy verified: ${GITHUB_SHA} serving ${LOCAL_BUNDLE}"
