@@ -124,30 +124,41 @@ jobs:
           # self-documenting for whoever inspects the VPS next.
           TARGET="${DEPLOY_PATH}/${OJAGE_PORTFOLIO_ROOT}"
 
-          ssh "${OPTS[@]}" "$HOST" "mkdir -p '${TARGET}'"
+          # Caddy bind-mounts TARGET, and a bind mount follows the inode it was
+          # created with. Replacing TARGET itself (mv a fresh directory into
+          # place) therefore leaves Caddy bound to the old, now-empty inode
+          # while the new build sits on disk unreferenced — which is exactly
+          # how the first deploy shipped a 404. So TARGET is created once and
+          # never replaced: builds land in releases/<stamp>/ and a "current"
+          # symlink inside TARGET is repointed instead. The symlink is what
+          # Caddy's root resolves through.
+          ssh "${OPTS[@]}" "$HOST" "mkdir -p '${TARGET}/releases'"
 
-          # Publish into a fresh staging directory first, then swap the contents
-          # in. Writing straight into the live root would expose a partially
-          # uploaded bundle to visitors for the duration of the transfer.
           STAMP=$(date -u +%Y%m%d%H%M%S)
-          ssh "${OPTS[@]}" "$HOST" "rm -rf '${TARGET}.staging' && mkdir -p '${TARGET}.staging'"
+          RELEASE="${TARGET}/releases/${STAMP}"
+
+          # Upload to a temporary name, then rename within the same filesystem so
+          # the release directory only ever appears complete.
+          ssh "${OPTS[@]}" "$HOST" "rm -rf '${RELEASE}.tmp' && mkdir -p '${RELEASE}.tmp'"
 
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
             build/ \
-            "${HOST}:${TARGET}.staging/"
+            "${HOST}:${RELEASE}.tmp/"
 
-          # Swap: move the new build in, keep the previous one for a moment so a
-          # rollback does not require a rebuild.
+          # Point "current" at the new release atomically (ln -sfn + mv -T on
+          # the link), so a request either sees the whole old build or the whole
+          # new one, never a mix.
           ssh "${OPTS[@]}" "$HOST" "
             set -e
-            rm -rf '${TARGET}.previous'
-            if [ -d '${TARGET}' ]; then mv '${TARGET}' '${TARGET}.previous'; fi
-            mv '${TARGET}.staging' '${TARGET}'
-            # Written to the parent, not the served root, so deploy metadata is
-            # not fetchable by visitors.
-            echo \"$(date -u +%FT%TZ) ${GITHUB_SHA:-unknown}\" > '${TARGET}.deployed-at'
-            echo \"$STAMP\" > '${TARGET}.deploy-stamp'
+            mv '${RELEASE}.tmp' '${RELEASE}'
+            ln -sfn 'releases/${STAMP}' '${TARGET}/current.new'
+            mv -Tf '${TARGET}/current.new' '${TARGET}/current'
+            # Deploy metadata lives outside releases/ so it is never served.
+            echo \"\$(date -u +%FT%TZ) \${GITHUB_SHA:-unknown} \${STAMP}\" > '${TARGET}/deployed-at'
+            # Keep the last few releases for rollback; drop the rest.
+            ls -1dt '${TARGET}'/releases/*/ 2>/dev/null | tail -n +4 | xargs -r rm -rf
+            echo \"current -> \$(readlink '${TARGET}/current')\"
           "
 
           # Confirm Caddy is serving *this* build, not merely that something
