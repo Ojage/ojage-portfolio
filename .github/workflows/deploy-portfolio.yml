@@ -155,7 +155,7 @@ jobs:
             ln -sfn 'releases/${STAMP}' '${TARGET}/current.new'
             mv -Tf '${TARGET}/current.new' '${TARGET}/current'
             # Deploy metadata lives outside releases/ so it is never served.
-            echo \"\$(date -u +%FT%TZ) \${GITHUB_SHA:-unknown} \${STAMP}\" > '${TARGET}/deployed-at'
+            echo \"\$(date -u +%FT%TZ) ${GITHUB_SHA} ${STAMP}\" > '${TARGET}/deployed-at'
             # Keep the last few releases for rollback; drop the rest.
             ls -1dt '${TARGET}'/releases/*/ 2>/dev/null | tail -n +4 | xargs -r rm -rf
             echo \"current -> \$(readlink '${TARGET}/current')\"
